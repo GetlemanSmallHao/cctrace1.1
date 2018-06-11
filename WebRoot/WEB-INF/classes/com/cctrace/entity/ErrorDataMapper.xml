@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cctrace.dao.ErrorDataMapper">
+	<resultMap id="BaseResultMap" type="com.cctrace.entity.ErrorData">
+		<id column="id" jdbcType="INTEGER" property="id" />
+		<result column="content" jdbcType="VARCHAR" property="content" />
+		<result column="receiveTime" jdbcType="VARCHAR" property="receiveTime" />
+		<result column="receiveLongTime" jdbcType="VARCHAR" property="receiveLongTime" />
+		<result column="type" jdbcType="VARCHAR" property="type" />
+	</resultMap>
+
+	<sql id="Base_Column_List">
+		id,content,receiveTime,receiveLongTime,type
+	</sql>
+
+	<select id="selectAllErrorData" parameterType="String" resultType="com.cctrace.entity.ErrorData">
+		select
+		<include refid="Base_Column_List" />
+		from errordata
+		where 1=1
+		
+	</select>
+
+	<insert id="insertErrorData" parameterType="com.cctrace.entity.ErrorData">
+		insert into errordata(content,receiveTime,receiveLongTime,type) 
+		values(#{content},#{receiveTime},#{receiveLongTime},#{type})
+			
+	</insert>
+	
+	<select id="selectErrorDataByDeviceId" parameterType="String" resultType="com.cctrace.entity.ErrorData">
+		select
+		<include refid="Base_Column_List" />
+		from errordata
+		where type=#{type}
+		ORDER BY id DESC LIMIT 1,1
+		
+	</select>
+	
+	
+	
+	<!-- 配置缓存 -->
+	<!-- <cache eviction="FIFO" flushInterval="10000" size="128" readOnly="true" /> -->
+</mapper>

@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cctrace.dao.CommandStoreMapper">
+	<resultMap id="BaseResultMap" type="com.cctrace.entity.CommandStore">
+		<id column="id" jdbcType="INTEGER" property="id" />
+		<result column="content" jdbcType="VARCHAR" property="content" />
+		<result column="userName" jdbcType="VARCHAR" property="userName" />
+		<result column="time" jdbcType="VARCHAR" property="time" />
+		<result column="longTime" jdbcType="VARCHAR" property="longTime" />
+		<result column="type" jdbcType="VARCHAR" property="type" />
+		<result column="command" jdbcType="VARCHAR" property="command" />
+		<result column="containerId" jdbcType="VARCHAR" property="containerId" />
+		<result column="status" jdbcType="VARCHAR" property="status" />
+		<result column="value" jdbcType="VARCHAR" property="value" />
+		<result column="display" jdbcType="VARCHAR" property="display" />
+
+	</resultMap>
+
+	<sql id="Base_Column_List">
+		id, content, userName, time, longTime,
+		type,command,containerId,status,value,display
+	</sql>
+
+	<!-- 最新一条控制指令 -->
+	<select id="selectCommandStoreDesc" parameterType="String"
+		resultType="com.cctrace.entity.CommandStore">
+		select
+		<include refid="Base_Column_List" />
+		from command_store
+		where containerId=#{containerId} and type='1'
+		order
+		by id desc limit 1
+
+	</select>
+	
+	<!-- 查看最新一条开关机指令 -->
+	<select id="selectCommandStoreSwitchDescOne" parameterType="String"
+		resultType="com.cctrace.entity.CommandStore">
+		select
+		<include refid="Base_Column_List" />
+		from command_store
+		where containerId=#{containerId} and type='1' and command='remoteSwiMac'
+		order by id desc limit 1
+
+	</select>
+	<!-- 查看最新一条运行模式 -->
+	<select id="selectCommandStoreRunModeDescOne" parameterType="String"
+		resultType="com.cctrace.entity.CommandStore">
+		select
+		<include refid="Base_Column_List" />
+		from command_store
+		where containerId=#{containerId} and type='1' and command='refRunMode'
+		order by id desc limit 1
+
+	</select>
+	<!-- 根据map查看最新一条运行模式 -->
+	<select id="selectCommandStoreByMap" parameterType="java.util.Map"
+		resultType="com.cctrace.entity.CommandStore">
+		select
+		<include refid="Base_Column_List" />
+		from command_store
+		where containerId=#{value1} and longTime >#{value2} and command='remoteSwiMac'
+		order by id desc limit 1
+
+	</select>
+	
+	<!-- 根据指令查询最新一条 -->
+	<select id="selectCommandStoreCommandDescOne" parameterType="java.util.Map" resultType="com.cctrace.entity.CommandStore">
+		SELECT * FROM command_store 
+		WHERE command = #{command}
+		AND containerId = #{containerId} AND type='1'
+		ORDER BY time DESC LIMIT 0,1
+	</select>
+	
+	<insert id="insertCommandStore" parameterType="com.cctrace.entity.CommandStore">
+		insert into command_store
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="content != null">
+				content,
+			</if>
+			<if test="userName != null">
+				userName,
+			</if>
+			<if test="time != null">
+				time,
+			</if>
+			<if test="longTime != null">
+				longTime,
+			</if>
+			<if test="type != null">
+				type,
+			</if>
+			<if test="command != null">
+				command,
+			</if>
+			<if test="containerId != null">
+				containerId,
+			</if>
+			<if test="status != null">
+				status,
+			</if>
+			<if test="value != null">
+				value,
+			</if>
+			<if test="display != null">
+				display,
+			</if>
+	
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=INTEGER},
+			</if>
+			<if test="content != null">
+				#{content,jdbcType=VARCHAR},
+			</if>
+			<if test="userName != null">
+				#{userName,jdbcType=VARCHAR},
+			</if>
+			<if test="time != null">
+				#{time,jdbcType=VARCHAR},
+			</if>
+			<if test="longTime != null">
+				#{longTime,jdbcType=VARCHAR},
+			</if>
+			<if test="type != null">
+				#{type,jdbcType=VARCHAR},
+			</if>
+			<if test="command != null">
+				#{command,jdbcType=VARCHAR},
+			</if>
+			<if test="containerId != null">
+				#{containerId,jdbcType=VARCHAR},
+			</if>
+			<if test="status != null">
+				#{status,jdbcType=VARCHAR},
+			</if>
+			<if test="value != null">
+				#{value,jdbcType=VARCHAR},
+			</if>
+			<if test="display != null">
+				#{display,jdbcType=VARCHAR},
+			</if>
+			
+		</trim>
+	</insert>
+
+	<update id="updateCommandStoreById" parameterType="com.cctrace.entity.CommandStore">
+		update command_store
+		<set>
+			<if test="content != null">
+				content = #{content,jdbcType=VARCHAR},
+			</if>
+			<if test="userName != null">
+				userName = #{userName,jdbcType=VARCHAR},
+			</if>
+			<if test="time != null">
+				time = #{time,jdbcType=VARCHAR},
+			</if>
+			<if test="longTime != null">
+				longTime = #{longTime,jdbcType=VARCHAR},
+			</if>
+			<if test="type != null">
+				type = #{type,jdbcType=VARCHAR},
+			</if>
+			<if test="command != null">
+				command = #{command,jdbcType=VARCHAR},
+			</if>
+			<if test="containerId != null">
+				containerId = #{containerId,jdbcType=VARCHAR},
+			</if>
+			<if test="status != null">
+				status = #{status,jdbcType=VARCHAR},
+			</if>
+			<if test="value != null">
+				value = #{value,jdbcType=VARCHAR},
+			</if>
+			<if test="display != null">
+				display = #{display,jdbcType=VARCHAR},
+			</if>
+
+		</set>
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+	<!-- 前台显示数据库中原来设定的值,查询条件：设定指令，状态为yes,时间降序最新一条 -->
+	<select id="selectSetTemp" parameterType="java.util.Map" resultType="com.cctrace.entity.CommandStore">
+		SELECT <include refid="Base_Column_List" /> FROM command_store 
+		WHERE command = #{commandType}
+		AND containerId = #{containerId} 
+		AND  status = 'Y'
+		ORDER BY time DESC LIMIT 0,1
+	</select>
+	
+	<!-- 暂时用于日志显示 -->
+	<select id="selectCommandForLogShowInTwoTimes" parameterType="java.util.Map" resultType="com.cctrace.entity.CommandStore">
+		SELECT 
+		<include refid="Base_Column_List" /> 
+		FROM command_store WHERE longTime BETWEEN #{start} and #{end}
+		AND containerId IN (SELECT containerId FROM container WHERE companyId = #{companyId})
+		ORDER BY longTime DESC
+	</select>
+	<!-- 暂时用于日志显示加冷藏箱模糊查询 -->
+	<select id="selectLogShowInTwoTimesWithContainerIdLike" parameterType="java.util.Map" resultType="com.cctrace.entity.CommandStore">
+		SELECT <include refid="Base_Column_List" /> FROM command_store WHERE longTime BETWEEN #{start} and #{end}
+		AND containerId IN (SELECT containerId FROM container WHERE companyId = #{companyId} AND containerId LIKE CONCAT('%',#{containerId},'%'))
+		ORDER BY longTime DESC
+	</select>
+
+	<!-- 配置缓存 -->
+	<!-- <cache eviction="FIFO" flushInterval="10000" size="128" readOnly="true" 
+		/> -->
+</mapper>

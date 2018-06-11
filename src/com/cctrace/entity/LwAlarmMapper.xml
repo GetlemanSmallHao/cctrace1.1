@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cctrace.dao.LwAlarmMapper">
+	<resultMap id="BaseResultMap" type="com.cctrace.entity.LwAlarm">
+		<id column="id" jdbcType="INTEGER" property="id" />
+		<result column="alarm_lev" jdbcType="VARCHAR" property="alarm_lev" />
+		<result column="alarm_num" jdbcType="INTEGER" property="alarm_num" />
+		<result column="eng_con" jdbcType="VARCHAR" property="eng_con" />
+		<result column="chi_con" jdbcType="VARCHAR" property="chi_con"/>
+	</resultMap>
+
+	<sql id="Base_Column_List">
+		id, alarm_lev, alarm_num, eng_con, chi_con
+	</sql>
+
+
+	<select id="selectLwAlarmByAlarm_num" parameterType="java.lang.Integer"
+		resultType="com.cctrace.entity.LwAlarm">
+		select
+		<include refid="Base_Column_List" />
+		from lwalarm
+		where alarm_num= #{alarm_num,jdbcType=INTEGER}
+	</select>
+	
+	
+	<!-- 配置缓存 -->
+	<cache eviction="FIFO" flushInterval="10000" size="128" readOnly="true" />
+</mapper>

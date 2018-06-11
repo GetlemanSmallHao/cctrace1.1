@@ -1,0 +1,742 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cctrace.dao.CcdataMapper1">
+	<resultMap id="BaseResultMap" type="com.cctrace.entity.Ccdata1">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="containerId" property="containerId" jdbcType="VARCHAR" />
+		<result column="deviceId" property="deviceId" jdbcType="VARCHAR" />
+		<result column="gpsBatVol" property="gpsBatVol" jdbcType="DOUBLE" />
+		<result column="refBatVol" property="refBatVol" jdbcType="DOUBLE" />
+		<result column="backDoorState" property="backDoorState" jdbcType="VARCHAR" />
+		<result column="oilLevel" property="oilLevel" jdbcType="DOUBLE" />
+		<result column="cenBoxTemp" property="cenBoxTemp" jdbcType="DOUBLE" />
+		<result column="lat" property="lat" jdbcType="DOUBLE" />
+		<result column="lon" property="lon" jdbcType="DOUBLE" />
+		<result column="jzLat" property="jzLat" jdbcType="DOUBLE" />
+		<result column="jzLon" property="jzLon" jdbcType="DOUBLE" />
+		<result column="tankHum" property="tankHum" jdbcType="DOUBLE" />
+		<result column="railId" property="railId" jdbcType="INTEGER" />
+		<result column="railTag" property="railTag" jdbcType="VARCHAR" />
+		<result column="railChangeTime" property="railChangeTime" jdbcType="VARCHAR" />
+		<result column="refSwiState" property="refSwiState" jdbcType="VARCHAR" />
+		<result column="refRunMode" property="refRunMode" jdbcType="VARCHAR" />
+		<result column="tailBoxTemp" property="tailBoxTemp" jdbcType="DOUBLE" />
+		<result column="enviTemp" property="enviTemp" jdbcType="DOUBLE" />
+		<result column="backWindTemp" property="backWindTemp" jdbcType="DOUBLE" />
+		<result column="chuWindTemp" property="chuWindTemp" jdbcType="DOUBLE" />
+		<result column="nowTime" property="nowTime" jdbcType="VARCHAR" />
+		<result column="nowLongTime" property="nowLongTime" jdbcType="BIGINT" />
+		<result column="receiveTime" property="receiveTime" jdbcType="VARCHAR" />
+		<result column="receiveLongTime" property="receiveLongTime" jdbcType="BIGINT" />
+		<result column="companyId" property="companyId" jdbcType="INTEGER" />
+		<result column="operationMode" property="operationMode" jdbcType="VARCHAR" />
+		<result column="workMode" property="workMode" jdbcType="VARCHAR" />
+		<result column="powerType" property="powerType" jdbcType="VARCHAR" />
+		<result column="vecRunTime" property="vecRunTime" jdbcType="DOUBLE" />
+		<result column="engRunTime" property="engRunTime" jdbcType="DOUBLE" />
+		<result column="oilTemp" property="oilTemp" jdbcType="DOUBLE" />
+		<result column="gpsPower" property="gpsPower" jdbcType="DOUBLE" />
+		<result column="tempSet" property="tempSet" jdbcType="DOUBLE" />
+		<result column="coilTemp" property="coilTemp" jdbcType="DOUBLE" />
+		<result column="chillerType" property="chillerType" jdbcType="VARCHAR" />
+		<result column="communicationState" property="communicationState" jdbcType="VARCHAR" />
+		<result column="lcxModel" property="lcxModel" jdbcType="VARCHAR" />
+		<result column="refXFSwiState" property="refXFSwiState" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<sql id="Base_Column_List">
+		id, containerId, deviceId, gpsBatVol, refBatVol, backDoorState, oilLevel,
+		cenBoxTemp,
+		lat, lon, jzLat, jzLon, tankHum, railId, railTag, railChangeTime,
+		refSwiState, refRunMode,
+		tailBoxTemp, enviTemp, backWindTemp, chuWindTemp, nowTime, nowLongTime,
+		receiveTime,
+		receiveLongTime, companyId, operationMode, workMode, powerType, vecRunTime,
+		engRunTime,
+		oilTemp, gpsPower,tempSet,coilTemp,chillerType,communicationState,lcxModel,
+		refXFSwiState
+	</sql>
+
+	<select id="selectCcdataById1" parameterType="java.lang.Integer"
+		resultType="com.cctrace.entity.Ccdata1">
+		select
+		<include refid="Base_Column_List" />
+		from ccdata1
+		where id = #{id,jdbcType=INTEGER}
+	</select>
+	
+	<!-- 根据通讯时间倒序查询 -->
+	<select id="selectCcdataLcxModelDescBycompanyId1" parameterType="java.lang.Integer"
+		resultType="com.cctrace.entity.Ccdata1">
+		select
+		<include refid="Base_Column_List" />
+		from ccdata1
+		where companyId = #{companyId} ORDER BY receiveLongTime DESC
+	</select>
+	<!-- 根据通讯时间正序查询 -->
+	<select id="selectCcdataLcxModelAscBycompanyId1" parameterType="java.lang.Integer"
+		resultType="com.cctrace.entity.Ccdata1">
+		select
+		<include refid="Base_Column_List" />
+		from ccdata1
+		where companyId = #{companyId} ORDER BY receiveLongTime ASC
+	</select>
+	
+	
+	<select id="selectCcdatasBycompanyId1" parameterType="java.lang.Integer"
+		resultType="com.cctrace.entity.Ccdata1">
+		select
+		<include refid="Base_Column_List" />
+		from ccdata1
+		where companyId = #{companyId,jdbcType=INTEGER}
+	</select>
+	<!-- 按照冷藏箱编号升序 -->
+	<select id="selectCcdatasBycompanyId1AndCIdASC" parameterType="java.lang.Integer"
+		resultType="com.cctrace.entity.Ccdata1">
+		select
+		<include refid="Base_Column_List" />
+		from ccdata1
+		where companyId = #{companyId,jdbcType=INTEGER} order by containerId asc
+	</select>
+
+	<select id="selectCcdatasBycompanyId1AndCIdDESC" parameterType="java.lang.Integer"
+		resultType="com.cctrace.entity.Ccdata1">
+		select
+		<include refid="Base_Column_List" />
+		from ccdata1
+		where companyId = #{companyId,jdbcType=INTEGER} order by containerId DESC
+	</select>
+	<!-- 按照设备编号升序 -->
+	<select id="selectCcdatasBycompanyId1AndDIdASC" parameterType="java.lang.Integer"
+		resultType="com.cctrace.entity.Ccdata1">
+		select
+		<include refid="Base_Column_List" />
+		from ccdata1
+		where companyId = #{companyId,jdbcType=INTEGER} order by deviceId asc
+	</select>
+
+	<select id="selectCcdatasBycompanyId1AndDIdDESC" parameterType="java.lang.Integer"
+		resultType="com.cctrace.entity.Ccdata1">
+		select
+		<include refid="Base_Column_List" />
+		from ccdata1
+		where companyId = #{companyId,jdbcType=INTEGER} order by deviceId DESC
+	</select>
+	
+	<!-- 按照时间升序 -->
+	<select id="selectCcdatasBycompanyId1AndNowTimeASC" parameterType="java.lang.Integer"
+		resultType="com.cctrace.entity.Ccdata1">
+		select
+		<include refid="Base_Column_List" />
+		from ccdata1
+		where companyId = #{companyId,jdbcType=INTEGER} order by nowLongTime asc
+	</select>
+
+	<select id="selectCcdatasBycompanyId1AndNowTimeDESC" parameterType="java.lang.Integer"
+		resultType="com.cctrace.entity.Ccdata1">
+		select
+		<include refid="Base_Column_List" />
+		from ccdata1
+		where companyId = #{companyId,jdbcType=INTEGER} order by nowLongTime DESC
+	</select>
+	
+	<!-- 按照设置温度升序 -->
+	<select id="selectCcdatasBycompanyId1AndSetTempASC" parameterType="java.lang.Integer"
+		resultType="com.cctrace.entity.Ccdata1">
+		select
+		<include refid="Base_Column_List" />
+		from ccdata1
+		where companyId = #{companyId,jdbcType=INTEGER} order by tempSet asc
+	</select>
+
+	<select id="selectCcdatasBycompanyId1AndSetTempDESC" parameterType="java.lang.Integer"
+		resultType="com.cctrace.entity.Ccdata1">
+		select
+		<include refid="Base_Column_List" />
+		from ccdata1
+		where companyId = #{companyId,jdbcType=INTEGER} order by tempSet DESC
+	</select>
+	
+	<!-- 按照回风温度升序 -->
+	<select id="selectCcdatasBycompanyId1AndBackWindASC" parameterType="java.lang.Integer"
+		resultType="com.cctrace.entity.Ccdata1">
+		select
+		<include refid="Base_Column_List" />
+		from ccdata1
+		where companyId = #{companyId,jdbcType=INTEGER} order by backWindTemp asc
+	</select>
+
+	<select id="selectCcdatasBycompanyId1AndBackWindDESC" parameterType="java.lang.Integer"
+		resultType="com.cctrace.entity.Ccdata1">
+		select
+		<include refid="Base_Column_List" />
+		from ccdata1
+		where companyId = #{companyId,jdbcType=INTEGER} order by backWindTemp DESC
+	</select>
+	
+	<!-- 冷机电瓶电压 -->
+	<select id="selectCcdatasBycompanyId1AndRefBatVolASC" parameterType="java.lang.Integer"
+		resultType="com.cctrace.entity.Ccdata1">
+		select
+		<include refid="Base_Column_List" />
+		from ccdata1
+		where companyId = #{companyId,jdbcType=INTEGER} order by refBatVol asc
+	</select>
+
+	<select id="selectCcdatasBycompanyId1AndRefBatVolDESC" parameterType="java.lang.Integer"
+		resultType="com.cctrace.entity.Ccdata1">
+		select
+		<include refid="Base_Column_List" />
+		from ccdata1
+		where companyId = #{companyId,jdbcType=INTEGER} order by refBatVol DESC
+	</select>
+
+	<select id="selectCcdataByDeviceId1" parameterType="java.lang.String"
+		resultType="com.cctrace.entity.Ccdata1">
+		select
+		<include refid="Base_Column_List" />
+		from ccdata1
+		where deviceId = #{deviceId}
+		ORDER BY id DESC
+		LIMIT 0 ,1
+	</select>
+
+	<select id="selectCcdataByContainerId1" parameterType="java.lang.String"
+		resultType="com.cctrace.entity.Ccdata1">
+		select
+		<include refid="Base_Column_List" />
+		from ccdata1
+		where containerId = #{containerId}
+		ORDER BY id DESC
+		LIMIT 0 ,1
+	</select>
+
+
+	<select id="selectLastCcdataByContainerId1" parameterType="java.lang.String"
+		resultType="com.cctrace.entity.Ccdata1">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM ccdata1
+		where containerId = #{containerId}
+		ORDER BY id DESC
+		LIMIT 0 ,1
+	</select>
+	
+	<delete id="deleteCcdataById1" parameterType="java.lang.Integer">
+		delete from ccdata1
+		where id = #{id,jdbcType=INTEGER}
+	</delete>
+
+	<delete id="deleteCcdatasByContainerId1" parameterType="java.lang.String">
+		delete
+		from ccdata1
+		where containerId = #{containerId,jdbcType=VARCHAR}
+	</delete>
+
+	<insert id="insertCcdata1" parameterType="com.cctrace.entity.Ccdata1">
+		insert into ccdata1
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="containerId != null">
+				containerId,
+			</if>
+			<if test="deviceId != null">
+				deviceId,
+			</if>
+			<if test="gpsBatVol != null">
+				gpsBatVol,
+			</if>
+			<if test="refBatVol != null">
+				refBatVol,
+			</if>
+			<if test="backDoorState != null">
+				backDoorState,
+			</if>
+			<if test="oilLevel != null">
+				oilLevel,
+			</if>
+			<if test="cenBoxTemp != null">
+				cenBoxTemp,
+			</if>
+			<if test="lat != null">
+				lat,
+			</if>
+			<if test="lon != null">
+				lon,
+			</if>
+			<if test="jzLat != null">
+				jzLat,
+			</if>
+			<if test="jzLon != null">
+				jzLon,
+			</if>
+			<if test="tankHum != null">
+				tankHum,
+			</if>
+			<if test="railId != null">
+				railId,
+			</if>
+			<if test="railTag != null">
+				railTag,
+			</if>
+			<if test="railChangeTime != null">
+				railChangeTime,
+			</if>
+			<if test="refSwiState != null">
+				refSwiState,
+			</if>
+			<if test="refRunMode != null">
+				refRunMode,
+			</if>
+			<if test="tailBoxTemp != null">
+				tailBoxTemp,
+			</if>
+			<if test="enviTemp != null">
+				enviTemp,
+			</if>
+			<if test="backWindTemp != null">
+				backWindTemp,
+			</if>
+			<if test="chuWindTemp != null">
+				chuWindTemp,
+			</if>
+			<if test="nowTime != null">
+				nowTime,
+			</if>
+			<if test="nowLongTime != null">
+				nowLongTime,
+			</if>
+			<if test="receiveTime != null">
+				receiveTime,
+			</if>
+			<if test="receiveLongTime != null">
+				receiveLongTime,
+			</if>
+			<if test="companyId != null">
+				companyId,
+			</if>
+			<if test="operationMode != null">
+				operationMode,
+			</if>
+			<if test="workMode != null">
+				workMode,
+			</if>
+			<if test="powerType != null">
+				powerType,
+			</if>
+			<if test="vecRunTime != null">
+				vecRunTime,
+			</if>
+			<if test="engRunTime != null">
+				engRunTime,
+			</if>
+			<if test="oilTemp != null">
+				oilTemp,
+			</if>
+			<if test="gpsPower != null">
+				gpsPower,
+			</if>
+			<if test="tempSet != null">
+				tempSet,
+			</if>
+			<if test="coilTemp != null">
+				coilTemp,
+			</if>
+			<if test="chillerType != null">
+				chillerType,
+			</if>
+			<if test="communicationState != null">
+				communicationState,
+			</if>
+			<if test="lcxModel != null">
+				lcxModel,
+			</if>
+			<if test="refXFSwiState != null">
+				refXFSwiState,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=INTEGER},
+			</if>
+			<if test="containerId != null">
+				#{containerId,jdbcType=VARCHAR},
+			</if>
+			<if test="deviceId != null">
+				#{deviceId,jdbcType=VARCHAR},
+			</if>
+			<if test="gpsBatVol != null">
+				#{gpsBatVol,jdbcType=DOUBLE},
+			</if>
+			<if test="refBatVol != null">
+				#{refBatVol,jdbcType=DOUBLE},
+			</if>
+			<if test="backDoorState != null">
+				#{backDoorState,jdbcType=VARCHAR},
+			</if>
+			<if test="oilLevel != null">
+				#{oilLevel,jdbcType=DOUBLE},
+			</if>
+			<if test="cenBoxTemp != null">
+				#{cenBoxTemp,jdbcType=DOUBLE},
+			</if>
+			<if test="lat != null">
+				#{lat,jdbcType=DOUBLE},
+			</if>
+			<if test="lon != null">
+				#{lon,jdbcType=DOUBLE},
+			</if>
+			<if test="jzLat != null">
+				#{jzLat,jdbcType=DOUBLE},
+			</if>
+			<if test="jzLon != null">
+				#{jzLon,jdbcType=DOUBLE},
+			</if>
+			<if test="tankHum != null">
+				#{tankHum,jdbcType=DOUBLE},
+			</if>
+			<if test="railId != null">
+				#{railId,jdbcType=INTEGER},
+			</if>
+			<if test="railTag != null">
+				#{railTag,jdbcType=VARCHAR},
+			</if>
+			<if test="railChangeTime != null">
+				#{railChangeTime,jdbcType=VARCHAR},
+			</if>
+			<if test="refSwiState != null">
+				#{refSwiState,jdbcType=VARCHAR},
+			</if>
+			<if test="refRunMode != null">
+				#{refRunMode,jdbcType=VARCHAR},
+			</if>
+			<if test="tailBoxTemp != null">
+				#{tailBoxTemp,jdbcType=DOUBLE},
+			</if>
+			<if test="enviTemp != null">
+				#{enviTemp,jdbcType=DOUBLE},
+			</if>
+			<if test="backWindTemp != null">
+				#{backWindTemp,jdbcType=DOUBLE},
+			</if>
+			<if test="chuWindTemp != null">
+				#{chuWindTemp,jdbcType=DOUBLE},
+			</if>
+			<if test="nowTime != null">
+				#{nowTime,jdbcType=VARCHAR},
+			</if>
+			<if test="nowLongTime != null">
+				#{nowLongTime,jdbcType=BIGINT},
+			</if>
+			<if test="receiveTime != null">
+				#{receiveTime,jdbcType=VARCHAR},
+			</if>
+			<if test="receiveLongTime != null">
+				#{receiveLongTime,jdbcType=BIGINT},
+			</if>
+			<if test="companyId != null">
+				#{companyId,jdbcType=INTEGER},
+			</if>
+			<if test="operationMode != null">
+				#{operationMode,jdbcType=VARCHAR},
+			</if>
+			<if test="workMode != null">
+				#{workMode,jdbcType=VARCHAR},
+			</if>
+			<if test="powerType != null">
+				#{powerType,jdbcType=VARCHAR},
+			</if>
+			<if test="vecRunTime != null">
+				#{vecRunTime,jdbcType=DOUBLE},
+			</if>
+			<if test="engRunTime != null">
+				#{engRunTime,jdbcType=DOUBLE},
+			</if>
+			<if test="oilTemp != null">
+				#{oilTemp,jdbcType=DOUBLE},
+			</if>
+			<if test="gpsPower != null">
+				#{gpsPower,jdbcType=DOUBLE},
+			</if>
+			<if test="tempSet != null">
+				#{tempSet,jdbcType=DOUBLE},
+			</if>
+			<if test="coilTemp != null">
+				#{coilTemp,jdbcType=DOUBLE},
+			</if>
+			<if test="chillerType != null">
+				#{chillerType,jdbcType=VARCHAR},
+			</if><if test="communicationState != null">
+				#{communicationState,jdbcType=VARCHAR},
+			</if>
+			<if test="lcxModel != null">
+				#{lcxModel,jdbcType=VARCHAR},
+			</if>
+			<if test="refXFSwiState != null">
+				#{refXFSwiState,jdbcType=VARCHAR},
+			</if>
+
+		</trim>
+	</insert>
+
+	<update id="updateCcdataById1" parameterType="com.cctrace.entity.Ccdata1">
+		update ccdata1
+		<set>
+			<if test="containerId != null">
+				containerId = #{containerId,jdbcType=VARCHAR},
+			</if>
+			<if test="deviceId != null">
+				deviceId = #{deviceId,jdbcType=VARCHAR},
+			</if>
+			<if test="gpsBatVol != null">
+				gpsBatVol = #{gpsBatVol,jdbcType=DOUBLE},
+			</if>
+			<if test="refBatVol != null">
+				refBatVol = #{refBatVol,jdbcType=DOUBLE},
+			</if>
+			<if test="backDoorState != null">
+				backDoorState = #{backDoorState,jdbcType=VARCHAR},
+			</if>
+			<if test="oilLevel != null">
+				oilLevel = #{oilLevel,jdbcType=DOUBLE},
+			</if>
+			<if test="cenBoxTemp != null">
+				cenBoxTemp = #{cenBoxTemp,jdbcType=DOUBLE},
+			</if>
+			<if test="lat != null">
+				lat = #{lat,jdbcType=DOUBLE},
+			</if>
+			<if test="lon != null">
+				lon = #{lon,jdbcType=DOUBLE},
+			</if>
+			<if test="jzLat != null">
+				jzLat = #{jzLat,jdbcType=DOUBLE},
+			</if>
+			<if test="jzLon != null">
+				jzLon = #{jzLon,jdbcType=DOUBLE},
+			</if>
+			<if test="tankHum != null">
+				tankHum = #{tankHum,jdbcType=DOUBLE},
+			</if>
+			<if test="railId != null">
+				railId = #{railId,jdbcType=INTEGER},
+			</if>
+			<if test="railTag != null">
+				railTag = #{railTag,jdbcType=VARCHAR},
+			</if>
+			<if test="railChangeTime != null">
+				railChangeTime = #{railChangeTime,jdbcType=VARCHAR},
+			</if>
+			<if test="refSwiState != null">
+				refSwiState = #{refSwiState,jdbcType=VARCHAR},
+			</if>
+			<if test="refRunMode != null">
+				refRunMode = #{refRunMode,jdbcType=VARCHAR},
+			</if>
+			<if test="tailBoxTemp != null">
+				tailBoxTemp = #{tailBoxTemp,jdbcType=DOUBLE},
+			</if>
+			<if test="enviTemp != null">
+				enviTemp = #{enviTemp,jdbcType=DOUBLE},
+			</if>
+			<if test="backWindTemp != null">
+				backWindTemp = #{backWindTemp,jdbcType=DOUBLE},
+			</if>
+			<if test="chuWindTemp != null">
+				chuWindTemp = #{chuWindTemp,jdbcType=DOUBLE},
+			</if>
+			<if test="nowTime != null">
+				nowTime = #{nowTime,jdbcType=VARCHAR},
+			</if>
+			<if test="nowLongTime != null">
+				nowLongTime = #{nowLongTime,jdbcType=BIGINT},
+			</if>
+			<if test="receiveTime != null">
+				receiveTime = #{receiveTime,jdbcType=VARCHAR},
+			</if>
+			<if test="receiveLongTime != null">
+				receiveLongTime = #{receiveLongTime,jdbcType=BIGINT},
+			</if>
+			<if test="companyId != null">
+				companyId = #{companyId,jdbcType=INTEGER},
+			</if>
+			<if test="operationMode != null">
+				operationMode = #{operationMode,jdbcType=VARCHAR},
+			</if>
+			<if test="workMode != null">
+				workMode = #{workMode,jdbcType=VARCHAR},
+			</if>
+			<if test="powerType != null">
+				powerType = #{powerType,jdbcType=VARCHAR},
+			</if>
+			<if test="vecRunTime != null">
+				vecRunTime = #{vecRunTime,jdbcType=DOUBLE},
+			</if>
+			<if test="engRunTime != null">
+				engRunTime = #{engRunTime,jdbcType=DOUBLE},
+			</if>
+			<if test="oilTemp != null">
+				oilTemp = #{oilTemp,jdbcType=DOUBLE},
+			</if>
+			<if test="gpsPower != null">
+				gpsPower = #{gpsPower,jdbcType=DOUBLE},
+			</if>
+			<if test="tempSet != null">
+				tempSet = #{tempSet,jdbcType=DOUBLE},
+			</if>
+			<if test="coilTemp != null">
+				coilTemp = #{coilTemp,jdbcType=DOUBLE},
+			</if>
+			<if test="chillerType != null">
+				chillerType = #{chillerType,jdbcType=VARCHAR},
+			</if>
+			<if test="communicationState != null">
+				communicationState = #{communicationState,jdbcType=VARCHAR},
+			</if>
+			<if test="lcxModel != null">
+				lcxModel = #{lcxModel,jdbcType=VARCHAR},
+			</if>
+			<if test="refXFSwiState != null">
+				refXFSwiState = #{refXFSwiState,jdbcType=VARCHAR},
+			</if>
+
+		</set>
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+
+	<update id="updateCcdataBycontainerId1" parameterType="com.cctrace.entity.Ccdata1">
+		update ccdata1
+		<set>
+			<if test="containerId != null">
+				containerId = #{containerId,jdbcType=VARCHAR},
+			</if>
+			<if test="deviceId != null">
+				deviceId = #{deviceId,jdbcType=VARCHAR},
+			</if>
+			<if test="gpsBatVol != null">
+				gpsBatVol = #{gpsBatVol,jdbcType=DOUBLE},
+			</if>
+			<if test="refBatVol != null">
+				refBatVol = #{refBatVol,jdbcType=DOUBLE},
+			</if>
+			<if test="backDoorState != null">
+				backDoorState = #{backDoorState,jdbcType=VARCHAR},
+			</if>
+			<if test="oilLevel != null">
+				oilLevel = #{oilLevel,jdbcType=DOUBLE},
+			</if>
+			<if test="cenBoxTemp != null">
+				cenBoxTemp = #{cenBoxTemp,jdbcType=DOUBLE},
+			</if>
+			<if test="lat != null">
+				lat = #{lat,jdbcType=DOUBLE},
+			</if>
+			<if test="lon != null">
+				lon = #{lon,jdbcType=DOUBLE},
+			</if>
+			<if test="jzLat != null">
+				jzLat = #{jzLat,jdbcType=DOUBLE},
+			</if>
+			<if test="jzLon != null">
+				jzLon = #{jzLon,jdbcType=DOUBLE},
+			</if>
+			<if test="tankHum != null">
+				tankHum = #{tankHum,jdbcType=DOUBLE},
+			</if>
+			<if test="railId != null">
+				railId = #{railId,jdbcType=INTEGER},
+			</if>
+			<if test="railTag != null">
+				railTag = #{railTag,jdbcType=VARCHAR},
+			</if>
+			<if test="railChangeTime != null">
+				railChangeTime = #{railChangeTime,jdbcType=VARCHAR},
+			</if>
+			<if test="refSwiState != null">
+				refSwiState = #{refSwiState,jdbcType=VARCHAR},
+			</if>
+			<if test="refRunMode != null">
+				refRunMode = #{refRunMode,jdbcType=VARCHAR},
+			</if>
+			<if test="tailBoxTemp != null">
+				tailBoxTemp = #{tailBoxTemp,jdbcType=DOUBLE},
+			</if>
+			<if test="enviTemp != null">
+				enviTemp = #{enviTemp,jdbcType=DOUBLE},
+			</if>
+			<if test="backWindTemp != null">
+				backWindTemp = #{backWindTemp,jdbcType=DOUBLE},
+			</if>
+			<if test="chuWindTemp != null">
+				chuWindTemp = #{chuWindTemp,jdbcType=DOUBLE},
+			</if>
+			<if test="nowTime != null">
+				nowTime = #{nowTime,jdbcType=VARCHAR},
+			</if>
+			<if test="nowLongTime != null">
+				nowLongTime = #{nowLongTime,jdbcType=BIGINT},
+			</if>
+			<if test="receiveTime != null">
+				receiveTime = #{receiveTime,jdbcType=VARCHAR},
+			</if>
+			<if test="receiveLongTime != null">
+				receiveLongTime = #{receiveLongTime,jdbcType=BIGINT},
+			</if>
+			<if test="companyId != null">
+				companyId = #{companyId,jdbcType=INTEGER},
+			</if>
+			<if test="operationMode != null">
+				operationMode = #{operationMode,jdbcType=VARCHAR},
+			</if>
+			<if test="workMode != null">
+				workMode = #{workMode,jdbcType=VARCHAR},
+			</if>
+			<if test="powerType != null">
+				powerType = #{powerType,jdbcType=VARCHAR},
+			</if>
+			<if test="vecRunTime != null">
+				vecRunTime = #{vecRunTime,jdbcType=DOUBLE},
+			</if>
+			<if test="engRunTime != null">
+				engRunTime = #{engRunTime,jdbcType=DOUBLE},
+			</if>
+			<if test="oilTemp != null">
+				oilTemp = #{oilTemp,jdbcType=DOUBLE},
+			</if>
+			<if test="gpsPower != null">
+				gpsPower = #{gpsPower,jdbcType=DOUBLE},
+			</if>
+			<if test="tempSet != null">
+				tempSet = #{tempSet,jdbcType=DOUBLE},
+			</if>
+			<if test="coilTemp != null">
+				coilTemp = #{coilTemp,jdbcType=DOUBLE},
+			</if>
+			<if test="chillerType != null">
+				chillerType = #{chillerType,jdbcType=VARCHAR},
+			</if>
+			<if test="communicationState != null">
+				communicationState = #{communicationState,jdbcType=VARCHAR},
+			</if>
+			<if test="lcxModel != null">
+				lcxModel = #{lcxModel,jdbcType=VARCHAR},
+			</if>
+			<if test="refXFSwiState != null">
+				refXFSwiState = #{refXFSwiState,jdbcType=VARCHAR},
+			</if>
+
+		</set>
+		where containerId = #{containerId,jdbcType=VARCHAR}
+	</update>
+	<!-- 首页模糊查询 -->
+	<select id="selectIndexContainerIdLikey" parameterType="java.util.Map" resultType="com.cctrace.entity.Ccdata1">
+		
+		select * from ccdata1 where containerId LIKE CONCAT('%',#{containerId},'%') and companyId=#{companyId}
+	
+	</select>
+	
+	<!-- 配置缓存 -->
+	<!-- <cache eviction="FIFO" flushInterval="10000" size="128" readOnly="true" /> -->
+</mapper>

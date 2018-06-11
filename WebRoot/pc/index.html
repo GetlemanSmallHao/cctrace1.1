@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+  <meta charset="UTF-8">
+  <title>冷藏箱控制系统</title>
+  <link rel="stylesheet" href="css/index.css"/>
+</head>
+<body>
+  <header class="header">
+    <div class="header__wrap">
+      <img style="height:39px;" src="img/logo.png" alt=""/>
+      <p>
+        <a href="javascript:;">用户名</a>
+        <a href="javascript:;">退出</a>
+      </p>
+    </div>
+  </header>
+  <nav class="navBar">
+    <div class="navBar__wrap width--1200">
+      导航条个人中心等
+    </div>
+  </nav>
+  <main class="main">
+    <!--<div class="con__map bindEvent clearfix">地图</div>-->
+    <div class="con__warning clearfix">
+      <div class="warning__wrap">
+        <header class="con__header">
+          <ul>
+            <li data-con="data/warning.html" class="con__header--active">告警提示</li>
+          </ul>
+       
+        </header>
+        <main class="con__main">
+          报警信息
+        <!--   <img style="display:block;" class="con__loading" src="img/loading.gif" alt=""/>      -->   </main>
+      </div>
+    </div>
+    <div class="con__container clearfix">
+      <div class="container__wrap">
+        <header class="con__header">
+          <ul>
+            <li data-con="data/container.html" class="con__header--active">班列</li>
+            <li>地图</li>
+          </ul>
+       
+        </header>
+        <main class="con__main amendBind">
+          集装箱列表
+         <!--  <img style="display:block;" class="con__loading" src="img/loading.gif" alt=""/>   -->      </main>
+      </div>
+    </div>
+    <!--<div class="con__sensor bindEvent clearfix"> 加bindEvent可以切换导航且可以异步加载功能-->
+    <div class="con__sensor clearfix">
+      <div class="sensor__wrap">
+        <header class="con__header">
+          <ul>
+            <li data-con="data/sensor.html" class="con__header--active">传感器</li>
+          </ul>
+          
+        </header>
+        <main class="con__main">
+          传感器
+        <!--   <img style="display:block;" class="con__loading" src="img/loading.gif" alt=""/>  -->       </main>
+      </div>
+    </div>
+  </main>
+
+
+  <script src="js/jquery-3.2.1.js"></script>
+  <script src="js/index.js"></script>
+</body>
+</html>

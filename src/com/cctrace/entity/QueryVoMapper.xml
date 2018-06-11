@@ -1,0 +1,474 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cctrace.dao.QueryVoMapper">
+	<resultMap id="BaseResultMapCcdata" type="com.cctrace.entity.Ccdata">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="containerId" property="containerId" jdbcType="VARCHAR" />
+		<result column="deviceId" property="deviceId" jdbcType="VARCHAR" />
+		<result column="gpsBatVol" property="gpsBatVol" jdbcType="DOUBLE" />
+		<result column="refBatVol" property="refBatVol" jdbcType="DOUBLE" />
+		<result column="backDoorState" property="backDoorState"
+			jdbcType="VARCHAR" />
+		<result column="oilLevel" property="oilLevel" jdbcType="DOUBLE" />
+		<result column="cenBoxTemp" property="cenBoxTemp" jdbcType="DOUBLE" />
+		<result column="lat" property="lat" jdbcType="DOUBLE" />
+		<result column="lon" property="lon" jdbcType="DOUBLE" />
+		<result column="jzLat" property="jzLat" jdbcType="DOUBLE" />
+		<result column="jzLon" property="jzLon" jdbcType="DOUBLE" />
+		<result column="tankHum" property="tankHum" jdbcType="DOUBLE" />
+		<result column="railId" property="railId" jdbcType="INTEGER" />
+		<result column="railTag" property="railTag" jdbcType="VARCHAR" />
+		<result column="railChangeTime" property="railChangeTime"
+			jdbcType="VARCHAR" />
+		<result column="refSwiState" property="refSwiState" jdbcType="VARCHAR" />
+		<result column="refRunMode" property="refRunMode" jdbcType="VARCHAR" />
+		<result column="tailBoxTemp" property="tailBoxTemp" jdbcType="DOUBLE" />
+		<result column="enviTemp" property="enviTemp" jdbcType="DOUBLE" />
+		<result column="backWindTemp" property="backWindTemp" jdbcType="DOUBLE" />
+		<result column="chuWindTemp" property="chuWindTemp" jdbcType="DOUBLE" />
+		<result column="nowTime" property="nowTime" jdbcType="VARCHAR" />
+		<result column="nowLongTime" property="nowLongTime" jdbcType="BIGINT" />
+		<result column="receiveTime" property="receiveTime" jdbcType="VARCHAR" />
+		<result column="receiveLongTime" property="receiveLongTime"
+			jdbcType="BIGINT" />
+		<result column="companyId" property="companyId" jdbcType="INTEGER" />
+		<result column="operationMode" property="operationMode"
+			jdbcType="VARCHAR" />
+		<result column="workMode" property="workMode" jdbcType="VARCHAR" />
+		<result column="powerType" property="powerType" jdbcType="VARCHAR" />
+		<result column="vecRunTime" property="vecRunTime" jdbcType="DOUBLE" />
+		<result column="engRunTime" property="engRunTime" jdbcType="DOUBLE" />
+		<result column="oilTemp" property="oilTemp" jdbcType="DOUBLE" />
+		<result column="gpsPower" property="gpsPower" jdbcType="DOUBLE" />
+		<result column="tempSet" property="tempSet" jdbcType="DOUBLE" />
+		<result column="coilTemp" property="coilTemp" jdbcType="DOUBLE" />
+		<result column="chillerType" property="chillerType" jdbcType="VARCHAR" />
+	</resultMap>
+
+
+	<resultMap id="BaseResultMapContainer" type="com.cctrace.entity.Container">
+		<id column="id" jdbcType="INTEGER" property="id" />
+		<result column="containerId" jdbcType="VARCHAR" property="containerId" />
+		<result column="registTime" jdbcType="VARCHAR" property="registTime" />
+		<result column="registLongTime" jdbcType="BIGINT" property="registLongTime" />
+		<result column="deviceId" jdbcType="VARCHAR" property="deviceId" />
+		<result column="modifyDeviceTime" jdbcType="VARCHAR" property="modifyDeviceTime" />
+		<result column="modifyDeviceLongTime" jdbcType="BIGINT"
+			property="modifyDeviceLongTime" />
+		<result column="minRefBatVol" jdbcType="DOUBLE" property="minRefBatVol" />
+		<result column="maxRefBatVol" jdbcType="DOUBLE" property="maxRefBatVol" />
+		<result column="minBackWindTemp" jdbcType="DOUBLE" property="minBackWindTemp" />
+		<result column="maxBackWindTemp" jdbcType="DOUBLE" property="maxBackWindTemp" />
+		<result column="minTankHum" jdbcType="DOUBLE" property="minTankHum" />
+		<result column="maxTankHum" jdbcType="DOUBLE" property="maxTankHum" />
+		<result column="minOilLevel" jdbcType="DOUBLE" property="minOilLevel" />
+		<result column="maxOilLevel" jdbcType="DOUBLE" property="maxOilLevel" />
+		<result column="minGpsBatVol" jdbcType="DOUBLE" property="minGpsBatVol" />
+		<result column="maxGpsBatVol" jdbcType="DOUBLE" property="maxGpsBatVol" />
+		<result column="minEnviTemp" jdbcType="DOUBLE" property="minEnviTemp" />
+		<result column="maxEnviTemp" jdbcType="DOUBLE" property="maxEnviTemp" />
+		<result column="minChuWindTemp" jdbcType="DOUBLE" property="minChuWindTemp" />
+		<result column="maxChuWindTemp" jdbcType="DOUBLE" property="maxChuWindTemp" />
+		<result column="minCenBoxTemp" jdbcType="DOUBLE" property="minCenBoxTemp" />
+		<result column="maxCenBoxTemp" jdbcType="DOUBLE" property="maxCenBoxTemp" />
+		<result column="minTailBoxTemp" jdbcType="DOUBLE" property="minTailBoxTemp" />
+		<result column="maxTailBoxTemp" jdbcType="DOUBLE" property="maxTailBoxTemp" />
+		<result column="remoteSwiMac" jdbcType="VARCHAR" property="remoteSwiMac" />
+		<result column="setTemp" jdbcType="DOUBLE" property="setTemp" />
+		<result column="bootDef" jdbcType="VARCHAR" property="bootDef" />
+		<result column="clearAlert" jdbcType="VARCHAR" property="clearAlert" />
+		<result column="selfCheck" jdbcType="VARCHAR" property="selfCheck" />
+		<result column="refRunMode" jdbcType="VARCHAR" property="refRunMode" />
+		<result column="companyId" jdbcType="INTEGER" property="companyId" />
+	</resultMap>
+
+
+	<resultMap id="BaseResultMapAlert" type="com.cctrace.entity.Alert">
+		<id column="id" jdbcType="INTEGER" property="id" />
+		<result column="containerId" jdbcType="VARCHAR" property="containerId" />
+		<result column="alertTime" jdbcType="VARCHAR" property="alertTime" />
+		<result column="alertLongTime" jdbcType="BIGINT" property="alertLongTime" />
+		<result column="alertType" jdbcType="VARCHAR" property="alertType" />
+		<result column="alertContent" jdbcType="VARCHAR" property="alertContent" />
+		<result column="lat" jdbcType="DOUBLE" property="lat" />
+		<result column="lon" jdbcType="DOUBLE" property="lon" />
+		<result column="readed" jdbcType="VARCHAR" property="readed" />
+	</resultMap>
+
+	<resultMap id="BaseResultMapCompany" type="com.cctrace.entity.Company">
+		<id column="id" jdbcType="VARCHAR" property="id" />
+		<result column="companyName" jdbcType="VARCHAR" property="companyName" />
+		<result column="address" jdbcType="VARCHAR" property="address" />
+		<result column="companyPhone" jdbcType="VARCHAR" property="companyPhone" />
+	</resultMap>
+
+
+	<resultMap id="BaseResultMapBindTable" type="com.cctrace.entity.BindTable">
+		<id column="id" jdbcType="INTEGER" property="id" />
+		<result column="operator" jdbcType="VARCHAR" property="operator" />
+		<result column="containerId" jdbcType="VARCHAR" property="containerId" />
+		<result column="deviceId" jdbcType="VARCHAR" property="deviceId" />
+		<result column="routeType" jdbcType="VARCHAR" property="routeType" />
+		<result column="trainId" jdbcType="VARCHAR" property="trainId" />
+		<result column="bindTime" jdbcType="VARCHAR" property="bindTime" />
+		<result column="bindLongTime" jdbcType="BIGINT" property="bindLongTime" />
+		<result column="yardId" jdbcType="INTEGER" property="yardId" />
+		<result column="theNextStationId" jdbcType="INTEGER" property="theNextStationId" />
+		<result column="carGoType" jdbcType="VARCHAR" property="carGoType" />
+		<result column="companyId" jdbcType="INTEGER" property="companyId" />
+	</resultMap>
+
+	<resultMap id="BaseResultMapTheNextStation" type="com.cctrace.entity.TheNextStation">
+		<id column="id" jdbcType="INTEGER" property="id" />
+		<result column="stationName" jdbcType="VARCHAR" property="stationName" />
+		<result column="companyId" jdbcType="VARCHAR" property="companyId" />
+	</resultMap>
+
+
+	<resultMap id="BaseResultMapUser" type="com.cctrace.entity.User">
+		<id column="id" jdbcType="INTEGER" property="id" />
+		<result column="username" jdbcType="VARCHAR" property="username" />
+		<result column="password" jdbcType="VARCHAR" property="password" />
+		<result column="phone" jdbcType="VARCHAR" property="phone" />
+		<result column="role" jdbcType="VARCHAR" property="role" />
+		<result column="lastLoginTime" jdbcType="VARCHAR" property="lastLoginTime" />
+		<result column="companyId" jdbcType="INTEGER" property="companyId" />
+	</resultMap>
+
+	<resultMap id="BaseResultMapOurCcdata" type="com.cctrace.entity.OurCcdata">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="containerId" property="containerId" jdbcType="VARCHAR" />
+		<result column="deviceId" property="deviceId" jdbcType="VARCHAR" />
+		<result column="oilTemp" property="oilTemp" jdbcType="DOUBLE" />
+		<result column="boxHum" property="boxHum" jdbcType="DOUBLE" />
+		<result column="tailBoxTemp" property="tailBoxTemp" jdbcType="DOUBLE" />
+		<result column="gpsPower" property="gpsPower" jdbcType="DOUBLE" />
+		<result column="oilLevel" property="oilLevel" jdbcType="DOUBLE" />
+		<result column="lat" property="lat" jdbcType="DOUBLE" />
+		<result column="lon" property="lon" jdbcType="DOUBLE" />
+		<result column="receiveTime" property="receiveTime" jdbcType="VARCHAR" />
+		<result column="receiveLongTime" property="receiveLongTime"
+			jdbcType="BIGINT" />
+		<result column="companyId" property="companyId" jdbcType="INTEGER" />
+		<result column="nowTime" property="nowTime" jdbcType="VARCHAR" />
+		<result column="nowLongTime" property="nowLongTime" jdbcType="BIGINT" />
+		<result column="minoilTemp" property="minoilTemp" jdbcType="VARCHAR" />
+		<result column="maxoilTemp" property="maxoilTemp" jdbcType="VARCHAR" />
+		<result column="minboxHum" property="minboxHum" jdbcType="VARCHAR" />
+		<result column="maxboxHum" property="maxboxHum" jdbcType="VARCHAR" />
+		<result column="mintailBoxTemp" property="mintailBoxTemp"
+			jdbcType="VARCHAR" />
+		<result column="maxtailBoxTemp" property="maxtailBoxTemp"
+			jdbcType="VARCHAR" />
+		<result column="mingpsPower" property="mingpsPower" jdbcType="VARCHAR" />
+		<result column="maxgpsPower" property="maxgpsPower" jdbcType="VARCHAR" />
+		<result column="minoilLevel" property="minoilLevel" jdbcType="VARCHAR" />
+		<result column="maxoilLevel" property="maxoilLevel" jdbcType="VARCHAR" />
+		<result column="chillerType" property="chillerType" jdbcType="VARCHAR" />
+		<result column="backDoorState" property="backDoorState"
+			jdbcType="VARCHAR" />
+	</resultMap>
+
+
+	<!-- 显示设备的详细信息 -->
+	<resultMap type="com.cctrace.entity.QueryVo" id="queryVo">
+		<association property="ourccdata" resultMap="BaseResultMapOurCcdata" />
+		<association property="bindTable" resultMap="BaseResultMapBindTable" />
+		<association property="company" resultMap="BaseResultMapCompany"></association>
+	</resultMap>
+
+	<select id="getInforBycontainerId" parameterType="java.lang.String"
+		resultMap="queryVo">
+		SELECT c.containerId , c.deviceId , c.lat , c.lon ,
+		c.receiveTime , b.routeType,b.carGoType, b.trainId, b.yardId
+		,b.theNextStationId
+		,comp.companyName FROM ourccdata c
+		JOIN bindtable b
+		ON c.containerId = b.containerId
+		JOIN company comp ON comp.id =
+		b.companyId
+		WHERE c.containerId =
+		#{containerId}
+		ORDER BY containerId
+		DESC LIMIT 0,1
+	</select>
+
+	<!-- 展示堆场信息 -->
+	<resultMap id="BaseResultMapYard" type="com.cctrace.entity.Yard">
+		<id column="id" jdbcType="INTEGER" property="id" />
+		<result column="yardName" jdbcType="VARCHAR" property="yardName" />
+		<result column="companyId" jdbcType="INTEGER" property="companyId" />
+	</resultMap>
+
+	<resultMap type="com.cctrace.entity.QueryVo" id="showYard">
+		<association property="yard" resultMap="BaseResultMapYard" />
+		<association property="company" resultMap="BaseResultMapCompany" />
+
+	</resultMap>
+
+	<select id="showYardInformation" parameterType="java.lang.Integer"
+		resultMap="showYard">
+		SELECT yy.yardName, comp.companyName FROM company comp
+		JOIN
+		yard yy ON comp.id = yy.companyId
+		WHERE comp.id = #{company.id}
+	</select>
+
+	<!-- 显示下货站信息 -->
+
+	<resultMap type="com.cctrace.entity.QueryVo" id="showstation">
+		<association property="nextStation" resultMap="BaseResultMapTheNextStation" />
+		<association property="company" resultMap="BaseResultMapCompany" />
+
+	</resultMap>
+
+	<select id="showStationInformation" parameterType="java.lang.Integer"
+		resultMap="showstation">
+		SELECT t.stationName, comp.companyName
+		FROM thenextstation
+		t,company comp
+		WHERE comp.id = t.companyId AND comp.id = #{company.id}
+	</select>
+
+
+	<!-- 展示没预警的班列信息 -->
+	<resultMap type="com.cctrace.entity.QueryVo" id="showbanlieNoAlert">
+		<association property="bindTable" resultMap="BaseResultMapBindTable" />
+		<association property="ccdata" resultMap="BaseResultMapCcdata" />
+		<association property="container" resultMap="BaseResultMapContainer" />
+		<association property="ourccdata" resultMap="BaseResultMapOurCcdata" />
+		<association property="nextStation" resultMap="BaseResultMapTheNextStation" />
+		<association property="yard" resultMap="BaseResultMapYard" />
+	</resultMap>
+
+	<select id="showBanLieInfoNoAlert" parameterType="java.lang.String"
+		resultMap="showbanlieNoAlert">
+		SELECT
+		b.containerId ,b.deviceId ,b.carGoType,
+		b.routeType,
+		b.trainId,
+		b.yardId ,b.theNextStationId ,
+		occ.oilLevel,c.backWindTemp,
+		c.vecRunTime,c.engRunTime,
+		occ.lat , occ.lon ,
+		con.setTemp,
+		ya.yardName,
+		n.stationName
+		FROM bindtable b
+		JOIN ccdata1 c ON c.containerId =
+		b.containerId
+		JOIN ourccdata1 occ ON occ.containerId = b.containerId
+		JOIN yard ya ON ya.id=b.yardId
+		JOIN thenextstation n ON n.id =
+		b.theNextStationId
+		JOIN container con ON con.containerId =
+		b.containerId
+		WHERE b.containerId =#{bindtable.containerId}
+		ORDER BY
+		c.receiveTime DESC LIMIT 0,1
+	</select>
+
+
+
+
+
+
+	<!-- 展示有预警的班列信息 -->
+	<resultMap type="com.cctrace.entity.QueryVo" id="showbanlie">
+		<association property="bindTable" resultMap="BaseResultMapBindTable" />
+		<association property="ccdata" resultMap="BaseResultMapCcdata" />
+		<association property="container" resultMap="BaseResultMapContainer" />
+		<association property="alert" resultMap="BaseResultMapAlert" />
+		<association property="ourccdata" resultMap="BaseResultMapOurCcdata" />
+		<association property="nextStation" resultMap="BaseResultMapTheNextStation" />
+		<association property="yard" resultMap="BaseResultMapYard" />
+	</resultMap>
+
+	<select id="showBanLieInfo" parameterType="java.lang.String"
+		resultMap="showbanlie">
+		SELECT
+		b.containerId ,b.deviceId ,b.carGoType,
+		a.alertType,a.alertTime,
+		b.routeType, b.trainId, b.yardId
+		,b.theNextStationId ,
+		c.vecRunTime,c.engRunTime,
+		occ.oilLevel,c.backWindTemp,
+		(occ.lat)as latitude , (occ.lon) as
+		longitude ,c.receiveTime,
+		con.setTemp,
+		ya.yardName,
+		n.stationName
+		FROM bindtable b
+		JOIN ccdata1 c ON
+		c.containerId = b.containerId
+		JOIN ourccdata1 occ ON occ.containerId =
+		b.containerId
+		JOIN alert a ON a.containerId = b.containerId
+		JOIN yard ya ON ya.id=b.yardId
+		JOIN thenextstation n ON  n.id = b.theNextStationId
+		JOIN container con ON con.containerId = b.containerId
+		WHERE b.containerId
+		=#{bindtable.containerId}
+		ORDER BY a.alertTime DESC LIMIT 0,1
+	</select>
+
+	<select id="showAllBanLieByCompanyId" parameterType="java.lang.Integer"
+		resultMap="showbanlie">
+		SELECT
+		b.containerId ,b.deviceId ,b.carGoType,
+		a.alertType,a.alertTime,
+		b.routeType, b.trainId, b.yardId
+		,b.theNextStationId ,
+		c.vecRunTime,c.engRunTime,
+		occ.oilLevel,c.backWindTemp,
+		(occ.lat)AS latitude , (occ.lon) AS
+		longitude ,c.receiveTime,
+		con.setTemp
+		FROM
+		bindtable b
+		JOIN ccdata c ON c.containerId = b.containerId
+		JOIN
+		ourccdata occ ON occ.containerId = b.containerId
+		JOIN alert a ON
+		a.containerId = b.containerId
+		JOIN container con ON con.containerId =
+		b.containerId
+		WHERE b.containerId = {bindtable.containerId}
+		ORDER BY a.alertTime DESC LIMIT 0,1
+	</select>
+
+
+	<!-- <select id="showAllBanLieByCompanyId" parameterType="java.lang.Integer" 
+		resultMap="showbanlie"> SELECT b.containerId , b.deviceId , a.alertTime, 
+		a.alertType, b.routeType, b.trainId, b.yardId ,b.carGoType,b.theNextStationId 
+		, c.gpsBatVol, c.refBatVol,c.backDoorState, c.oilLevel,c.cenBoxTemp, c.tankHum,c.cenBoxTemp,c.railId, 
+		c.railTag,c.railChangeTime,c.railChangeTime, c.refSwiState,c.refRunMode,c.tailBoxTemp,c.enviTemp,c.backWindTemp, 
+		c.chuWindTemp,c.gpsTime, c.lat , c.lon , MAX(c.receiveTime)receiveTime, con.setTemp 
+		FROM bindtable b, ccdata c,alert a,container con WHERE c.containerId = b.containerId 
+		and a.containerId = b.containerId and con.containerId = b.containerId and 
+		b.trainId =#{bindtable.trainId} <if test="_parameter == null"> and alert.alertTime 
+		= null </if> <if test="_parameter == null"> and alert.alertType = null </if> 
+		</select> -->
+
+
+	<!-- 显示冷藏箱信息 -->
+	<resultMap type="com.cctrace.entity.QueryVo" id="showcontainer">
+		<association property="container" resultMap="BaseResultMapContainer" />
+		<association property="company" resultMap="BaseResultMapCompany" />
+	</resultMap>
+
+
+	<!-- 显示单个冷藏箱 -->
+	<resultMap type="com.cctrace.entity.QueryVo" id="showOneContainer">
+		<association property="container" resultMap="BaseResultMapContainer" />
+		<association property="company" resultMap="BaseResultMapCompany"></association>
+	</resultMap>
+
+	<select id="showAllContainerByUsername" parameterType="java.lang.Integer"
+		resultMap="showcontainer">
+		SELECT c.containerId ,c.deviceId,
+		comp.companyName FROM
+		container c
+		JOIN company comp ON c.companyId = comp.id
+		WHERE comp.id =
+		#{company.id}
+	</select>
+
+	<select id="showContainerinforBycontainerId" parameterType="java.lang.String"
+		resultMap="showOneContainer">
+		SELECT c.containerId
+		,c.registTime,c.deviceId,c.modifyDeviceTime,
+		c.minRefBatVol,c.maxRefBatVol,c.minBackWindTemp,c.maxBackWindTemp,
+		c.minTankHum,c.maxTankHum,c.minOilLevel,c.maxOilLevel,c.minGpsBatVol,
+		c.maxGpsBatVol,c.minEnviTemp,c.maxEnviTemp,c.minChuWindTemp,c.maxChuWindTemp
+		,
+		c.minCenBoxTemp,c.maxCenBoxTemp ,c.minTailBoxTemp ,c.maxTailBoxTemp
+		,c.remoteSwiMac ,c.setTemp ,
+		c.bootDef,
+		c.clearAlert,c. selfCheck
+		,c.refRunMode,c.companyId,
+		comp.companyName FROM container c
+		JOIN
+		company comp ON comp.id = c.companyId
+		WHERE c.containerId =
+		#{container.containerId}
+	</select>
+
+
+	<!-- 显示传感器在时间段内的详情 -->
+	<resultMap type="com.cctrace.entity.QueryVo" id="showSensorInfoTwoTime">
+		<association property="container" resultMap="BaseResultMapContainer" />
+		<association property="ccdata" resultMap="BaseResultMapCcdata" />
+		<association property="ourccdata" resultMap="BaseResultMapOurCcdata" />
+
+	</resultMap>
+
+	<select id="showSensorBetweenTwoTimeInfo" parameterType="java.util.Map"
+		resultMap="showSensorInfoTwoTime">
+		SELECT
+		cc.nowTime,
+		cc.containerId,
+		cc.nowLongTime,cc.refBatVol,cc.backWindTemp,cc.refSwiState,
+		cc.enviTemp,cc.chuWindTemp,con.setTemp,cc.refRunMode,occ.oilTemp,
+		occ.boxHum,occ.tailBoxTemp,occ.gpsPower,occ.oilLevel,occ.backDoorState,
+		cc.vecRunTime,cc.engRunTime
+		FROM ccdata cc, container con ,ourccdata
+		occ
+		WHERE cc.containerId = con.containerId and
+		occ.containerId=con.containerId
+		AND cc.nowLongTime BETWEEN #{start} and
+		#{end}
+		AND cc.containerId = #{containerId}
+	</select>
+	<!-- 显示传感器设置的信息 -->
+	<select id="showSensorSetting" parameterType="java.lang.String"
+		resultMap="showSensorInfoTwoTime">
+		SELECT
+		c.containerId,c.deviceId,
+		c.minRefBatVol,c.maxRefBatVol,c.minBackWindTemp,c.maxBackWindTemp,
+		c.minEnviTemp,c.maxEnviTemp,c.minChuWindTemp,c.maxChuWindTemp,
+		occ.minoilTemp,occ.maxoilTemp,occ.minboxHum,occ.maxboxHum,occ.mintailBoxTemp,
+		occ.maxtailBoxTemp,occ.mingpsPower,occ.maxgpsPower,occ.minoilLevel,occ.maxoilLevel,
+		occ.backDoorState
+		FROM container c, ccdata cc,ourccdata occ
+		WHERE
+		c.containerId = cc.containerId and occ.containerId=c.containerId
+		AND
+		c.containerId = #{container.containerId}
+		ORDER BY cc.containerId limit
+		0,1
+
+	</select>
+
+	<!-- 显示我的信息 -->
+	<resultMap type="com.cctrace.entity.QueryVo" id="showMyInfo">
+		<association property="company" resultMap="BaseResultMapCompany" />
+		<association property="user" resultMap="BaseResultMapUser" />
+	</resultMap>
+
+	<select id="showMyInfo" parameterType="java.lang.String"
+		resultMap="showMyInfo">
+		SELECT u.username, u.phone, u.role,
+		c.companyName
+		FROM company
+		c, USER u
+		WHERE c.id = u.companyId
+		AND u.username = #{user.username}
+	</select>
+	<!-- 展示冷藏箱信息表，涉及自研设备表和container -->
+	<resultMap type="com.cctrace.entity.QueryVo" id="showOurCcdataAndContainer">
+		<association property="container" resultMap="BaseResultMapContainer" />
+		<association property="ourccdata" resultMap="BaseResultMapOurCcdata" />
+	</resultMap>
+
+	<!-- <select id="showOurCcdataAndContainer" parameterType="java.lang.Integet" 
+		resultMap="showOurCcdataAndContainer"> SELECT u.username, u.phone, u.role, 
+		c.companyName FROM company c, USER u WHERE c.id = u.companyId AND u.username 
+		= #{user.username} </select> -->
+
+
+
+	<!-- 配置缓存 -->
+	<!-- <cache eviction="FIFO" flushInterval="10000" size="128" readOnly="true" 
+		/> -->
+</mapper>

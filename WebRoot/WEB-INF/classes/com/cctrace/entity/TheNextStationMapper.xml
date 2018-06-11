@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cctrace.dao.TheNextStationMapper">
+	<resultMap id="BaseResultMap" type="com.cctrace.entity.TheNextStation">
+		<id column="id" jdbcType="INTEGER" property="id"/>
+		<result column="stationName" jdbcType="VARCHAR" property="stationName" />
+		<result column="companyId" jdbcType="VARCHAR" property="companyId" />
+	</resultMap>
+	
+	<sql id="Base_Column_List">
+		id, stationName , companyId
+	</sql>
+	
+	<select id="selectAllTheNextStations" resultType="com.cctrace.entity.TheNextStation">
+		SELECT <include refid="Base_Column_List"/>
+		FROM thenextstation
+	</select>
+	
+	<select id="selectTheNextStationById" parameterType="java.lang.Integer" resultType="com.cctrace.entity.TheNextStation">
+		select <include refid="Base_Column_List"/> from thenextstation where id = #{id}
+	</select>
+	
+	<select id="selectAllTheNextStationsBycompanyId" parameterType="java.lang.Integer" resultType="com.cctrace.entity.TheNextStation">
+		SELECT <include refid="Base_Column_List"/>
+		FROM thenextstation
+		where companyId = #{companyId}
+	</select>
+	
+	<select id="selectTheNextStationBycompanyIdAndStationName" parameterType="java.util.Map" resultType="com.cctrace.entity.TheNextStation">
+		SELECT <include refid="Base_Column_List"/>
+		FROM thenextstation
+		where  stationName = #{stationName}
+		and companyId = #{companyId}
+	</select>	
+	
+	<insert id="insertTheNextStationBycompanyIdAndStationName" parameterType="com.cctrace.entity.TheNextStation">
+		INSERT INTO thenextstation (stationName,companyId) VALUES (#{stationName},#{companyId})
+	</insert>
+	
+	<update id="updateTheNextStationById" parameterType="com.cctrace.entity.TheNextStation">
+		UPDATE thenextstation SET
+		stationName = #{stationName},
+		companyId = #{companyId}
+		WHERE 
+		id = #{id}		
+	</update>
+	
+	<delete id="deleteTheNextStationBycompanyIdAndStationName" parameterType="com.cctrace.entity.TheNextStation">
+		DELETE FROM thenextstation WHERE
+		stationName = #{stationName} AND companyId = #{companyId}
+	</delete>
+
+	<!-- 配置缓存 -->
+	<cache eviction="FIFO" flushInterval="10000" size="128" readOnly="true" />
+</mapper>

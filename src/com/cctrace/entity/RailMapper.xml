@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cctrace.dao.RailMapper">
+	<resultMap id="BaseResultMap" type="com.cctrace.entity.Rail">
+		<id column="id" jdbcType="INTEGER" property="id" />
+		<result column="railName" jdbcType="VARCHAR" property="railname" />
+		<result column="railLat" jdbcType="DOUBLE" property="raillat" />
+		<result column="railLon" jdbcType="DOUBLE" property="raillon" />
+		<result column="radius" jdbcType="DOUBLE" property="radius" />
+		<result column="companyId" jdbcType="VARCHAR" property="companyId" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id , railName , railLat , railLon , radius , companyId
+	</sql>
+
+	<select id="selectAllRailsByCompanyId" parameterType="java.lang.Integer"
+		resultType="com.cctrace.entity.Rail">
+		select
+		<include refid="Base_Column_List" />
+		from rail
+		where companyId = #{companyId}
+	</select>
+
+	<select id="selectRailByRailId" parameterType="java.lang.Integer"
+		resultType="com.cctrace.entity.Rail">
+		select
+		<include refid="Base_Column_List" />
+		from rail where id = #{id}
+	</select>
+
+
+	<select id="selectRailByRailNameAndCompanyId" parameterType="java.util.Map"
+		resultType="com.cctrace.entity.Rail">
+		select
+		<include refid="Base_Column_List" />
+		from rail
+		where railName = #{railName,jdbcType=VARCHAR} and companyId = #{companyId} 
+	</select>
+	
+	<select id="selectRailByRailName" parameterType="java.lang.String"
+		resultType="com.cctrace.entity.Rail">
+		select
+		<include refid="Base_Column_List" />
+		from rail
+		where railName = #{railName,jdbcType=VARCHAR}
+	</select>
+
+	<delete id="deleteRailByRailName">
+		delete from rail
+		where railName =
+		#{railname,jdbcType=VARCHAR}
+	</delete>
+
+	<delete id="deleteRailById" parameterType="java.lang.Integer">
+		delete from rail
+		where id = #{id}
+	</delete>
+
+	<insert id="insertRail" parameterType="com.cctrace.entity.Rail">
+		insert into rail
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="railName != null">
+				railName,
+			</if>
+			<if test="railLat != 0">
+				railLat,
+			</if>
+			<if test="railLon != 0">
+				railLon,
+			</if>
+			<if test="radius != 0">
+				radius,
+			</if>
+			<if test="companyId != null">
+				companyId,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="railName != null">
+				#{railName,jdbcType=VARCHAR},
+			</if>
+			<if test="railLat != 0">
+				#{railLat,jdbcType=DOUBLE},
+			</if>
+			<if test="railLon != 0">
+				#{railLon,jdbcType=DOUBLE},
+			</if>
+			<if test="radius != 0">
+				#{radius,jdbcType=DOUBLE},
+			</if>
+			<if test="companyId != null">
+				#{companyId,jdbcType=VARCHAR}
+			</if>
+		</trim>
+	</insert>
+
+	<update id="updateRailByRailName" parameterType="com.cctrace.entity.Rail">
+		update rail
+		<set>
+			<if test="railLat != null">
+				railLat = #{railLat,jdbcType=DOUBLE},
+			</if>
+			<if test="railLon != null">
+				railLon = #{railLon,jdbcType=DOUBLE},
+			</if>
+			<if test="radius != null">
+				radius = #{radius,jdbcType=DOUBLE},
+			</if>
+			<if test="companyId != companyId">
+				companyId = #{companyId,jdbcType=VARCHAR}
+			</if>
+		</set>
+		where railName = #{railName,jdbcType=VARCHAR}
+	</update>
+
+	<update id="updateRailById" parameterType="com.cctrace.entity.Rail">
+		update rail
+		<set>
+			<if test="railName != null">
+				railName = #{railName}
+			</if>
+			<if test="railLat != null">
+				railLat = #{railLat},
+			</if>
+			<if test="railLon != null">
+				railLon = #{railLon},
+			</if>
+			<if test="radius != null">
+				radius = #{radius},
+			</if>
+			<if test="companyId != companyId">
+				companyId = #{companyId}
+			</if>
+		</set>
+		where id = #{id}
+	</update>
+
+	<!-- 配置缓存 -->
+	<cache eviction="FIFO" flushInterval="10000" size="128" readOnly="true" />
+</mapper>

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+  <meta charset="UTF-8">
+  <title>冷藏箱管理</title>
+  <link rel="stylesheet" href="css/index.css"/>
+</head>
+<body>
+<header class="header">
+  <div class="header__wrap">
+    <img style="height:39px;" src="img/logo.png" alt=""/>
+    <p>
+      <a href="javascript:;">用户名</a>
+      <a href="javascript:;">退出</a>
+    </p>
+  </div>
+</header>
+<nav class="navBar">
+  <div class="navBar__wrap width--1200">
+    导航条个人中心等
+  </div>
+</nav>
+<main class="main">
+  <!--现有冷藏箱列表-->
+  <div class="con__boxManage bindEvent clearfix">
+    <div class="boxManage__wrap">
+      <header class="con__header">
+        <ul>
+          <li data-con="data/boxManage.html" class="con__header--active">现有冷藏箱</li>
+        </ul>
+      
+        <a class="con__header--add" href="javascript:;">
+          新增冷藏箱
+        </a>
+      </header>
+      <main class="con__main">
+        冷藏箱列表信息
+        <!-- <img style="display:block;" class="con__loading" src="img/loading.gif" alt=""/> -->
+      </main>
+    </div>
+  </div>
+  <!--当前冷藏箱信息-->
+  <div class="con__boxManage--menu bindEvent clearfix">
+    <div class="boxManage__wrap boxManage__amend">
+      <header class="con__header">
+        <ul>
+          <li class="con__header--active">现有冷藏箱</li>
+        </ul>
+      </header>
+      <main class="con__main">
+        <div class="boxManage__main--amend">
+          <span class="boxManage__main--header">修改（删除）冷藏箱信息</span>
+          <span>冷藏箱编号：<input type="text"/></span>
+          <span>冷藏箱型号：<input type="text"/></span>
+          <span>绑定设备ID：<input type="text"/></span>
+          <p class="footer__btn">
+            <input class="btn--delete" type="submit" value="删除"/>
+            <input type="submit" value="保存"/>
+          </p>
+        </div>
+      </main>
+    </div>
+    <div class="boxManage__wrap boxManage__add">
+      <header class="con__header">
+        <ul>
+          <li class="con__header--active">新增冷藏箱</li>
+        </ul>
+      </header>
+      <main class="con__main">
+        <div class="boxManage__main--add">
+          <span class="boxManage__main--header">新增冷藏箱信息</span>
+          <span>冷藏箱编号：<input type="text"/></span>
+          <span>冷藏箱型号：<input type="text"/></span>
+     <!--      <span>冷机类型：<input type="text"/></span> -->
+          <span>绑定设备ID：<input type="text"/></span>
+          <p class="footer__btn">
+            <input type="submit" value="删除"/>
+            <input type="submit" value="保存"/>
+          </p>
+        </div>
+      </main>
+    </div>
+  </div>
+
+</main>
+<script src="js/jquery-3.2.1.js"></script>
+<script src="js/index.js"></script>
+</body>
+</html>

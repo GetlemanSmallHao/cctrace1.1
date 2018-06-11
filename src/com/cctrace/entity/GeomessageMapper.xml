@@ -1,0 +1,413 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cctrace.entity.Geomessage" >
+  <resultMap id="BaseResultMap" type="com.cctrace.entity.Geomessage" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="containerId" property="containerId" jdbcType="VARCHAR" />
+    <result column="alertTime" property="alertTime" jdbcType="VARCHAR" />
+    <result column="alertLongTime" property="alertLongTime" jdbcType="VARCHAR" />
+    <result column="alertType" property="alertType" jdbcType="VARCHAR" />
+    <result column="alertContent" property="alertContent" jdbcType="VARCHAR" />
+    <result column="lat" property="lat" jdbcType="DOUBLE" />
+    <result column="lon" property="lon" jdbcType="DOUBLE" />
+    <result column="readed" property="readed" jdbcType="VARCHAR" />
+    <result column="alarm_num" property="alarm_num" jdbcType="INTEGER" />
+    <result column="gpsPosition" property="gpsPosition" jdbcType="VARCHAR" />
+    <result column="updateTime" property="updateTime" jdbcType="VARCHAR" />
+    <result column="updateLongTime" property="updateLongTime" jdbcType="VARCHAR" />
+    <result column="companyId" property="companyId" jdbcType="INTEGER" />
+    <result column="ext1" property="ext1" jdbcType="VARCHAR" />
+    <result column="ext2" property="ext2" jdbcType="VARCHAR" />
+    <result column="ext3" property="ext3" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, containerId, alertTime, alertLongTime, alertType, alertContent, lat, lon, readed, 
+    alarm_num, gpsPosition, updateTime, updateLongTime, companyId, ext1, ext2, ext3
+  </sql>
+
+	<!-- 更新GeoMessage阅读时间 -->
+	<update id="modifyAlertReadStateByGeomessagetId" parameterType="java.lang.Integer">
+		update geomessage set readed = 'yes' where id = #{alertId}
+	</update>
+	
+	
+  <!-- 默认查询 -->
+  <select id="getCountOfNoReadedGeomessageBeforeDays"
+		parameterType="java.util.Map" resultType="java.lang.Integer">
+		select count(id) from
+		geomessage
+		where containerId in (select containerId from container where
+		companyId = #{companyId}) and readed= 'no' 
+		and alertLongTime > #{beginTime}
+		ORDER BY alertTime DESC
+	</select>
+	<!-- 查询两段时间以内的围栏通知消息 -->
+	<select id="showGeomessagetsInTwoTimeAndContainerId" parameterType="java.util.Map"
+		resultType="com.cctrace.entity.Geomessage">
+		SELECT * FROM geomessage WHERE containerId LIKE CONCAT('%',#{containerId} ,'%')
+		  <if test="startTime!=null and startTime!=''">  
+                AND alertLongTime <![CDATA[>=]]>    #{startTime} 
+            </if>
+            <if test="endTime!=null and endTime!=''">  
+                AND alertLongTime <![CDATA[<=]]> #{endTime} 
+            </if>
+		ORDER BY alertTime DESC
+	</select>
+  <select id="getAlertsByCompanyIdInOneDays" parameterType="java.util.Map"
+		resultType="com.cctrace.entity.Geomessage">
+		Select <include refid="Base_Column_List" /> From (
+		select <include refid="Base_Column_List" /> from geomessage where   containerId in (select containerId from container
+			where companyId = #{companyId}) and alertLongTime > #{beginTime} order by id desc ) A;
+	</select>
+  
+  <select id="getGeoMessageById" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from geomessage
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from geomessage
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+ 
+  <insert id="insert" parameterType="com.cctrace.entity.Geomessage" >
+    insert into geomessage (containerId, alertTime, 
+      alertLongTime, alertType, alertContent, 
+      lat, lon, readed, alarm_num, 
+      gpsPosition, updateTime, updateLongTime, 
+      companyId, ext1, ext2, 
+      ext3)
+      
+    values (#{containerId,jdbcType=VARCHAR}, #{alertTime,jdbcType=VARCHAR}, 
+      #{alertLongTime,jdbcType=VARCHAR}, #{alertType,jdbcType=VARCHAR}, #{alertContent,jdbcType=VARCHAR}, 
+      #{lat,jdbcType=DOUBLE}, #{lon,jdbcType=DOUBLE}, #{readed,jdbcType=VARCHAR}, #{alarm_num,jdbcType=INTEGER}, 
+      #{gpsPosition,jdbcType=VARCHAR}, #{updateTime,jdbcType=VARCHAR}, #{updateLongTime,jdbcType=VARCHAR}, 
+      #{companyId,jdbcType=INTEGER}, #{ext1,jdbcType=VARCHAR}, #{ext2,jdbcType=VARCHAR}, 
+      #{ext3,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.cctrace.entity.Geomessage" >
+    insert into geomessage
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="containerid != null" >
+        containerId,
+      </if>
+      <if test="alerttime != null" >
+        alertTime,
+      </if>
+      <if test="alertlongtime != null" >
+        alertLongTime,
+      </if>
+      <if test="alerttype != null" >
+        alertType,
+      </if>
+      <if test="alertcontent != null" >
+        alertContent,
+      </if>
+      <if test="lat != null" >
+        lat,
+      </if>
+      <if test="lon != null" >
+        lon,
+      </if>
+      <if test="readed != null" >
+        readed,
+      </if>
+      <if test="alarmNum != null" >
+        alarm_num,
+      </if>
+      <if test="gpsposition != null" >
+        gpsPosition,
+      </if>
+      <if test="updatetime != null" >
+        updateTime,
+      </if>
+      <if test="updatelongtime != null" >
+        updateLongTime,
+      </if>
+      <if test="companyid != null" >
+        companyId,
+      </if>
+      <if test="ext1 != null" >
+        ext1,
+      </if>
+      <if test="ext2 != null" >
+        ext2,
+      </if>
+      <if test="ext3 != null" >
+        ext3,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="containerid != null" >
+        #{containerid,jdbcType=VARCHAR},
+      </if>
+      <if test="alerttime != null" >
+        #{alerttime,jdbcType=VARCHAR},
+      </if>
+      <if test="alertlongtime != null" >
+        #{alertlongtime,jdbcType=VARCHAR},
+      </if>
+      <if test="alerttype != null" >
+        #{alerttype,jdbcType=VARCHAR},
+      </if>
+      <if test="alertcontent != null" >
+        #{alertcontent,jdbcType=VARCHAR},
+      </if>
+      <if test="lat != null" >
+        #{lat,jdbcType=DOUBLE},
+      </if>
+      <if test="lon != null" >
+        #{lon,jdbcType=DOUBLE},
+      </if>
+      <if test="readed != null" >
+        #{readed,jdbcType=VARCHAR},
+      </if>
+      <if test="alarmNum != null" >
+        #{alarmNum,jdbcType=INTEGER},
+      </if>
+      <if test="gpsposition != null" >
+        #{gpsposition,jdbcType=VARCHAR},
+      </if>
+      <if test="updatetime != null" >
+        #{updatetime,jdbcType=VARCHAR},
+      </if>
+      <if test="updatelongtime != null" >
+        #{updatelongtime,jdbcType=VARCHAR},
+      </if>
+      <if test="companyid != null" >
+        #{companyid,jdbcType=INTEGER},
+      </if>
+      <if test="ext1 != null" >
+        #{ext1,jdbcType=VARCHAR},
+      </if>
+      <if test="ext2 != null" >
+        #{ext2,jdbcType=VARCHAR},
+      </if>
+      <if test="ext3 != null" >
+        #{ext3,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  
+  <update id="updateByExampleSelective" parameterType="map" >
+    update geomessage
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.containerid != null" >
+        containerId = #{record.containerid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.alerttime != null" >
+        alertTime = #{record.alerttime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.alertlongtime != null" >
+        alertLongTime = #{record.alertlongtime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.alerttype != null" >
+        alertType = #{record.alerttype,jdbcType=VARCHAR},
+      </if>
+      <if test="record.alertcontent != null" >
+        alertContent = #{record.alertcontent,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lat != null" >
+        lat = #{record.lat,jdbcType=DOUBLE},
+      </if>
+      <if test="record.lon != null" >
+        lon = #{record.lon,jdbcType=DOUBLE},
+      </if>
+      <if test="record.readed != null" >
+        readed = #{record.readed,jdbcType=VARCHAR},
+      </if>
+      <if test="record.alarmNum != null" >
+        alarm_num = #{record.alarmNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.gpsposition != null" >
+        gpsPosition = #{record.gpsposition,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updatetime != null" >
+        updateTime = #{record.updatetime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updatelongtime != null" >
+        updateLongTime = #{record.updatelongtime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.companyid != null" >
+        companyId = #{record.companyid,jdbcType=INTEGER},
+      </if>
+      <if test="record.ext1 != null" >
+        ext1 = #{record.ext1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ext2 != null" >
+        ext2 = #{record.ext2,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ext3 != null" >
+        ext3 = #{record.ext3,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update geomessage
+    set id = #{record.id,jdbcType=INTEGER},
+      containerId = #{record.containerid,jdbcType=VARCHAR},
+      alertTime = #{record.alerttime,jdbcType=VARCHAR},
+      alertLongTime = #{record.alertlongtime,jdbcType=VARCHAR},
+      alertType = #{record.alerttype,jdbcType=VARCHAR},
+      alertContent = #{record.alertcontent,jdbcType=VARCHAR},
+      lat = #{record.lat,jdbcType=DOUBLE},
+      lon = #{record.lon,jdbcType=DOUBLE},
+      readed = #{record.readed,jdbcType=VARCHAR},
+      alarm_num = #{record.alarmNum,jdbcType=INTEGER},
+      gpsPosition = #{record.gpsposition,jdbcType=VARCHAR},
+      updateTime = #{record.updatetime,jdbcType=VARCHAR},
+      updateLongTime = #{record.updatelongtime,jdbcType=VARCHAR},
+      companyId = #{record.companyid,jdbcType=INTEGER},
+      ext1 = #{record.ext1,jdbcType=VARCHAR},
+      ext2 = #{record.ext2,jdbcType=VARCHAR},
+      ext3 = #{record.ext3,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cctrace.entity.Geomessage" >
+    update geomessage
+    <set >
+      <if test="containerid != null" >
+        containerId = #{containerid,jdbcType=VARCHAR},
+      </if>
+      <if test="alerttime != null" >
+        alertTime = #{alerttime,jdbcType=VARCHAR},
+      </if>
+      <if test="alertlongtime != null" >
+        alertLongTime = #{alertlongtime,jdbcType=VARCHAR},
+      </if>
+      <if test="alerttype != null" >
+        alertType = #{alerttype,jdbcType=VARCHAR},
+      </if>
+      <if test="alertcontent != null" >
+        alertContent = #{alertcontent,jdbcType=VARCHAR},
+      </if>
+      <if test="lat != null" >
+        lat = #{lat,jdbcType=DOUBLE},
+      </if>
+      <if test="lon != null" >
+        lon = #{lon,jdbcType=DOUBLE},
+      </if>
+      <if test="readed != null" >
+        readed = #{readed,jdbcType=VARCHAR},
+      </if>
+      <if test="alarmNum != null" >
+        alarm_num = #{alarmNum,jdbcType=INTEGER},
+      </if>
+      <if test="gpsposition != null" >
+        gpsPosition = #{gpsposition,jdbcType=VARCHAR},
+      </if>
+      <if test="updatetime != null" >
+        updateTime = #{updatetime,jdbcType=VARCHAR},
+      </if>
+      <if test="updatelongtime != null" >
+        updateLongTime = #{updatelongtime,jdbcType=VARCHAR},
+      </if>
+      <if test="companyid != null" >
+        companyId = #{companyid,jdbcType=INTEGER},
+      </if>
+      <if test="ext1 != null" >
+        ext1 = #{ext1,jdbcType=VARCHAR},
+      </if>
+      <if test="ext2 != null" >
+        ext2 = #{ext2,jdbcType=VARCHAR},
+      </if>
+      <if test="ext3 != null" >
+        ext3 = #{ext3,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.cctrace.entity.Geomessage" >
+    update geomessage
+    set containerId = #{containerid,jdbcType=VARCHAR},
+      alertTime = #{alerttime,jdbcType=VARCHAR},
+      alertLongTime = #{alertlongtime,jdbcType=VARCHAR},
+      alertType = #{alerttype,jdbcType=VARCHAR},
+      alertContent = #{alertcontent,jdbcType=VARCHAR},
+      lat = #{lat,jdbcType=DOUBLE},
+      lon = #{lon,jdbcType=DOUBLE},
+      readed = #{readed,jdbcType=VARCHAR},
+      alarm_num = #{alarmNum,jdbcType=INTEGER},
+      gpsPosition = #{gpsposition,jdbcType=VARCHAR},
+      updateTime = #{updatetime,jdbcType=VARCHAR},
+      updateLongTime = #{updatelongtime,jdbcType=VARCHAR},
+      companyId = #{companyid,jdbcType=INTEGER},
+      ext1 = #{ext1,jdbcType=VARCHAR},
+      ext2 = #{ext2,jdbcType=VARCHAR},
+      ext3 = #{ext3,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

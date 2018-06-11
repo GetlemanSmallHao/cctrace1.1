@@ -1,0 +1,113 @@
+.col-xs-1, .col-sm-1, .col-md-1, .col-lg-1, .col-xs-2, .col-sm-2, .col-md-2, .col-lg-2, .col-xs-3, .col-sm-3, .col-md-3, .col-lg-3, .col-xs-4, .col-sm-4, .col-md-4, .col-lg-4, .col-xs-5, .col-sm-5, .col-md-5, .col-lg-5, .col-xs-6, .col-sm-6, .col-md-6, .col-lg-6, .col-xs-7, .col-sm-7, .col-md-7, .col-lg-7, .col-xs-8, .col-sm-8, .col-md-8, .col-lg-8, .col-xs-9, .col-sm-9, .col-md-9, .col-lg-9, .col-xs-10, .col-sm-10, .col-md-10, .col-lg-10, .col-xs-11, .col-sm-11, .col-md-11, .col-lg-11, .col-xs-12, .col-sm-12, .col-md-12, .col-lg-12{
+  padding:0;
+}
+body{
+  background-color:#fafafa;
+  font-size:16px;
+}
+.c-banner img{
+  width:100%;
+}
+.c-friendLink div{
+  text-align:center;
+}
+.c-hero>img{
+  width:100%;
+}
+/*抵消bootstrap中的样式*/
+.navbar-default .navbar-nav > li > a:hover,
+.navbar-default .navbar-nav > li > a:focus {
+  color: #fff;
+  background-color: transparent;
+}
+.navbar-default .navbar-nav > .active > a,
+.navbar-default .navbar-nav > .active > a:hover,
+.navbar-default .navbar-nav > .active > a:focus{
+  color:#fff;
+  background-color:transparent;
+}
+.navbar-default .navbar-nav > li > a{
+  color:#fff;
+  background-color:transparent;
+  padding-top:20px;
+}
+.c-container-1080 {
+  position: relative;
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+.c-nav{
+  position:absolute;
+  top:0;
+  height:100px;
+  line-height:100px;
+  width:100%;
+  background: linear-gradient(rgba(110, 110, 110, 0.5) 0%, rgba(110, 110, 110, 0) 100%);
+}
+.footer{
+  height:50px;
+  line-height:50px;
+  border-top:1px solid #bbb;
+  text-align:center;
+  color:#999;
+}
+@media (max-width: 768px){
+  .c-nav{
+    /*background:transparent;*/
+    height:80px;
+  }
+  .container > .c-navList{
+    position:absolute;
+    top:80px;
+    z-index:6666;
+    width:100%;
+    margin-left:-20px;
+    margin-right:-20px;
+    padding:0;
+    background-color:rgba(110,110,110,.7);
+    border:none;
+  }
+  .container > .c-navList ul{
+    margin:0;
+  }
+  .container > .c-navList li{
+    border-bottom:1px solid #999;
+  }
+  .navbar-default .navbar-toggle:hover, .navbar-default .navbar-toggle:focus {
+    background-color:transparent;
+  }
+  .navbar-default .navbar-toggle {
+    margin-top:20px;
+    border-color: transparent;
+  }
+  .navbar-default .navbar-toggle .icon-bar {
+    background-color: #fff;
+  }
+}
+@media (min-width: 1366px){
+  .c-nav{
+  	font-size:18px;
+  }
+  .c-nav .navbar-brand > img{
+  	width:110%;
+  }
+  .navbar-default .navbar-nav > li > a {
+    padding-top: 27px;
+  }
+}
+/*回到顶部的样式*/
+.j-backToTop{
+  display:none;
+  position:fixed;
+  bottom:4%;
+  right:1%;
+  width:54px;
+  height:54px;
+  background:url(../img/backToTop/backToTopHover.png) no-repeat;
+  cursor:pointer;
+  z-index:9999;
+}
+.j-backToTop:hover{
+  background-image:url(../img/backToTop/backToTop.png);
+}

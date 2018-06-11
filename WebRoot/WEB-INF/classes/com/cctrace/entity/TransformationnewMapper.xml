@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cctrace.dao.TransformationnewMapper">
+	<resultMap id="BaseResultMap" type="com.cctrace.entity.Transformationnew">
+		<id column="id" jdbcType="INTEGER" property="id" />
+		<result column="alarmNumber" jdbcType="VARCHAR" property="alarmNumber" />
+		<result column="alarmMessage1" jdbcType="VARCHAR" property="alarmMessage1" />
+		<result column="alarmMessage2" jdbcType="VARCHAR" property="alarmMessage2" />
+		<result column="alarmType1" jdbcType="VARCHAR" property="alarmType1"/>
+		<result column="alarmType2" jdbcType="VARCHAR" property="alarmType2"/>
+	</resultMap>
+
+	<sql id="Base_Column_List">
+		id,alarmNumber,alarmMessage1,alarmMessage2,alarmType1,alarmType2
+	</sql>
+
+
+	<select id="selectTransformationByAlarmNumber" parameterType="String"
+		resultType="com.cctrace.entity.Transformationnew">
+		select
+		<include refid="Base_Column_List" />
+		from transformationnew
+		where alarmNumber= #{alarmNumber}
+	</select>
+	
+	
+	<!-- 配置缓存 -->
+	<cache eviction="FIFO" flushInterval="10000" size="128" readOnly="true" />
+</mapper>

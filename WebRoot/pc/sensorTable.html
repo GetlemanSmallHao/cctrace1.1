@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+  <meta charset="UTF-8">
+  <title>传感器报告</title>
+  <link rel="stylesheet" href="css/laydate.css"/>
+  <link rel="stylesheet" href="css/index.css"/>
+  <style>
+    .footer__btn .btn--some{
+      border: 1px solid #C6C6C6;
+      background-color: #D9D9D9;
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="header__wrap">
+      <img style="height:39px;" src="img/logo.png" alt=""/>
+      <p>
+        <a href="javascript:;">用户名</a>
+        <a href="javascript:;">退出</a>
+      </p>
+    </div>
+  </header>
+  <nav class="navBar">
+    <div class="navBar__wrap width--1200">
+      导航条个人中心等
+    </div>
+  </nav>
+  <main class="main">
+    <!--<div class="con__map bindEvent clearfix">地图</div>-->
+    <div class="con__boxTable clearfix">
+      <div class="boxTable__wrap">
+        <header class="con__header">
+          <ul>
+            <li class="con__header--active">冷藏箱</li>
+          </ul>
+          <!--<a class="con__header&#45;&#45;refresh" href="javascript:;">-->
+            <!--<i></i>-->
+            <!--刷新-->
+          <!--</a>-->
+        </header>
+        <div class="conMap__track__time">
+          开始时间：
+          <input class="laydate-icon" id="startTime"  name="startTime"  value="" style="background-color: #E0FFFF"/>
+          结束时间：
+          <input class="laydate-icon" id="endTime"  name="endTime" value="" style="background-color: #E0FFFF"/>
+        </div>
+        <main class="con__main">
+          <div>
+            <div class="con__main--search">
+              设备编号：<input type="text"/>
+              <button>搜索</button>
+            </div>
+            <div class="con__main__table">
+              <table>
+                <thead>
+                <tr>
+                  <td><div class="">序号</div></td>
+                  <td><div class="">集装箱编号</div></td>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                  <td><div class="leftDown--div1">1</div></td>
+                  <td><div class="leftDown--div2">CICU9956919</div></td>
+                </tr>
+                <tr>
+                  <td><div class="leftDown--div1">1</div></td>
+                  <td><div class="leftDown--div2">CICU9956919</div></td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="footer__btn clearfix">
+              <button class="btn--some">导出环境温度</button>
+              <button class="btn--some">导出冷机电瓶电压</button>
+              <button class="btn--some">导出回风温度</button>
+              <button class="btn--all">导出全部报表</button>
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+    <div class="con__sensorTable clearfix">
+      <div class="sensorTable__wrap">
+        <header class="con__header">
+          <ul>
+            <li class="con__header--active">传感器列表</li>
+          </ul>
+          <!--<a class="con__header&#45;&#45;refresh" href="javascript:;">-->
+            <!--<i></i>-->
+            <!--刷新-->
+          <!--</a>-->
+        </header>
+        <main class="con__main amendBind">
+          <div>
+            <!--<div class="con__main&#45;&#45;search">-->
+              <!--设备编号：<input type="text"/>-->
+              <!--<button>搜索</button>-->
+            <!--</div>-->
+            <div class="con__main__table">
+              <table>
+                <thead>
+                <tr>
+                  <td><div class="leftDown--div1">序号</div></td>
+                  <td><div class="">接收数据时间</div></td>
+                  <td><div class="">冷机电瓶电压</div></td>
+                  <td><div class="">回风温度</div></td>
+                  <td><div class="">后门开关</div></td>
+                  <td><div class="">箱内湿度</div></td>
+                  <td><div class="">油箱油位</div></td>
+                  <td><div class="">GPS电压</div></td>
+                  <td><div class="">冷机状态</div></td>
+                  <td><div class="">环境温度</div></td>
+                  <td><div class="">出风温度</div></td>
+                  <td><div class="">设定温度</div></td>
+                  <td><div class="">中部箱温</div></td>
+                  <td><div class="">尾部箱温</div></td>
+                  <td><div class="">工作模式</div></td>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                  <td><div class="">1</div></td>
+                  <td><div class="">2017-7-13 16:18:00</div></td>
+                  <td><div class="">12V</div></td>
+                  <td><div class="">12°C</div></td>
+                  <td><div class="">关</div></td>
+                  <td><div class="">13%</div></td>
+                  <td><div class="">12L</div></td>
+                  <td><div class="">12V</div></td>
+                  <td><div class="">开</div></td>
+                  <td><div class="">30°C</div></td>
+                  <td><div class="">30°C</div></td>
+                  <td><div class="">30°C</div></td>
+                  <td><div class="">30°C</div></td>
+                  <td><div class="">30°C</div></td>
+                  <td><div class="">制冷</div></td>
+                </tr>
+                <tr>
+                  <td><div class="">1</div></td>
+                  <td><div class="">2017-7-13 16:18:00</div></td>
+                  <td><div class="">12V</div></td>
+                  <td><div class="">12°C</div></td>
+                  <td><div class="">关</div></td>
+                  <td><div class="">13%</div></td>
+                  <td><div class="">12L</div></td>
+                  <td><div class="">12V</div></td>
+                  <td><div class="">开</div></td>
+                  <td><div class="">30°C</div></td>
+                  <td><div class="">30°C</div></td>
+                  <td><div class="">30°C</div></td>
+                  <td><div class="">30°C</div></td>
+                  <td><div class="">30°C</div></td>
+                  <td><div class="">制冷</div></td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+  </main>
+
+
+  <script src="js/jquery-3.2.1.js"></script>
+  <script src="js/index.js"></script>
+  <script src="js/laydate.js"></script>
+  <script>
+    var start = {
+      elem: '#startTime',
+      event: 'click',
+      format: 'YYYY-MM-DD hh:mm:ss',
+      min: '2014-01-01 00:00:00', //最小日期
+      max: laydate.now(), //设定最大日期为当前日期
+      istime: true,
+      istoday: true,
+      choose: function(datas){
+//        console.log(datas);
+        //console.log(new Date(datas));//Thu Jul 13 2017 15:03:53 GMT+0800 (中国标准时间)
+        //console.log(new Date(datas).getTime());//1499929433000
+        //console.log((new Date(datas)).valueOf());//1499929433000
+//        console.log(Date.parse(new Date(datas)));//1499929433000
+        var nowDate = Date.parse(new Date(laydate.now()));
+        var maxDate = Date.parse(new Date(datas)) + 7*24*60*60*1000;
+        end.min = datas; //开始日选好后，重置结束日的最小日期
+        end.start = datas //将结束日的初始值设定为开始日
+        if(maxDate < nowDate)//当加7天后的时间 小于 当前时间
+        end.max = laydate.now(maxDate);//才重置结束最大日期为maxDate
+      }
+    };
+    var end = {
+      elem: '#endTime',
+      event: 'click',
+      format: 'YYYY-MM-DD hh:mm:ss',
+      min: '2014-01-01 00:00:00',
+      max: laydate.now(),
+      istime: true,
+      istoday: true,
+      choose: function(datas){
+        start.max = datas; //结束日选好后，重置开始日的最大日期
+        var minDate = Date.parse(new Date(datas)) - 7*24*60*60*1000;
+        start.min = laydate.now(minDate);//结束日选好，重置开始的最小时间为当前-7天
+      }
+    };
+    laydate(start);
+    laydate(end);
+  </script>
+</body>
+</html>

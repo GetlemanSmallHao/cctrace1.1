@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <title>联系我们</title>
+  <link rel="stylesheet" href="bootstrap-3.3.7-dist/css/bootstrap.css"/>
+  <link rel="stylesheet" href="css/global.css"/>
+  <style>
+    .c-hero{
+      position:relative;
+    }
+    .c-hero .c-heroTitle{
+      position:absolute;
+      top:-moz-calc(50% - 6rem);
+      top:-webkit-calc(50% - 6rem);
+      top:calc(50% - 6rem);
+      z-index:500;
+      width:100%;
+      text-align:center;
+      font-size:9rem;
+      color:#fff;
+      font-weight:600;
+      text-shadow:3px 3px 5px #333;
+    }
+    .c-contactUs{
+      padding:40px;
+      background-color:#f0f2f5;
+    }
+    .c-contactUs .c-contactUs-box{
+      width:65%;
+      margin:-100px auto 0;
+      padding:30px 120px;
+      background-color:#fff;
+    }
+    .c-contactUs .c-contactUs-box .c-contactUs-title{
+      margin-top:0;
+      text-align:center;
+      color:#E23C0D;
+      font-weight:600;
+    }
+    .c-contactUs .c-contactUs-box .c-contactUs-content{
+      padding:10px;
+      width:100%;
+    }
+    .c-contactUs .c-contactUs-box .c-contactUs-content>h4{
+      font-weight:600;
+      font-size:1.2em;
+    }
+    .c-contactUs .c-contactUs-box .c-contactUs-content>h4:before{
+      content: '-';
+      display:inline-block;
+      width: 1em;
+      margin-left: -1em;
+      font-weight: normal;
+      opacity: .8;
+    }
+    .c-contactUs .c-contactUs-box .c-contactUs-content>span{
+      font-size:1.2em;
+    }
+    @media (max-width: 992px){
+      .c-hero .c-heroTitle{
+        font-size:6rem;
+        top:-moz-calc(50% - 4rem);
+        top:-webkit-calc(50% - 4rem);
+        top:calc(50% - 4rem);
+      }
+    }
+    @media (max-width: 768px){
+      .c-hero .c-heroTitle{
+        font-size:4rem;
+        top:-moz-calc(50% - 2rem);
+        top:-webkit-calc(50% - 2rem);
+        top:calc(50% - 2rem);
+      }
+    }
+  </style>
+</head>
+<body>
+<div class="container-fluid">
+  <div class="row" style="position:relative;/* display:flex; display:-webkit-flex;*/">
+    <nav class="c-nav navbar-default navbar-static-top" role="navgation">
+      <div class="container c-container-1080">
+        <div class="navbar-header">
+          <a href="index.jsp" class="navbar-brand">
+            <img src="img/indexImg/ccLogo.png">
+          </a>
+          <button class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+        </div>
+        <div class="c-navList navbar-collapse collapse pull-right">
+          <ul class="navbar-nav nav">
+            <li><a href="lengcangxiang.html">产品</a></li>
+            <li><a href="zhonghao.html">中浩科技</a></li>
+            <li><a href="lianxiwomen.html">联系我们</a></li>
+            <li><a href="/cctrace1.1/pc/login.jsp">登录</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <!--页面主图-->
+    <div class="col-lg-12 c-hero">
+      <!--<div class="c-hero-bg" style="background:url('img/indexImg/1.png') no-repeat; background-size:cover;"></div>-->
+      <img src="img/zhonghao/zhonghaoHero.png" alt=""/>
+      <div class="c-heroTitle">专业&nbsp;&nbsp;专注&nbsp;&nbsp;专心</div>
+    </div>
+  </div>
+</div>
+<!--页面主体部分-->
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-12 c-contactUs">
+      <div class="c-contactUs-box">
+        <h2 class="c-contactUs-title">联系我们</h2>
+        <div class="c-contactUs-content">
+          <h4>软件技术支持</h4>
+          <span>软件技术支持，电话：400-011-9559</span>
+        </div>
+        <div class="c-contactUs-content">
+          <h4>硬件技术支持</h4>
+          <span>硬件技术支持，邮箱：jidian@zih718.com</span>
+        </div>
+        <div class="c-contactUs-content">
+          <h4>冷藏箱业务咨询</h4>
+          <span>冷藏箱业务咨询，电话：15713689261</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!--页脚部分-->
+<div class="container-fluid">
+  <div class="row c-friendLink">
+    <!--<div class="col-xs-12" style="color:#848484; text-align:left; padding-left:50px;">友情链接</div>-->
+    <div class="col-xs-12 col-sm-6 col-lg-3">
+   	  <a href="http://42.228.11.187/transport/public/index/index/index.html" target="_blank">
+      	<img src="img/indexImg/lenglian.png" alt=""/>
+      </a>
+    </div>
+    <div class="col-xs-12 col-sm-6 col-lg-3">
+      <a href="http://www.thermoking.com.cn/tk-innovation-ap/CN/en.html" target="_blank">
+      	<img src="img/indexImg/lengwang.png" alt=""/>
+      </a>
+    </div>
+    <div class="col-xs-12 col-sm-6 col-lg-3">
+      <a href="http://www.qdcimc.com/" target="_blank">
+      	<img src="img/indexImg/zhongji.png" alt=""/>
+      </a>	
+    </div>
+    <div class="col-xs-12 col-sm-6 col-lg-3">
+      <a href="https://www.carrier.com/carrier/en/cn/" target="_blank">
+      	<img src="img/indexImg/kaili.png" alt=""/>
+      </a>	
+    </div>
+  </div>
+  <div class="footer row">
+    <div class="col-lg-12">@2017 郑州陆港开发建设有限公司 版权所有</div>
+  </div>
+</div>
+<!-- 回到顶部 -->
+<div class="j-backToTop">
+</div>
+
+<script src="js/jquery-3.2.1.js"></script>
+<script src="bootstrap-3.3.7-dist/js/bootstrap.js"></script>
+<script>
+  $(function(){
+    $(window).scroll(function(){
+      if($(this).scrollTop() > 150){
+        $(".j-backToTop").fadeIn(100);
+      }else{
+        $(".j-backToTop").fadeOut(100);
+      }
+    });
+    $(".j-backToTop").click(function(){
+      $("html,body").animate({scrollTop:0},500);
+    });
+  });
+</script>
+</body>
+</html>

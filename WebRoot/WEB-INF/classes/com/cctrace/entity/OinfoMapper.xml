@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cctrace.dao.OinfoMapper">
+	<resultMap type="com.cctrace.entity.Oinfo" id="BaseResultMap">
+		<id column="oinfo_id" jdbcType="INTEGER" property="oinfoId"></id>
+		<result column="oinfo_content" jdbcType="VARCHAR" property="oinfoContent"/>
+		<result column="oinfo_alias" jdbcType="VARCHAR" property="oinfoAlias"/>
+	</resultMap>
+	<sql id="Base_Column_List">
+		oinfo_id, oinfo_content , oinfo_alias
+	</sql>
+	
+	<select id="selectOinfoByOinfoContent" parameterType="java.lang.String" resultMap="BaseResultMap">
+		select 
+		<include refid="Base_Column_List"/> 
+		from operatorinfo where oinfo_content = #{oinfoContent}	
+	</select>
+	
+	
+	
+
+	<!-- 配置缓存 -->
+	<cache eviction="FIFO" flushInterval="10000" size="128" readOnly="true" />
+</mapper>
