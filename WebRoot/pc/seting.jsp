@@ -132,7 +132,7 @@
 					</div>
 
 					<div class="con__main__table">
-						<table style="width:101%;">
+						<table style="width:100%;">
 							<thead>
 								<tr>
 									<td><div class="leftDown--div1">序号</div></td>
@@ -164,7 +164,7 @@
 				<div class="set__menu--wrap">
 					<div class="con__main--search">冷藏箱控制设置</div>
 					<div class="con__main__table">
-						<table style="width:101%;">
+						<table style="width:100%;">
 							<thead>
 								<tr>
 									<td><div class="leftDown--div1">序号</div></td>

@@ -83,8 +83,7 @@
 	 	float:left;
 	 	width:300px;
 	 	height:60%;
-	 	border: 3px solid transparent;
-	 	display:none;
+	 	border: 3px solid transparent;	
 	 }
 	 .location__wrap{
 	 	width: 100%;
@@ -119,22 +118,6 @@
 <body>
 	<jsp:include page="header.jsp" flush="true"></jsp:include>
 	<main class="main"> <!--<div class="con__map bindEvent clearfix">地图</div>-->
-	<!-- 首页单点定位模块 -->
-	<div class="con__location">
-		<div class="location__wrap">
-			<header class="con__header">
-				<ul>
-					<li class="con__header--active" style="background:none;">定位</li>
-				</ul>
-			</header>
-			<main class="con__main">
-				<div>
-					<div id="googleMap" style="width:100%;height:100%;margin:0 auto;">           	
-   				    </div>
-				</div>
-			</main>
-		</div>
-	</div>
 	<!-- 冷藏箱列表模块 -->
 	<div class="con__container clearfix">
 		<div class="container__wrap">
@@ -306,16 +289,18 @@
 	<div class="con__sensor clearfix">
 		<div class="sensor__wrap">
 			<header class="con__header">
-				<ul>
-					<li data-con="${PATH}/data/sensor.jsp" class="con__header--active">传感器</li>
-					<li class="con__header--active"><a href="" id="j-setting">设置</a></li>
-					<li class="con__header--active"><a href="" id="">告警提示</a></li>
-					<li class="con__header--active"><a href="" id="">定位</a></li>
+				<ul class="sensor_ul">
+					<li data-con="${PATH}/data/sensor.jsp" class="con__header--active" tab_id="1"
+					style="color:#649893;">传感器</li>
+					<li class="con__header--active" tab_id="2"><a href="#" id="j-setting">设置</a></li>
+					<li class="con__header--active" tab_id="3"><a href="#" id="">告警信息</a></li>
+					<li class="con__header--active" tab_id="4"><a href="#" id="">定位</a></li>
 					
 					<%--  <a href="${PATH}/pc/seting.jsp?containerId="><li class="con__header--active">设置</li></a> --%>
 				</ul>
 			</header>
-			<main class="con__main"> <!-- 传感器 -->
+			<!-- 传感器 -->
+			<main class="con__main tab_main"> 
 			<div style="position:relative;">
 				<!--  <div class="con__main--search">
 			    发射器：<input type="text"/>
@@ -707,7 +692,27 @@
 						</footer>
 					</div>--%>
 				</div>
-				</main>
+			</main>
+			<!-- 传感器结束 -->
+			<main class="con__main tab_main" style="display:none;">bbb </main>
+			<main class="con__main tab_main" style="display:none;">ccc </main>
+			<main class="con__main tab_main" style="display:none;">
+				<div class="con__location">
+					<div class="location__wrap">
+						<header class="con__header">
+							<ul>
+								<li class="con__header--active" style="background:none;">定位</li>
+							</ul>
+						</header>
+						<main class="con__main">
+							<div>
+								<div id="googleMap" style="width:100%;height:100%;margin:0 auto;">           	
+			   				    </div>
+							</div>
+						</main>
+					</div>
+				</div>
+			</main>
 			</div>
 		</div>
 	</div>
@@ -1106,42 +1111,29 @@
 							});
 			/* }); */
 			//点击设置按钮跳转设置页面并传值
-			$("#j-setting").click(
-					function() {
-						var role1 =<%=role1%>;
-						if (role1 != 0)
-							return false;
-						var cId = $("#ccdatas_table").find(".tr__active").find(".containerId ").text();
-						if (cId != "" && cId.replace(/\s+/g, "") != "") {
-						<%-- href="${PATH}/pc/seting.jsp?containerId=" --%>
-							this.href = "${PATH}/pc/seting.jsp?containerId="+ cId;
-						} else {
-							alert("请选择（点击）一个冷藏箱！！！");
-						}
-					});
+			$("#j-setting").click(function() {
+				
+			});
 			
 					
-			//未查看围栏告警数目
-			function getCountOfNoReadedGeomessageBeforeDays() {
-				var countOfNoReaded = 0;
-
-				$
-						.ajax({
-							url : "${pageContext.request.contextPath}/pc/alert/getCountOfNoReadedGeomessageBeforeDays.do",
-							data : "",
-							async : false,
-							type : "get",
-							dataType : "json",
-							success : function(result) {
-								countOfNoReaded = result;
-
-							}
-						});
-				return countOfNoReaded;
-			}
-			
-			
-			
+				//未查看围栏告警数目
+				function getCountOfNoReadedGeomessageBeforeDays() {
+					var countOfNoReaded = 0;
+	
+					$
+							.ajax({
+								url : "${pageContext.request.contextPath}/pc/alert/getCountOfNoReadedGeomessageBeforeDays.do",
+								data : "",
+								async : false,
+								type : "get",
+								dataType : "json",
+								success : function(result) {
+									countOfNoReaded = result;
+	
+								}
+							});
+					return countOfNoReaded;
+				}
 			
 			//未查看警告记录数
 			function askCountOfNoReadedAlert() {
@@ -1818,6 +1810,7 @@
 						var mess = result.message;
 						if (field == '0') {
 							layer.msg(mess);
+							build_sensor_table(containerId);
 							return;
 						} else {
 							layer.msg(mess);
@@ -1851,6 +1844,7 @@
 						var mess = result.message;
 						if (field == '0') {
 							layer.msg(mess);
+							build_sensor_table(containerId);
 							return;
 						} else {
 							layer.msg(mess);
@@ -1884,6 +1878,7 @@
 						var mess = result.message;
 						if (field == '0') {
 							layer.msg(mess);
+							build_sensor_table(containerId);
 							return;
 						} else {
 							layer.msg(mess);
@@ -1917,6 +1912,7 @@
 						var mess = result.message;
 						if (field == '0') {
 							layer.msg(mess);
+							build_sensor_table(containerId);
 							return;
 						} else {
 							layer.msg(mess);
@@ -1948,6 +1944,7 @@
 						var mess = result.message;
 						if (field == '0') {
 							layer.msg(mess);
+							build_sensor_table(containerId);
 							return;
 						} else {
 							layer.msg(mess);
@@ -1981,6 +1978,7 @@
 						var mess = result.message;
 						if (field == '0') {
 							layer.msg(mess);
+							build_sensor_table(containerId);
 							return;
 						} else {
 							layer.msg(mess);
@@ -2014,6 +2012,7 @@
 						var mess = result.message;
 						if (field == '0') {
 							layer.msg(mess);
+							build_sensor_table(containerId);
 							return;
 						} else {
 							layer.msg(mess);
@@ -2047,6 +2046,7 @@
 						var mess = result.message;
 						if (field == '0') {
 							layer.msg(mess);
+							build_sensor_table(containerId);
 							return;
 						} else {
 							layer.msg(mess);
@@ -2080,6 +2080,7 @@
 						var mess = result.message;
 						if (field == '0') {
 							layer.msg(mess);
+							build_sensor_table(containerId);
 							return;
 						} else {
 							layer.msg(mess);
@@ -2146,6 +2147,7 @@
 						var mess = result.message;
 						if (field == '0') {
 							layer.msg(mess);
+							build_sensor_table(containerId);
 							return;
 						} else {
 							layer.msg(mess);
@@ -2179,6 +2181,7 @@
 						var mess = result.message;
 						if (field == '0') {
 							layer.msg(mess);
+							build_sensor_table(containerId);
 							return;
 						} else {
 							layer.msg(mess);
@@ -2212,6 +2215,7 @@
 						var mess = result.message;
 						if (field == '0') {
 							layer.msg(mess);
+							build_sensor_table(containerId);
 							return;
 						} else {
 							layer.msg(mess);
@@ -2245,6 +2249,7 @@
 						var mess = result.message;
 						if (field == '0') {
 							layer.msg(mess);
+							build_sensor_table(containerId);
 							return;
 						} else {
 							layer.msg(mess);
@@ -2277,6 +2282,7 @@
 						var mess = result.message;
 						if (field == '0') {
 							layer.msg(mess);
+							build_sensor_table(containerId);
 							return;
 						} else {
 							layer.msg(mess);
@@ -2349,9 +2355,9 @@
 			--%>
 			/* 冷藏箱列表左右滚动标题滚动 */
 			$("#ccdatas_table").on("scroll",function(){
-				console.log($(this).scrollLeft());
+				//console.log($(this).scrollLeft());
 				var marginLeft = "-" + $(this).scrollLeft() + "px";
-				console.log($(".j-tableTitle"));
+				//console.log($(".j-tableTitle"));
 				$(".j-tableTitle").css("marginLeft",marginLeft);
 				sessionStorage.lastScrollTop = $(this).scrollTop();
 			});
@@ -2643,9 +2649,34 @@
 					$("#weilantongzhi").css("display","block");
 				}
 	</script>
-
-
-
-
+	<script>
+		/*点击修改传感器头部的字体颜色*/
+		$(document).ready(function() {
+			$('.sensor_ul li').on('click',function(){
+				var role1 =<%=role1%>;
+				if (role1 == 1)
+					return;
+				$('.sensor_ul li').css('color','#333');
+				$('.sensor_ul li a').css('color','#333');
+				$(this).css('color','#649893');			
+				$(this).children('a').css('color','#649893');
+				let id = $(this).attr('tab_id');
+				//如果为设置则跳转页面
+				if(id == 2){
+					var cId = $("#ccdatas_table").find(".tr__active").find(".containerId ").text();
+					if (cId != "" && cId.replace(/\s+/g, "") != "") {
+					<%-- href="${PATH}/pc/seting.jsp?containerId=" --%>
+						this.firstChild.href = "${PATH}/pc/seting.jsp?containerId="+ cId;
+					} else {
+						alert("请选择（点击）一个冷藏箱！！！");
+					}
+				}else{
+					$('.tab_main').hide();
+					$('.tab_main:nth-of-type('+ id +')').show();
+				}
+				
+			});
+		})
+	</script>
 </body>
 </html>
