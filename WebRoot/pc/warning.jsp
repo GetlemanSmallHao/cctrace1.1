@@ -32,7 +32,7 @@
 		<div class="warning__wrap">
 			<header class="con__header">
 			<ul>
-				<li data-con="data/warning.html" class="con__header--active">告警提示</li>
+				<li data-con="data/warning.html" class="con__header--active con__header_none">告警提示</li>
 			</ul>
 			</a> </header>
 			<main class="con__main"> <!-- 报警提示 -->
@@ -62,8 +62,8 @@
 			<header class="con__header">
 			<ul>
 				<li data-con="${basePath }/data/warnDetails.jsp"
-					class="con__header--active">告警信息</li>
-					<li style="color:red;" id="exportAlertExcelFile" onclick="exportAlertExcelFile();">导出报表</li>
+					class="con__header--active con__header_none">告警信息</li>
+					<li id="exportAlertExcelFile" onclick="exportAlertExcelFile();" class="red_print">导出报表</li>
 			</ul>
 			</header>
 			<main class="con__main amendBind"><!--  集装箱列表 -->

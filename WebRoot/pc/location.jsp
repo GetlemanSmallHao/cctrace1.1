@@ -92,7 +92,7 @@
         <header class="con__header">
           <ul>
       <!--       <li>班列</li> -->
-            <li class="con__header--active">定位</li>
+            <li class="con__header--active" style="background:none;">定位</li>
       <!--       <li>轨迹</li>
             <li>围栏</li> -->
           </ul>

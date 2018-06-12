@@ -26,7 +26,7 @@
 			<div class="map__wrap">
 				<header class="con__header">
 					<ul>
-						<li class="con__header--active" style="background:none;">班列</li>
+						<li class="con__header--active con__header_none">班列</li>
 					</ul>
 					<!-- <a class="con__header--refresh" onclick="ajaxRefresh()"
 						href="javascript:;"> <i></i> 刷新 -->
@@ -99,7 +99,7 @@
 					<ul>
 				<!-- 		<li>班列</li>
 						<li>定位</li> -->
-						<li class="con__header--active">轨迹</li>
+						<li class="con__header--active"  style="background:none;">轨迹</li>
 					<!-- 	<li>围栏</li> -->
 					</ul>
 				</header>

@@ -55,63 +55,29 @@
 	 	position:relative;
 	 }
 	 .xsj{
-	 	position:absolute;
-	 	right:8px;
+	 	position:absolute;right:8px;
 	 }
 	 .xsjUp{
-	 	top:2px;
-	 	display:inline-block;
-	 	width:0;
-	 	height:0;
-	 	border:5px solid #fff;
-	 	border-top-color:transparent;
-	 	border-left-color:transparent;
-	 	border-right-color:transparent;
+		top:2px;display:inline-block;width:0;height:0;border:5px solid #fff;
+	 	border-top-color:transparent;border-left-color:transparent;border-right-color:transparent;
 	 }
 	 .xsjDown{
-	 	top:7px;
-	 	display:inline-block;
-	 	width:0;
-	 	height:0;
-	 	border:5px solid #fff;
-	 	border-bottom-color:transparent;
-	 	border-left-color:transparent;
-	 	border-right-color:transparent;
+	 	top:7px;display:inline-block;width:0;height:0;border:5px solid #fff;
+		border-bottom-color:transparent;border-left-color:transparent;border-right-color:transparent;
 	 }
 	 /* 分为四个模块的结构样式 （定位、冷藏箱、告警、传感器）*/
-	 .con__location{
-	 	float:left;
-	 	width:300px;
-	 	height:60%;
-	 	border: 3px solid transparent;	
+	 .con__location{float:left;width:300px;height:60%;border: 3px solid transparent;	
 	 }
 	 .location__wrap{
-	 	width: 100%;
-	    height: 100%;
-	    border: 2px solid #c3c3c3;
-	    border-radius: 3px;
+	 	width: 100%;height: 100%;border: 2px solid #c3c3c3;border-radius: 3px;
 	 }
 	 .con__container{
-	 	/* -webkit-width:calc(100% - 300px);
-	 	-moz-width:calc(100% - 300px);
-	 	width:calc(100% - 300px); */
-	 	-webkit-width:100%;
-	 	-moz-width:100%;
-	 	width:100%; 
-	 }
-	 .con__warning{
-	 	width:300px;
-	 	height:40%;
-	 	display:none;
-	 }
+	 	/* -webkit-width:calc(100% - 300px);-moz-width:calc(100% - 300px);width:calc(100% - 300px); */
+	 	-webkit-width:100%;-moz-width:100%;width:100%; }
+	 .con__warning{width:300px;height:40%;display:none;}
 	 .con__sensor{
-	 	/* -webkit-width:calc(100% - 300px);
-	 	-moz-width:calc(100% - 300px);
-	 	width:calc(100% - 300px); */
-	 	-webkit-width:100%;
-	 	-moz-width:100%;
-	 	width:100%; 
-	 }
+	 	/* -webkit-width:calc(100% - 300px);-moz-width:calc(100% - 300px);width:calc(100% - 300px); */
+	 	-webkit-width:100%;-moz-width:100%;width:100%; }
 </style>
 </head>
 
@@ -123,10 +89,8 @@
 		<div class="container__wrap">
 			<header class="con__header">
 				<ul>
-					<li class="con__header--active" style="background:none;">班列</li>
-					<li><a href="${PATH}/pc/ExportExcel/findBindTableJsonExcel.do" style="color: red;background: -webkit-linear-gradient(top, #fff, #e3e3e3);background: -o-linear-gradient(top, #fff, #e3e3e3);
-    background: -moz-linear-gradient(top, #fff, #e3e3e3);background: linear-gradient(top, #fff, #e3e3e3);
-    border-color: #e3e3e3; padding: 2px 10px;">导出报表</a></li>
+					<li class="con__header--active con__header_none">班列</li>
+					<li><a href="${PATH}/pc/ExportExcel/findBindTableJsonExcel.do" class="red_print">导出报表</a></li>
 				</ul>
 			</header>
 		

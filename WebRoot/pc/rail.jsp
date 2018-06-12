@@ -107,7 +107,7 @@
           <ul>
            <!--  <li>班列</li>
             <li>定位轨迹</li> -->
-            <li class="con__header--active">地理围栏</li>
+            <li class="con__header--active" style="background:none;">地理围栏</li>
           </ul>
         </header>
         <main class="con__main">

@@ -34,7 +34,7 @@
              
                 --%>
                 <ul>
-                    <li class="con__header--active" style="background:none;">用户</li>
+                    <li class="con__header--active con__header_none">用户</li>
                 </ul> 
                
                 <a href="${PATH}/user/userRegist.do" class="btn--createUser" style="color: #333;
@@ -106,7 +106,7 @@
         <div class="user__wrap">
             <header class="con__header">
                 <ul>
-                    <li class="con__header--active">用户</li>
+                    <li class="con__header--active con__header_none">用户</li>
                 </ul>
             </header>
             <main class="con__main">

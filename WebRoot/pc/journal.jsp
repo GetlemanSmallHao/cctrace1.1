@@ -102,11 +102,8 @@
       <div class="warnDetails__wrap">
         <header class="con__header">
           <ul>
-            <li data-con="${PATH }/data/warnDetails.html" class="con__header--active" style="background:none;">告警信息</li>
-            <li><a href = "" id = "a1" onclick="excel();" style="color:red;
-    background: -webkit-linear-gradient(top, #fff, #e3e3e3);background: -o-linear-gradient(top, #fff, #e3e3e3);
-    background: -moz-linear-gradient(top, #fff, #e3e3e3);background: linear-gradient(top, #fff, #e3e3e3);
-    border-color: #e3e3e3; padding: 2px 10px;">导出报表</a></li>
+            <li data-con="${PATH }/data/warnDetails.html" class="con__header--active con__header_none">告警信息</li>
+            <li><a href = "" id = "a1" onclick="excel();" class="red_print">导出报表</a></li>
           </ul>
          
         </header>

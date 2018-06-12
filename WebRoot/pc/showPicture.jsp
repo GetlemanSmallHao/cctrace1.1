@@ -171,7 +171,7 @@
 		<div class="sensorTable__wrap">
 			<header class="con__header">
 			<ul>
-				<li class="con__header--active">温度折线图</li>
+				<li class="con__header--active" style="background:none;">温度折线图</li>
 			</ul>
 			<!--<a class="con__header&#45;&#45;refresh" href="javascript:;">--> <!--<i></i>-->
 			<!--刷新--> <!--</a>--> </header>

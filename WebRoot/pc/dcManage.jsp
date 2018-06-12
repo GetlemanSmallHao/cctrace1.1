@@ -28,7 +28,7 @@
     <div class="dcManage__wrap">
       <header class="con__header">
         <ul>
-          <li data-con="${PATH }/data/dcManage.html" class="con__header--active" style="background:none;">现有堆场</li>
+          <li data-con="${PATH }/data/dcManage.html" class="con__header--active con__header_none">现有堆场</li>
         </ul>
       
         <a class="con__header--add" href="javascript:;" style="color: #333;
@@ -88,7 +88,7 @@
         </div>
       </main>
     </div>
-    <div class="dcManage__wrap manage__add">
+    <div class="dcManage__wrap manage__add" style="display:block;">
       <header class="con__header">
         <ul>
           <li class="con__header--active">新增堆场</li>
@@ -99,7 +99,6 @@
           <span class="dcManage__main--header">新增堆场信息</span>
           <span>堆场名称：<input type="text" id="yardName" name="yardName"/></span>
           <p class="footer__btn">
-           <!--  <input type="submit" value="删除"/> -->
             <input type="submit" value="保存" onclick="regist()"/>
           </p>
         </div>

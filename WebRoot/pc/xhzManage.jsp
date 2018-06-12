@@ -28,14 +28,11 @@
     <div class="xhzManage__wrap">
       <header class="con__header">
         <ul>
-          <li data-con="${PATH }/data/xhzManage.html" class="con__header--active" style="background:none;">现有下货站</li>
+          <li data-con="${PATH }/data/xhzManage.html" class="con__header--active con__header_none">现有下货站</li>
         </ul>
        
-        <a class="con__header--add" href="javascript:;" style="color: #333;
-    background: -webkit-linear-gradient(top, #fff, #e3e3e3);background: -o-linear-gradient(top, #fff, #e3e3e3);
-    background: -moz-linear-gradient(top, #fff, #e3e3e3);background: linear-gradient(top, #fff, #e3e3e3);
-    border-color: #e3e3e3; padding: 0px 20px;">
-          新增下货站
+        <a class="con__header--add red_print" href="javascript:;" style="color:#333;padding: 0px 20px;">
+          	新增下货站
         </a>
       </header>
       <main class="con__main" style="overflow:auto;">
@@ -90,7 +87,7 @@
         </div>
       </main>
     </div>
-    <div class="xhzManage__wrap manage__add">
+    <div class="xhzManage__wrap manage__add" style="display:block;">
       <header class="con__header">
         <ul>
           <li class="con__header--active">新增下货站</li>
@@ -101,7 +98,6 @@
           <span class="xhzManage__main--header">新增下货站信息</span>
           <span>下货站名称：<input type="text" id="stationName" name="stationName"/></span>
           <p class="footer__btn">
-           <!--  <input type="submit" value="删除"/> -->
             <input type="submit" onclick="regist()" value="保存"/>
           </p>
         </div>
@@ -117,9 +113,7 @@
 <script type="text/javascript">
   	//添加下货站
 	function regist(){
-	
 		var stationName = $('#stationName').val();
-		
 		$.ajax({
 			url:'${PATH}/pc/xhzRegist.do',
 			type: 'post',
