@@ -10,6 +10,7 @@
     <meta name="renderer" content="webkit|ie-comp|ie-stand">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <%
 	pageContext.setAttribute("PATH", request.getContextPath());
 %> 
@@ -93,10 +94,14 @@ google.maps.event.addDomListener(window, 'load', showRail);
 <body>
 
 
-<div id="googleMap" style="width:100%;height:100%;margin:0 auto;">     </div>   
-<div style="position:absolute;left:90%;top:5%;">
-   		<a href="${PATH }/pc/rail/findHadRailName.do"><button id="btn" >退出显示</button>  </a>
-</div> 
+	<div id="googleMap" style="width:100%;height:100%;margin:0 auto;">     </div>   
+	<div style="position:fixed;left:80%;top:5%;">
+  		<a href="${PATH }/pc/rail/findHadRailName.do">
+  			<button id="btn" style="color:#333;background:linear-gradient(#33a69b,#fff);border:1px solid #33a69b;
+  			width:110px;height:30px;line-height:30px;border-radius:5px;cursor:pointer;"><i class="fa fa-power-off fa-lg" 
+  			style="color:red;margin-right:5px;" aria-hidden="true"></i>退出显示</button>
+		</a>
+	</div> 
     <input name="rs" id="rs" value="${rs }" type="hidden">
     <input name="lats" id="lats" value="${lats }" type="hidden">
     <input name="lons" id="lons" value="${lons }" type="hidden">

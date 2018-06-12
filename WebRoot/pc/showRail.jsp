@@ -92,11 +92,12 @@ google.maps.event.addDomListener(window, 'load', showRail);
 
 <body>
 
-
-<div id="googleMap" style="width:100%;height:100%;margin:0 auto;">     </div>   
-<div style="position:absolute;left:90%;top:5%;">
-   		<a href="${PATH }/pc/rail/findHadRailName.do"><button id="btn" >退出显示</button>  </a>
-</div> 
+	<div id="googleMap" style="width:100%;height:100%;margin:0 auto;">     </div>   
+	<div style="position:absolute;left:90%;top:5%;">
+   		<a href="${PATH }/pc/rail/findHadRailName.do">
+   			<button id="btn">退出显示</button>
+		</a>
+	</div> 
     <input name="rs" id="rs" value="${rs }" type="hidden">
     <input name="lats" id="lats" value="${lats }" type="hidden">
     <input name="lons" id="lons" value="${lons }" type="hidden">

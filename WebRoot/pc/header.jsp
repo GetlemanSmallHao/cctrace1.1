@@ -57,7 +57,6 @@
             <c:if test="${sessionScope.user.role=='root'||sessionScope.user.role=='admin'}">
                <li><a href="${PATH}/pc/alert/getRecentFourDaysAlerts.do">告警信息 </a></li>
             </c:if>
-            
           </ul>
      		
     	</div>
