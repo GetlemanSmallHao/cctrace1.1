@@ -66,15 +66,13 @@
 		border-bottom-color:transparent;border-left-color:transparent;border-right-color:transparent;
 	 }
 	 /* 分为四个模块的结构样式 （定位、冷藏箱、告警、传感器）*/
-	 .con__location{float:left;width:300px;height:60%;border: 3px solid transparent;	
-	 }
-	 .location__wrap{
-	 	width: 100%;height: 100%;border: 2px solid #c3c3c3;border-radius: 3px;
-	 }
+	 .con__location{float:left;width:300px;height:60%;}
+	 .location__wrap{width: 100%;height: 100%;}
 	 .con__container{
 	 	/* -webkit-width:calc(100% - 300px);-moz-width:calc(100% - 300px);width:calc(100% - 300px); */
 	 	-webkit-width:100%;-moz-width:100%;width:100%; }
-	 .con__warning{width:300px;height:40%;display:none;}
+	 .con__warning{width:300px;height:40%;border:none;}
+	 .warning__wrap{border:none;}
 	 .con__sensor{
 	 	/* -webkit-width:calc(100% - 300px);-moz-width:calc(100% - 300px);width:calc(100% - 300px); */
 	 	-webkit-width:100%;-moz-width:100%;width:100%; }
@@ -189,66 +187,7 @@
 		</div>
 	</div>
 	<!--<div class="con__sensor bindEvent clearfix"> 加bindEvent可以切换导航且可以异步加载功能-->
-	<!-- 告警模块 -->
-	<div class="con__warning clearfix">
-		<div class="warning__wrap">
-			<header class="con__header">
-			<ul>
-				<li data-con="${PATH}/data/warning.html" class="con__header--active" onclick="showgaojingxinxi()">告警提示</li>
-				<li data-con="${PATH}/data/warning.html" class="con__header--active" onclick="showweilantongzhi()">围栏通知</li>
-			</ul>
-
-			</header>
-			<main class="con__main"> <!-- 报警信息  -->
-			
-			<div id="gaojingxinxi">
-				<table>
-					<thead>
-						<tr>
-							<td><div style="padding-left:3px;" class="leftDown--div2">告警信息</div></td>
-							<td><div style="padding-left:3px;" class="leftDown--div3">当前未查看记录数</div></td>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td style="background-color:transparent;">
-								<div class="leftDown--div2">
-									<a href="${PATH}/pc/alert/getRecentFourDaysAlerts.do">查看明细</a>
-								</div>
-							</td>
-							<td><div class="leftDown--div3" id="countOfNRA"></div></td>
-						</tr>
-					</tbody>
-				</table>
-			</div>
-			
-			
-			<div id="weilantongzhi" style="display:none">
-				<table>
-					<thead>
-						<tr>
-							<td><div style="padding-left:3px;" class="leftDown--div2">围栏通知</div></td>
-							<td><div style="padding-left:3px;" class="leftDown--div3">当前未查看记录数</div></td>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td style="background-color:transparent;">
-								<div class="leftDown--div2">
-									<a href="${PATH}/pc/alert/getRecentOneDaysGeoAlerts.do">查看明细</a>
-								</div>
-							</td>
-							<td><div class="leftDown--div3" id="geoCount"></div></td>
-						</tr>
-					</tbody>
-				</table>
-			</div>
-			
-			
-			
-			</main>
-		</div>
-	</div>
+	
 	<!-- 传感器模块 -->
 	<div class="con__sensor clearfix">
 		<div class="sensor__wrap">
@@ -658,14 +597,49 @@
 				</div>
 			</main>
 			<!-- 传感器结束 -->
-			<main class="con__main tab_main" style="display:none;">bbb </main>
-			<main class="con__main tab_main" style="display:none;">ccc </main>
+			<main class="con__main tab_main" style="display:none;">bbb</main>
+			<main class="con__main tab_main" style="display:none;">
+				<span>告警信息</span>
+				<table id="alarm_table">
+					<thead>
+						<tr>
+							<td><div class="">序号</div></td>
+							<td><div class="">冷藏箱编号</div></td>
+							<td><div class="">报警开始时间</div></td>
+							<td><div class="">告警编号   </div></td>
+							<td><div class="">报警类型</div></td>
+							<td><div class="">报警内容</div></td>
+							<td><div class="">报警时的纬度</div></td>
+							<td><div class="">报警时的经度</div></td>
+							<td><div class="">报警位置</div></td>
+							<td><div class="">读取状态</div></td>
+						</tr>
+					</thead>
+					<tbody id="show_alarm">
+						<tr>
+							<td>1</td>
+							<td>无数据！</td>
+							<td>无数据！</td>
+							<td>无数据！</td>
+							<td>无数据！</td>
+							<td>无数据！</td>
+							<td>无数据！</td>
+							<td>无数据！</td>
+							<td>无数据！</td>
+							<td>无数据！</td>
+						</tr>
+						<tr>
+							<td style="background-color:transparent; color:inherit;">无数据！</td>
+						</tr>
+					</tbody>
+				</table>
+			</main>
 			<main class="con__main tab_main" style="display:none;">
 				<div class="con__location">
 					<div class="location__wrap">
 						<header class="con__header">
 							<ul>
-								<li class="con__header--active" style="background:none;">定位</li>
+								<li class="con__header--active con__header_none">定位</li>
 							</ul>
 						</header>
 						<main class="con__main">
@@ -1103,8 +1077,7 @@
 			function askCountOfNoReadedAlert() {
 				var countOfNoReaded = 0;
 
-				$
-						.ajax({
+				$.ajax({
 							url : "${pageContext.request.contextPath}/pc/alert/getCountOfNoReadedALertsBeforeDays.do",
 							data : "",
 							async : false,
@@ -1365,6 +1338,7 @@
 				var role1 =<%=role1%>;
 				build_sensor_table(containerId1);
 				doInitMap(containerId1);
+				//console.log('点击列表')
 			});
 
 			//解析显示传感器数据
