@@ -14,12 +14,12 @@
 									<td><div class="leftDown--div3">${alert.lat}</div></td>
 									<td><div class="leftDown--div2">${alert.lon}</div></td>
 									<td><div class="leftDown--div2">${alert.gpsPosition}</div></td>
-									<td><div class="leftDown--div3">
+									<td><div class="leftDown--div3 data_readed">
 											<c:choose>
 												<c:when test="${alert.readed=='no'}">未读</c:when>
 												<c:otherwise>已读</c:otherwise>
 											</c:choose>
 										</div></td>
-									<td style="display:none;"><div class="leftDown--div2">${alert.id}</div></td>	
+									<td style="display:none;"><div class="leftDown--div2 data_alert_id">${alert.id}</div></td>	
 								</tr>
 							</c:forEach>

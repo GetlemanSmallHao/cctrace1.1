@@ -120,13 +120,13 @@
 											<td><div class="leftDown--div3">${alert.lat}</div></td>
 											<td><div class="leftDown--div2">${alert.lon}</div></td>
 											<td><div class="leftDown--div2">${alert.gpsPosition}</div></td>
-											<td><div class="leftDown--div3">
+											<td><div class="leftDown--div3 data_readed">
 													<c:choose>
 														<c:when test="${alert.readed=='no'}">未读</c:when>
 														<c:otherwise>已读</c:otherwise>
 													</c:choose>
 												</div></td>
-											<td style="display:none;"><div class="leftDown--div2">${alert.id}</div></td>	
+											<td style="display:none;"><div class="leftDown--div2 data_alert_id">${alert.id}</div></td>	
 										</tr>
 							</c:forEach>
 									
@@ -218,8 +218,6 @@
 				form.append(input3);
 				form.submit();
 				
-				
-				
 	}
 	
 	function searchAlert(){
@@ -227,145 +225,19 @@
 		var startTime = $.trim($("#startTime").val());
 		var endTime = $.trim($("#endTime").val());
 		$.ajax({
-					url : "${pageContext.request.contextPath}/pc/alert/showAlertsInTwoTimeAndContainerId.do",
-					data : {
-						"containerId" : containerId,
-						"startTime"  : startTime,
-						"endTime"    : endTime
-					},
-					type : "get",
-					success : function(result) {
-						$("#showSelectAlerts").html(result);
-						/* var field = result.state;
-						var mess = result.message;
-						if (field == '0') {
-						var addHtml = $("#alert_table tbody").empty();
-						var alerts = result.alerts;
-						var htmlStr = "";
-						$.each(alerts,function(index,item) {
-											htmlStr += "<tr>";
-											htmlStr += "<td><div class='leftDown--div1'>"
-													+ (index+1)
-													+ "</div></td> ";
-											htmlStr += "<td><div class='containerId '>"
-													+ item.containerId
-													+ "</div></td>";
-											htmlStr += "<td><div class='leftDown--div2'>"
-													+ item.alertTime
-													+ "</div></td>";
-
-											htmlStr += "<td><div class='leftDown--div2'>"
-													+ item.alarm_num 
-													+ "</div></td>";
-
-											htmlStr += "<td><div class='leftDown--div2'>"
-													+ item.alertType
-													+ "</div></td>";
-											htmlStr += "<td><div class='leftDown--div2'>"
-													+ item.alertContent
-													+ "</div></td>";
-
-											htmlStr += "<td><div class='leftDown--div2'>"
-													+ item.lat
-													+ "</div></td>";
-											htmlStr += "<td><div class='leftDown--div2'>"
-													+ item.lon
-													+ "</div></td>";
-											if(item.readed == "no"){
-												htmlStr += "<td><div class='leftDown--div3'>"+"未读"+"</div></td>";  
-												}else{
-													htmlStr += "<td><div class='leftDown--div3'>"+"已读"+"</div></td>";  
-												}
-
-											htmlStr += "</tr>";
-
-										});
-						//return htmlStr;
-						addHtml.append(htmlStr);
-					}
-						else{
-							alert(mess);
-							//console.log(mess);
-						}	*/
-					} 
-				});
+			url : "${pageContext.request.contextPath}/pc/alert/showAlertsInTwoTimeAndContainerId.do",
+			data : {
+				"containerId" : containerId,
+				"startTime"  : startTime,
+				"endTime"    : endTime
+			},
+			type : "get",
+			success : function(result) {
+			alert(result)
+				$("#showSelectAlerts").html(result);
+			} 
+		});
 	}
-	/* 
-		$(function() {
-			$("#search").click(function() {
-								var containerId = $.trim($("#containerId").val());
-								var startTime = $.trim($("#startTime").val());
-								var endTime = $.trim($("#endTime").val());
-								$.ajax({
-											url : "${PATH}/pc/alert/showAlertsInTwoTimeAndContainerId.do",
-											data : {
-												"containerId" : containerId,
-												"startTime"  : startTime,
-												"endTime"    : endTime
-											},
-											type : "get",
-											success : function(result) {
-												var field = result.state;
-												var mess = result.message;
-												if (field == '0') {
-												var addHtml = $(
-														"#alert_table tbody")
-														.empty();
-												var alerts = result.alerts;
-												var htmlStr = "";
-												$
-														.each(
-																alerts,
-																function(index,
-																		item) {
-																	htmlStr += "<tr>";
-																	htmlStr += "<td><div class='leftDown--div1'>"
-																			+ (index+1)
-																			+ "</div></td> ";
-																	htmlStr += "<td><div class='leftDown--div1'><button class='main__amend'>修改</button> </div></td>";
-																	htmlStr += "<td><div class='containerId '>"
-																			+ item.alertTime
-																			+ "</div></td>";
-																	htmlStr += "<td><div class='leftDown--div2'>"
-																			+ item.alertLongTime
-																			+ "</div></td>";
-
-																	htmlStr += "<td><div class='leftDown--div2'>"
-																			+ item.containerId
-																			+ "</div></td>";
-
-																	htmlStr += "<td><div class='leftDown--div2'>"
-																			+ item.alertType
-																			+ "</div></td>";
-																	htmlStr += "<td><div class='leftDown--div2'>"
-																			+ item.alertContent
-																			+ "</div></td>";
-
-																	htmlStr += "<td><div class='leftDown--div2'>"
-																			+ item.lat
-																			+ "</div></td>";
-																	htmlStr += "<td><div class='leftDown--div2'>"
-																			+ item.lon
-																			+ "</div></td>";
-																	if(item.readed == "no"){
-																		htmlStr += "<td><div class='leftDown--div3'>"+"未读"+"</div></td>";  
-																		}else{
-																			htmlStr += "<td><div class='leftDown--div3'>"+"已读"+"</div></td>";  
-																		}
-
-																	htmlStr += "</tr>";
-
-																});
-												addHtml.append(htmlStr);
-											}
-												else{
-													console.log(mess);
-												}	
-											}
-										});
-							
-							});
-		}); */
 	</script>
 	<script type="text/javascript">
 		var maxAlertId = 0;
@@ -419,9 +291,11 @@
 			$("#countOfNRA").text(countOfNRA);
 		});
 		$(".alertBind").on("click","tr",function(){
-			
-			var alertId =  $($(this).find("div")[11]).text();
-			var readStateEle = $($(this).find("div")[10]);
+			if($(this).children('td').text() == '无数据！'){
+				return;
+			};
+			var alertId = $(this).find(".data_alert_id").text();
+			var readStateEle = $(this).find(".data_readed");
 			var readState = readStateEle.text().replace(/\s*/g, "");
 			if(readState=='已读'){
 				layer.msg("这是一个已读的信息!");
@@ -436,7 +310,7 @@
 				success : function(result) {
 					if(result.readed=='yes'){
 						readStateEle.text("已读");
-						var  countOfNRA = askCountOfNoReadedAlert();
+						var countOfNRA = askCountOfNoReadedAlert();
 						$("#countOfNRA").text(countOfNRA);
 					}
 				}
@@ -453,11 +327,11 @@
 			istime : true,
 			istoday : true,
 			choose : function(datas) {
-				//        console.log(datas);
+				//console.log(datas);
 				//console.log(new Date(datas));//Thu Jul 13 2017 15:03:53 GMT+0800 (中国标准时间)
 				//console.log(new Date(datas).getTime());//1499929433000
 				//console.log((new Date(datas)).valueOf());//1499929433000
-				//        console.log(Date.parse(new Date(datas)));//1499929433000
+				//console.log(Date.parse(new Date(datas)));//1499929433000
 				var nowDate = Date.parse(new Date(laydate.now()));
 				var maxDate = Date.parse(new Date(datas)) + 7 * 24 * 60 * 60
 						* 1000;
