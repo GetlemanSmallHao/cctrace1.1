@@ -882,3 +882,38 @@ img {
   margin: 3px;
   height: 19px;
 }
+/* 弹窗公共样式 */
+.popup_div{
+	width: 275px;
+	height: 165px;
+	position:absolute;
+	left:0;
+	right:0; 
+	top:0; 
+	bottom:0;
+	margin:auto;
+	border-radius: 10px;
+	background: #f8f8f8;
+	text-align: center;
+	display: none;
+}
+.popup_div i{
+	color: #70b3ad;
+	padding-top: 20px;
+}
+.popup_read{
+	font-size:16px;
+	padding: 20px 0;
+	border-bottom: 1px solid #bfbfbf;
+}
+.popup_div span{
+	width:135px;
+	height:47px;
+	line-height:47px;
+	display:inline-block;
+	font-size: 16px;
+	cursor: pointer;
+}
+.popup_div span:nth-of-type(1){
+	border-right: 1px solid #bfbfbf;
+}

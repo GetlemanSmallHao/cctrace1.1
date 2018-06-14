@@ -23,6 +23,7 @@
 <meta http-equiv="description" content="This is my page">
 <link rel="stylesheet" href="css/index.css" />
 <link rel="stylesheet" href="css/laydate.css" />
+<link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
 	<!-- 导航 -->
@@ -154,6 +155,12 @@
 		</div>
 	</div>
 	</main>
+	<div class="popup_div">
+		<i class="fa fa-info-circle fa-3x" aria-hidden="true"></i>
+		<p class="popup_read">确认已读</p>
+		<span class="popup_go">确认</span>
+		<span class="popup_hide">取消</span>
+	</div>
 	<script type="text/javascript"
 		src="${pageContext.request.contextPath}/js/jquery-1.11.3.js"></script>
 	<script src="${pageContext.request.contextPath}/js/index.js"></script>
@@ -233,7 +240,6 @@
 			},
 			type : "get",
 			success : function(result) {
-			alert(result)
 				$("#showSelectAlerts").html(result);
 			} 
 		});
@@ -301,19 +307,26 @@
 				layer.msg("这是一个已读的信息!");
 				return;
 			}
-			$.ajax({
-				url:"${pageContext.request.contextPath}/pc/alert/modifyAlertReadStateByAlertId.do",
-				data:{"alertId":alertId},
-				type:"post",
-				async : false,
-				dataType : "json",
-				success : function(result) {
-					if(result.readed=='yes'){
-						readStateEle.text("已读");
-						var countOfNRA = askCountOfNoReadedAlert();
-						$("#countOfNRA").text(countOfNRA);
+			$('.popup_div').show();
+			$('.popup_hide').on('click',function(){
+				$('.popup_div').hide();
+			});
+			$('.popup_go').on('click',function(){
+				$('.popup_div').hide();
+				$.ajax({
+					url:"${pageContext.request.contextPath}/pc/alert/modifyAlertReadStateByAlertId.do",
+					data:{"alertId":alertId},
+					type:"post",
+					async : false,
+					dataType : "json",
+					success : function(result) {
+						if(result.readed=='yes'){
+							readStateEle.text("已读");
+							var countOfNRA = askCountOfNoReadedAlert();
+							$("#countOfNRA").text(countOfNRA);
+						}
 					}
-				}
+				});
 			});
 		});
 		
