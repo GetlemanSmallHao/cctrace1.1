@@ -91,7 +91,7 @@
 								<td><div class="">序号</div></td>
 								<td><div class="">冷藏箱编号</div></td>
 								<td><div class="">报警开始时间</div></td>
-								<%--<td><div class="">最近一次报警时间</div></td>--%>
+								<td><div class="">最近一次报警时间</div></td>
 								<td><div class="">告警编号   </div></td>
 								<td><div class="">报警类型</div></td>
 								<td><div class="">报警内容</div></td>
@@ -114,7 +114,7 @@
 											<td><div class="leftDown--div2">${status.index+1}</div></td>
 											<td><div class="leftDown--div2">${alert.containerId}</div></td>
 											<td><div class="leftDown--div3">${alert.alertTime}</div></td>
-											<%--<td><div class="leftDown--div3">${alert.updateTime}</div></td>--%>
+											<td><div class="leftDown--div3">${alert.updateTime}</div></td>
 											<td><div class="leftDown--div2">${alert.alarm_num }</div></td>
 											<td><div class="leftDown--div3">${alert.alertType}</div></td>
 											<td><div class="leftDown--div2">${alert.alertContent}</div></td>
@@ -155,6 +155,7 @@
 		</div>
 	</div>
 	</main>
+	<!-- 删除提示窗 -->
 	<div class="popup_div">
 		<i class="fa fa-info-circle fa-3x" aria-hidden="true"></i>
 		<p class="popup_read">确认已读</p>
@@ -179,7 +180,6 @@
 	
 	//下载报表
 	function exportAlertExcelFile(){
-		debugger;
 		var containerId = $.trim($("#containerId").val());
 		var startTime = $.trim($("#startTime").val());
 		var endTime = $.trim($("#endTime").val());
@@ -226,7 +226,6 @@
 				form.submit();
 				
 	}
-	
 	function searchAlert(){
 		var containerId = $.trim($("#containerId").val());
 		var startTime = $.trim($("#startTime").val());
@@ -288,12 +287,9 @@
 		}
 	
 		$(function() {
-			console.log(maxAlertId);
 			maxAlertId = askMaxAlertId();
-			console.log(maxAlertId);
 			var compareAlertInterval = setInterval("compareMaxAlertId()",150000);
 			var countOfNRA = askCountOfNoReadedAlert();
-			console.log("countOfNRA");
 			$("#countOfNRA").text(countOfNRA);
 		});
 		$(".alertBind").on("click","tr",function(){

@@ -24,6 +24,7 @@
 		http://localhost:3306/cctrace1.0
  -->
 <link rel="stylesheet" href="${PATH}/css/laydate.css" />
+<link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <script src="http://maps.google.cn/maps/api/js?key=AIzaSyBncQ86ns5F-I5xF5_dE3Gf2_EauuXQXJA&sensor=false&libraries=places" type="text/javascript"></script>
 <script type="text/javascript">
 	var path = "${PATH}";
@@ -606,6 +607,7 @@
 							<td><div class="">序号</div></td>
 							<td><div class="">冷藏箱编号</div></td>
 							<td><div class="">报警开始时间</div></td>
+							<td><div class="">最近一次报警时间</div></td>
 							<td><div class="">告警编号   </div></td>
 							<td><div class="">报警类型</div></td>
 							<td><div class="">报警内容</div></td>
@@ -616,18 +618,6 @@
 						</tr>
 					</thead>
 					<tbody id="show_alarm">
-						<tr>
-							<td>1</td>
-							<td>无数据！</td>
-							<td>无数据！</td>
-							<td>无数据！</td>
-							<td>无数据！</td>
-							<td>无数据！</td>
-							<td>无数据！</td>
-							<td>无数据！</td>
-							<td>无数据！</td>
-							<td>无数据！</td>
-						</tr>
 						<tr>
 							<td style="background-color:transparent; color:inherit;">无数据！</td>
 						</tr>
@@ -655,7 +645,13 @@
 		</div>
 	</div>
 </main>
-
+<!-- 删除提示窗 -->
+<div class="popup_div">
+	<i class="fa fa-info-circle fa-3x" aria-hidden="true"></i>
+	<p class="popup_read">确认已读</p>
+	<span class="popup_go">确认</span>
+	<span class="popup_hide">取消</span>
+</div>
 	<script src="${PATH}/js/jquery-3.2.1.js"></script>
 	<script src="${PATH}/js/index.js"></script>
 	<script src="${PATH}/js/layer_3.1.0/layer.js"></script>
@@ -795,7 +791,7 @@
 					type : "get",
 					success : function(result) {
 					//console.log(result);
-						//解析显示冷藏箱数据
+						//解析显示冷藏箱数据,显示列表
 						build_ccdatas_table(result,pn,result.extend.totalSize,ranking,orderStr);
 					}
 				});
@@ -811,7 +807,7 @@
 				data : "",
 				type : "get",
 				success : function(result) {
-					////解析显示堆场列表
+					//解析显示堆场列表
 					build_Dc_list(result);
 				}
 			});
@@ -1119,6 +1115,7 @@
 			//解析显示冷藏箱数据
 			
 			var timerInit;//冷藏箱定时器储存  新增
+			
 			function build_ccdatas_table(result,pn,totalSize,ranking,order) {
 				if(pn != 1){
 					var addHtml = $("#ccdatas_table tbody");
@@ -1339,11 +1336,29 @@
 				build_sensor_table(containerId1);
 				doInitMap(containerId1);
 				//console.log('点击列表')
+				build_waring(containerId1);
 			});
-
+			//解析警告提示为  当前选中冷箱的前一天的告警提示
+			function build_waring(containerId){
+				var curDate = new Date();
+				var preDate = new Date(curDate.getTime() - 24*60*60*1000); 
+				var startTime = getNowFormatDate(preDate);
+				var endTime = getNowFormatDate(curDate);
+				$.ajax({
+					url : "${pageContext.request.contextPath}/pc/alert/showAlertsInTwoTimeAndContainerId.do",
+					data : {
+						"containerId" : containerId,
+						"startTime"  : startTime,
+						"endTime"    : endTime
+					},
+					type : "get",
+					success : function(result) {
+						$("#show_alarm").html(result);
+					} 
+				});
+			}
 			//解析显示传感器数据
 			function build_sensor_table(containerId) {
-				//console.log("11111111");
 				$.ajax({
 							url : "${PATH}/pc/sensor/findIndexSensorWithJson.do",
 							type : "get",
@@ -2612,9 +2627,58 @@
 					$('.tab_main').hide();
 					$('.tab_main:nth-of-type('+ id +')').show();
 				}
-				
 			});
+			
 		})
+		/* 获取当前时间为固定格式 */
+		function getNowFormatDate(date) {
+		    var seperator1 = "-";
+		    var seperator2 = ":";
+		    var month = date.getMonth() + 1;
+		    var strDate = date.getDate();
+		    if (month >= 1 && month <= 9) {
+		        month = "0" + month;
+		    }
+		    if (strDate >= 0 && strDate <= 9) {
+		        strDate = "0" + strDate;
+		    }
+		    var currentdate = date.getFullYear() + seperator1 + month + seperator1 + strDate
+		            + " " + date.getHours() + seperator2 + date.getMinutes()
+		            + seperator2 + date.getSeconds();
+		    return currentdate;
+		}
+		//点击修改告警提示为已读
+		$("#show_alarm").on("click","tr",function(){
+			if($(this).children('td').text() == '无数据！'){
+				return;
+			};
+			var alertId = $(this).find(".data_alert_id").text();
+			var readStateEle = $(this).find(".data_readed");
+			var readState = readStateEle.text().replace(/\s*/g, "");
+			if(readState=='已读'){
+				layer.msg("这是一个已读的信息!");
+				return;
+			}
+			$('.popup_div').show();
+			$('.popup_hide').on('click',function(){
+				$('.popup_div').hide();
+			});
+			$('.popup_go').on('click',function(){
+				$('.popup_div').hide();
+				$.ajax({
+					url:"${pageContext.request.contextPath}/pc/alert/modifyAlertReadStateByAlertId.do",
+					data:{"alertId":alertId},
+					type:"post",
+					async : false,
+					dataType : "json",
+					success : function(result) {
+						if(result.readed=='yes'){
+							readStateEle.text("已读");
+						}
+					}
+				});
+			});
+		});
 	</script>
 </body>
 </html>
