@@ -15,6 +15,9 @@
 		<result column="carGoType" jdbcType="VARCHAR" property="carGoType" />
 		<result column="companyId" jdbcType="INTEGER" property="companyId" />
 		<result column="remark" jdbcType="VARCHAR" property="remark" />
+		<result column="yardName" jdbcType="VARCHAR" property="yardName" />
+		<result column="theNextStationName" jdbcType="VARCHAR" property="theNextStationName" />
+		<result column="buMenM" jdbcType="VARCHAR" property="buMenM" />
 	</resultMap>
 
 	<sql id="Base_Column_List">
@@ -29,7 +32,10 @@
 		theNextStationId,
 		carGoType,
 		companyId,
-		remark
+		remark,
+		yardName,
+		theNextStationName,
+		buMenM
 	</sql>
 
 	<select id="selectAllBindTables" resultType="com.cctrace.entity.BindTable">
@@ -126,6 +132,15 @@
 			<if test="remark != null">
 				remark,
 			</if>
+			<if test="yardName != null">
+				yardName,
+			</if>
+			<if test="theNextStationName != null">
+				theNextStationName,
+			</if>
+			<if test="buMenM != null">
+				buMenM,
+			</if>
 		</trim>
 		<trim prefix="values (" suffix=")" suffixOverrides=",">
 			<if test="id != null">
@@ -166,6 +181,15 @@
 			</if>
 			<if test="remark != null">
 				#{remark,jdbcType=VARCHAR},
+			</if>
+			<if test="yardName != null">
+				#{yardName,jdbcType=VARCHAR},
+			</if>
+			<if test="theNextStationName != null">
+				#{theNextStationName,jdbcType=VARCHAR},
+			</if>
+			<if test="buMenM != null">
+				#{buMenM,jdbcType=VARCHAR},
 			</if>
 		</trim>
 	</insert>
@@ -210,6 +234,15 @@
 			</if>
 			<if test="remark != null">
 				remark = #{remark,jdbcType=VARCHAR},
+			</if>
+			<if test="yardName != null">
+				yardName = #{yardName,jdbcType=VARCHAR},
+			</if>
+			<if test="theNextStationName != null">
+				theNextStationName = #{theNextStationName,jdbcType=VARCHAR},
+			</if>
+			<if test="buMenM != null">
+				buMenM = #{buMenM,jdbcType=VARCHAR},
 			</if>
 		</set>
 		where containerId = #{containerId,jdbcType=VARCHAR}

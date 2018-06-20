@@ -32,6 +32,7 @@ public class BindTable implements Serializable {
 	
 	private String yardName;
 	private String theNextStationName;
+	private String buMenM;
 
 	public BindTable() {
 		super();
@@ -41,7 +42,8 @@ public class BindTable implements Serializable {
 	public BindTable(Integer id, String operator, String containerId,
 			String deviceId, String routeType, String trainId, String bindTime,
 			Long bindLongTime, Integer yardId, Integer theNextStationId,
-			String carGoType, Integer companyId, String remark) {
+			String carGoType, Integer companyId, String remark,
+			String yardName, String theNextStationName, String buMenM) {
 		super();
 		this.id = id;
 		this.operator = operator;
@@ -56,9 +58,12 @@ public class BindTable implements Serializable {
 		this.carGoType = carGoType;
 		this.companyId = companyId;
 		this.remark = remark;
+		this.yardName = yardName;
+		this.theNextStationName = theNextStationName;
+		this.buMenM = buMenM;
 	}
 
-	
+
 	
 	public String getRemark() {
 		return remark;
@@ -188,6 +193,16 @@ public class BindTable implements Serializable {
 	}
 
 
+	public String getBuMenM() {
+		return buMenM;
+	}
+
+
+	public void setBuMenM(String buMenM) {
+		this.buMenM = buMenM;
+	}
+
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -196,6 +211,7 @@ public class BindTable implements Serializable {
 				+ ((bindLongTime == null) ? 0 : bindLongTime.hashCode());
 		result = prime * result
 				+ ((bindTime == null) ? 0 : bindTime.hashCode());
+		result = prime * result + ((buMenM == null) ? 0 : buMenM.hashCode());
 		result = prime * result
 				+ ((carGoType == null) ? 0 : carGoType.hashCode());
 		result = prime * result
@@ -213,8 +229,14 @@ public class BindTable implements Serializable {
 		result = prime
 				* result
 				+ ((theNextStationId == null) ? 0 : theNextStationId.hashCode());
+		result = prime
+				* result
+				+ ((theNextStationName == null) ? 0 : theNextStationName
+						.hashCode());
 		result = prime * result + ((trainId == null) ? 0 : trainId.hashCode());
 		result = prime * result + ((yardId == null) ? 0 : yardId.hashCode());
+		result = prime * result
+				+ ((yardName == null) ? 0 : yardName.hashCode());
 		return result;
 	}
 
@@ -237,6 +259,11 @@ public class BindTable implements Serializable {
 			if (other.bindTime != null)
 				return false;
 		} else if (!bindTime.equals(other.bindTime))
+			return false;
+		if (buMenM == null) {
+			if (other.buMenM != null)
+				return false;
+		} else if (!buMenM.equals(other.buMenM))
 			return false;
 		if (carGoType == null) {
 			if (other.carGoType != null)
@@ -283,6 +310,11 @@ public class BindTable implements Serializable {
 				return false;
 		} else if (!theNextStationId.equals(other.theNextStationId))
 			return false;
+		if (theNextStationName == null) {
+			if (other.theNextStationName != null)
+				return false;
+		} else if (!theNextStationName.equals(other.theNextStationName))
+			return false;
 		if (trainId == null) {
 			if (other.trainId != null)
 				return false;
@@ -292,6 +324,11 @@ public class BindTable implements Serializable {
 			if (other.yardId != null)
 				return false;
 		} else if (!yardId.equals(other.yardId))
+			return false;
+		if (yardName == null) {
+			if (other.yardName != null)
+				return false;
+		} else if (!yardName.equals(other.yardName))
 			return false;
 		return true;
 	}
@@ -305,7 +342,9 @@ public class BindTable implements Serializable {
 				+ ", bindTime=" + bindTime + ", bindLongTime=" + bindLongTime
 				+ ", yardId=" + yardId + ", theNextStationId="
 				+ theNextStationId + ", carGoType=" + carGoType
-				+ ", companyId=" + companyId + ", remark=" + remark + "]";
+				+ ", companyId=" + companyId + ", remark=" + remark
+				+ ", yardName=" + yardName + ", theNextStationName="
+				+ theNextStationName + ", buMenM=" + buMenM + "]";
 	}
 
 	

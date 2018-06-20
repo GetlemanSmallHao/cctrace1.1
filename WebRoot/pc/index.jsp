@@ -107,6 +107,7 @@
 								<td><div style="width:27px;">序号</div></td>
 								<td><div style="width:33px;" class="main__caozuo">操作</div></td>
 								<td><div class="j-sort1" data-status="up" style="width:110px;">冷藏箱编号<span class="xsj xsjUp"></span></div></td>
+								<td><div class="" style="width:70px;">冷藏箱箱型</div></td>
 								<td><div class="j-sort7" data-status="up" style="width:115px;">GPS接收时间<span class="xsj xsjUp"></span></div></td>
 								<td><div class="j-sort10" data-status="up" style="width:150px;">地理位置<span class="xsj xsjUp"></span></div></td>
 								<td><div class="j-sort9" data-status="up" style="width:70px;">冷机告警<span class="xsj xsjUp"></span></div></td>
@@ -1121,7 +1122,7 @@
 					var addHtml = $("#ccdatas_table tbody");
 				}else{
 					var addHtml = $("#ccdatas_table tbody").empty();
-				}	
+				}
 				var ccdatas = result.extend.maps;
 				var htmlStr = "";
 				$.each(ccdatas,function(index, item) {
@@ -1136,6 +1137,9 @@
 					htmlStr += "<td><div style='width:33px;'><button class='main__amend'>修改</button> </div></td>";
 					htmlStr += "<td><div style='width:110px;' class='containerId '>"
 							+ item.ccdata.containerId
+							+ "</div></td>";
+					htmlStr += "<td><div style='width:70px;'>"
+							+ item.buMenM
 							+ "</div></td>";
 					if(item.ourccdata.nowTime != null){
 						htmlStr += "<td><div style='width:115px;'>"
@@ -1327,15 +1331,11 @@
 			//1、点击冷藏箱列表，相应传感器
 			$("#ccdatas_table tbody").on("click", "tr", function(e) {
 				containerId1 = $(this).find(".containerId").text();
-				//cId2 = $(this).find(".containerId").text();
 				sessionStorage.lastClickCid = $(this).find(".containerId").text();
-				//console.log(cId2);
 				//2、异步请求 并 解析显示传感器数据
-				//console.log(containerId1);
 				var role1 =<%=role1%>;
 				build_sensor_table(containerId1);
 				doInitMap(containerId1);
-				//console.log('点击列表')
 				build_waring(containerId1);
 			});
 			//解析警告提示为  当前选中冷箱的前一天的告警提示
@@ -1367,7 +1367,7 @@
 								//'pn'          : pn
 							},
 							success : function(result) {
-
+							
 								var sensorHtml = $("#sensor_table tbody").empty();
 								var ccdata = result.extend.maps;
 
@@ -1560,7 +1560,6 @@
 									sensorStr += " <td><div class='c-sensor4'>°C</div></td>";
 									sensorStr += "<td><div class='c-sensor5'><button data-id='setMenu2' class='setMenu__btn'>设置</button></div></td>";
 									sensorStr += "</tr>";
-									
 									
 									sensorStr += "<tr>";
 									sensorStr += "<td><div class='c-sensor1'>7</div></td> ";

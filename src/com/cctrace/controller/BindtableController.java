@@ -145,6 +145,7 @@ public class BindtableController {
 					mapAlert.put("startTime", end);
 					mapAlert.put("endTime", start);
 					String routeType;
+					String buMenM;
 					String trainId;
 					String carGoType;
 					String stationName = "";
@@ -163,6 +164,11 @@ public class BindtableController {
 						routeType = bindTable.getRouteType();
 					} else {
 						routeType = "";
+					}
+					if (null != bindTable.getBuMenM()) {
+						buMenM = bindTable.getBuMenM();
+					} else {
+						buMenM = "";
 					}
 					if (null != bindTable.getTrainId()) {
 						trainId = bindTable.getTrainId();
@@ -226,6 +232,7 @@ public class BindtableController {
 							Map<String, Object> map1 = new HashMap<String, Object>();
 							map1.put("ccdata", ccdata);
 							map1.put("ourccdata", ourCcdata);
+							map1.put("bindtable",bindTable);
 							map1.put("trainId", trainId);
 							map1.put("carGoType", carGoType);
 							map1.put("stationName", stationName);
@@ -239,6 +246,7 @@ public class BindtableController {
 							map1.put("communicationState", communicationState);
 							map1.put("ifAlert", ifAlert);
 							map1.put("remark", bindTable.getRemark());
+							map1.put("buMenM", bindTable.getBuMenM());
 							maps.add(map1);
 						}
 					}
@@ -288,6 +296,7 @@ public class BindtableController {
 				mapAlert.put("endTime", start);
 				count = daoService.selectAlertInBeforeSeconds(mapAlert);
 				String routeType;
+				String buMenM;
 				String trainId;
 				String carGoType;
 				String stationName = "";
@@ -306,6 +315,11 @@ public class BindtableController {
 					routeType = bindTable.getRouteType();
 				} else {
 					routeType = "";
+				}
+				if (null != bindTable.getBuMenM()) {
+					buMenM = bindTable.getBuMenM();
+				} else {
+					buMenM = "";
 				}
 				if (null != bindTable.getTrainId()) {
 					trainId = bindTable.getTrainId();
@@ -378,6 +392,7 @@ public class BindtableController {
 				Map<String, Object> map1 = new HashMap<String, Object>();
 				map1.put("ccdata", ccdata1);
 				map1.put("ourccdata", ourccdata);
+				map1.put("bindtable",bindTable);
 				map1.put("trainId", trainId);
 				map1.put("carGoType", carGoType);
 				map1.put("stationName", stationName);
@@ -391,6 +406,7 @@ public class BindtableController {
 				map1.put("communicationState", communicationState);
 				map1.put("ifAlert", ifAlert);
 				map1.put("remark", bindTable.getRemark());
+				map1.put("buMenM", bindTable.getBuMenM());
 				maps.add(map1);
 			}
 
@@ -429,6 +445,7 @@ public class BindtableController {
 				mapAlert.put("endTime", start);
 				count = daoService.selectAlertInBeforeSeconds(mapAlert);
 				String routeType;
+				String buMenM;
 				String trainId;
 				String carGoType;
 				String stationName = "";
@@ -447,6 +464,11 @@ public class BindtableController {
 					routeType = bindTable.getRouteType();
 				} else {
 					routeType = "";
+				}
+				if (null != bindTable.getBuMenM()) {
+					buMenM = bindTable.getBuMenM();
+				} else {
+					buMenM = "";
 				}
 				if (null != bindTable.getTrainId()) {
 					trainId = bindTable.getTrainId();
@@ -519,6 +541,7 @@ public class BindtableController {
 				Map<String, Object> map1 = new HashMap<String, Object>();
 				map1.put("ccdata", ccdata1);
 				map1.put("ourccdata", ourccdata);
+				map1.put("bindtable",bindTable);
 				map1.put("trainId", trainId);
 				map1.put("carGoType", carGoType);
 				map1.put("stationName", stationName);
@@ -532,6 +555,7 @@ public class BindtableController {
 				map1.put("communicationState", communicationState);
 				map1.put("ifAlert", ifAlert);
 				map1.put("remark", bindTable.getRemark());
+				map1.put("buMenM", bindTable.getBuMenM());
 				maps.add(map1);
 			}
 
@@ -662,6 +686,7 @@ public class BindtableController {
 					mapAlert.put("endTime", start);
 					count = daoService.selectAlertInBeforeSeconds(mapAlert);
 					String routeType;
+					String buMenM;
 					String trainId;
 					String carGoType;
 					String stationName = "";
@@ -680,6 +705,11 @@ public class BindtableController {
 						routeType = bindTable.getRouteType();
 					} else {
 						routeType = "";
+					}
+					if (null != bindTable.getBuMenM()) {
+						buMenM = bindTable.getBuMenM();
+					} else {
+						buMenM = "";
 					}
 					if (null != bindTable.getTrainId()) {
 						trainId = bindTable.getTrainId();
@@ -751,6 +781,7 @@ public class BindtableController {
 					Map<String, Object> map1 = new HashMap<String, Object>();
 					map1.put("ccdata", ccdata1);
 					map1.put("ourccdata", ourccdata);
+					map1.put("bindtable",bindTable);
 					map1.put("trainId", trainId);
 					map1.put("carGoType", carGoType);
 					map1.put("stationName", stationName);
@@ -764,6 +795,7 @@ public class BindtableController {
 					map1.put("communicationState", communicationState);
 					map1.put("ifAlert", ifAlert);
 					map1.put("remark", bindTable.getRemark());
+					map1.put("buMenM", bindTable.getBuMenM());
 					maps.add(map1);
 				}
 			} else if (order.equals("RemarkASC") || order.equals("RemarkDESC")) {
@@ -787,6 +819,7 @@ public class BindtableController {
 					mapAlert.put("endTime", start);
 					count = daoService.selectAlertInBeforeSeconds(mapAlert);
 					String routeType;
+					String buMenM;
 					String trainId;
 					String carGoType;
 					String stationName = "";
@@ -805,6 +838,11 @@ public class BindtableController {
 						routeType = bindTable.getRouteType();
 					} else {
 						routeType = "";
+					}
+					if (null != bindTable.getBuMenM()) {
+						buMenM = bindTable.getBuMenM();
+					} else {
+						buMenM = "";
 					}
 					if (null != bindTable.getTrainId()) {
 						trainId = bindTable.getTrainId();
@@ -876,6 +914,7 @@ public class BindtableController {
 					Map<String, Object> map1 = new HashMap<String, Object>();
 					map1.put("ccdata", ccdata1);
 					map1.put("ourccdata", ourCcdata);
+					map1.put("bindtable",bindTable);
 					map1.put("trainId", trainId);
 					map1.put("carGoType", carGoType);
 					map1.put("stationName", stationName);
@@ -889,6 +928,7 @@ public class BindtableController {
 					map1.put("communicationState", communicationState);
 					map1.put("ifAlert", ifAlert);
 					map1.put("remark", bindTable.getRemark());
+					map1.put("buMenM", bindTable.getBuMenM());
 					maps.add(map1);
 				}
 			} else {
@@ -912,6 +952,7 @@ public class BindtableController {
 					mapAlert.put("endTime", start);
 					count = daoService.selectAlertInBeforeSeconds(mapAlert);
 					String routeType;
+					String buMenM;
 					String trainId;
 					String carGoType;
 					String stationName = "";
@@ -930,6 +971,11 @@ public class BindtableController {
 						routeType = bindTable.getRouteType();
 					} else {
 						routeType = "";
+					}
+					if (null != bindTable.getBuMenM()) {
+						buMenM = bindTable.getBuMenM();
+					} else {
+						buMenM = "";
 					}
 					if (null != bindTable.getTrainId()) {
 						trainId = bindTable.getTrainId();
@@ -1001,6 +1047,7 @@ public class BindtableController {
 					Map<String, Object> map1 = new HashMap<String, Object>();
 					map1.put("ccdata", ccdata);
 					map1.put("ourccdata", ourCcdata);
+					map1.put("bindtable",bindTable);
 					map1.put("trainId", trainId);
 					map1.put("carGoType", carGoType);
 					map1.put("stationName", stationName);
@@ -1014,6 +1061,7 @@ public class BindtableController {
 					map1.put("communicationState", communicationState);
 					map1.put("ifAlert", ifAlert);
 					map1.put("remark", bindTable.getRemark());
+					map1.put("buMenM", bindTable.getBuMenM());
 					maps.add(map1);
 				}
 			}
@@ -1068,6 +1116,7 @@ public class BindtableController {
 				mapAlert.put("endTime", start);
 				count = daoService.selectAlertInBeforeSeconds(mapAlert);
 				String routeType;
+				String buMenM;
 				String trainId;
 				String carGoType;
 				String stationName = "";
@@ -1086,6 +1135,11 @@ public class BindtableController {
 					routeType = bindTable.getRouteType();
 				} else {
 					routeType = "";
+				}
+				if (null != bindTable.getBuMenM()) {
+					buMenM = bindTable.getBuMenM();
+				} else {
+					buMenM = "";
 				}
 				if (null != bindTable.getTrainId()) {
 					trainId = bindTable.getTrainId();
@@ -1158,6 +1212,7 @@ public class BindtableController {
 				Map<String, Object> map1 = new HashMap<String, Object>();
 				map1.put("ccdata", ccdata);
 				map1.put("ourccdata", ourCcdata);
+				map1.put("bindtable",bindTable);
 				map1.put("trainId", trainId);
 				map1.put("carGoType", carGoType);
 				map1.put("stationName", stationName);
@@ -1171,6 +1226,7 @@ public class BindtableController {
 				map1.put("communicationState", communicationState);
 				map1.put("ifAlert", ifAlert);
 				map1.put("remark", bindTable.getRemark());
+				map1.put("buMenM", bindTable.getBuMenM());
 				maps.add(map1);
 			}
 		}
@@ -1239,6 +1295,7 @@ public class BindtableController {
 			mapAlert.put("endTime", start);
 			count = daoService.selectAlertInBeforeSeconds(mapAlert);
 			String routeType;
+			String buMenM;
 			String trainId;
 			String carGoType;
 			String stationName;
@@ -1257,6 +1314,11 @@ public class BindtableController {
 				routeType = bindTable.getRouteType();
 			} else {
 				routeType = "";
+			}
+			if (null != bindTable.getBuMenM()) {
+				buMenM = bindTable.getBuMenM();
+			} else {
+				buMenM = "";
 			}
 			if (null != bindTable.getTrainId()) {
 				trainId = bindTable.getTrainId();
@@ -1327,6 +1389,7 @@ public class BindtableController {
 			Map<String, Object> map1 = new HashMap<String, Object>();
 			map1.put("ccdata", ccdata);
 			map1.put("ourccdata", ourCcdata);
+			map1.put("bindtable",bindTable);
 			map1.put("chillerType", container.getChillerType());
 			map1.put("trainId", trainId);
 			map1.put("carGoType", carGoType);
@@ -1341,6 +1404,7 @@ public class BindtableController {
 			map1.put("ifAlert", ifAlert);
 			map1.put("communicationState", communicationState);
 			map1.put("remark", bindTable.getRemark());
+			map1.put("buMenM", bindTable.getBuMenM());
 			maps.add(map1);
 		}
 		// map.addAttribute("maps", maps);

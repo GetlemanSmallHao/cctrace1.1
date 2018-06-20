@@ -129,29 +129,14 @@
 												</div></td>
 											<td style="display:none;"><div class="leftDown--div2 data_alert_id">${alert.id}</div></td>	
 										</tr>
-							</c:forEach>
-									
+									</c:forEach>
 								</c:otherwise>
 							</c:choose>
-							
 						</tbody>
 					</table>
 				</div>
-				
-				
-				<!-- <div><table>
-					<tr>
-							<td><a>1</a></td>
-							<td>2</td>
-							<td>3</td>
-						</tr>
-				
-				</table></div> -->
-				
-				
 			</div>
 		 </main>
-
 		</div>
 	</div>
 	</main>
@@ -239,6 +224,7 @@
 			},
 			type : "get",
 			success : function(result) {
+			console.log(result)
 				$("#showSelectAlerts").html(result);
 			} 
 		});
