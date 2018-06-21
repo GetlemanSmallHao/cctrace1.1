@@ -25,6 +25,9 @@ public class CommandStore {
 //	冷机状态显示
 	private String display;
 	
+//关联表查询buMenM
+	private String buMenM;
+	
 	
 	public String getDisplay() {
 		return display;
@@ -92,7 +95,14 @@ public class CommandStore {
 	public void setType(String type) {
 		this.type = type;
 	}
-
+	public String getBuMenM() {
+		return buMenM;
+	}
+	public void setBuMenM(String buMenM) {
+		this.buMenM = buMenM;
+	}
+	
+	
 	
 	
 }

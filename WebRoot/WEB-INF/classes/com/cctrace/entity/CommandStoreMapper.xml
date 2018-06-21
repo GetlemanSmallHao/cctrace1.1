@@ -15,10 +15,30 @@
 		<result column="display" jdbcType="VARCHAR" property="display" />
 
 	</resultMap>
+	<!-- 联合查询 -->
+	<resultMap id="WithBCResultMap" type="com.cctrace.entity.CommandStore">
+		<id column="id" jdbcType="INTEGER" property="id" />
+		<result column="content" jdbcType="VARCHAR" property="content" />
+		<result column="userName" jdbcType="VARCHAR" property="userName" />
+		<result column="time" jdbcType="VARCHAR" property="time" />
+		<result column="longTime" jdbcType="VARCHAR" property="longTime" />
+		<result column="type" jdbcType="VARCHAR" property="type" />
+		<result column="command" jdbcType="VARCHAR" property="command" />
+		<result column="containerId" jdbcType="VARCHAR" property="containerId" />
+		<result column="status" jdbcType="VARCHAR" property="status" />
+		<result column="value" jdbcType="VARCHAR" property="value" />
+		<result column="display" jdbcType="VARCHAR" property="display" />
+	    <result column="buMenM" jdbcType="VARCHAR" property="buMenM" />
+	</resultMap>
 
 	<sql id="Base_Column_List">
 		id, content, userName, time, longTime,
 		type,command,containerId,status,value,display
+	</sql>
+	<!-- 联合查询 -->
+	<sql id="WithBase_Column_List">
+		C.id, C.content, C.userName, C.time, C.longTime,C.type,
+		C.command,C.containerId,C.status,C.value,C.display,B.buMenM
 	</sql>
 
 	<!-- 最新一条控制指令 -->
@@ -194,7 +214,7 @@
 		ORDER BY time DESC LIMIT 0,1
 	</select>
 	
-	<!-- 暂时用于日志显示 -->
+	<!-- 暂时用于日志显示
 	<select id="selectCommandForLogShowInTwoTimes" parameterType="java.util.Map" resultType="com.cctrace.entity.CommandStore">
 		SELECT 
 		<include refid="Base_Column_List" /> 
@@ -202,11 +222,26 @@
 		AND containerId IN (SELECT containerId FROM container WHERE companyId = #{companyId})
 		ORDER BY longTime DESC
 	</select>
-	<!-- 暂时用于日志显示加冷藏箱模糊查询 -->
+	 -->
+	<select id="selectCommandForLogShowInTwoTimes" resultMap="WithBCResultMap">
+		SELECT 
+		<include refid="WithBase_Column_List" /> 
+		FROM command_store C inner join bindtable B on C.`containerId`=B.`containerId` 
+		WHERE C.longTime BETWEEN #{start} and #{end} AND C.containerId IN 
+		(SELECT containerId FROM container WHERE companyId = #{companyId})
+		ORDER BY C.longTime DESC
+	</select>
+	<!-- 暂时用于日志显示加冷藏箱模糊查询 
 	<select id="selectLogShowInTwoTimesWithContainerIdLike" parameterType="java.util.Map" resultType="com.cctrace.entity.CommandStore">
 		SELECT <include refid="Base_Column_List" /> FROM command_store WHERE longTime BETWEEN #{start} and #{end}
 		AND containerId IN (SELECT containerId FROM container WHERE companyId = #{companyId} AND containerId LIKE CONCAT('%',#{containerId},'%'))
 		ORDER BY longTime DESC
+	</select>
+	-->
+	<select id="selectLogShowInTwoTimesWithContainerIdLike" resultMap="WithBCResultMap">
+		SELECT <include refid="WithBase_Column_List" /> FROM command_store C inner join bindtable B on C.`contianerId`=B.`containerId`
+		WHERE C.longTime BETWEEN #{start} and #{end} AND C.containerId IN (SELECT containerId FROM container WHERE companyId = #{companyId} AND containerId LIKE CONCAT('%',#{containerId},'%'))
+		ORDER BY C.longTime DESC
 	</select>
 
 	<!-- 配置缓存 -->

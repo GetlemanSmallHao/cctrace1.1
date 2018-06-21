@@ -304,6 +304,7 @@
 			data:{"startTime":sTime,"endTime":eTime,"containerId":cID,"pn":pn},
 			type:"POST",
 			success:function(result){
+				console.log(result)
 				var page = result.extend.page.pageNum;
   				var totalPage = result.extend.page.pages;
 				if(totalPage < 1){

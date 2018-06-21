@@ -599,7 +599,310 @@
 				</div>
 			</main>
 			<!-- 传感器结束 -->
-			<main class="con__main tab_main" style="display:none;">bbb</main>
+			<%-- <main class="con__main></main> --%>
+			<main class="con__main set__menu tab_main" style="display:none;">
+			<div class="set__menu1">
+				<div class="set__menu--wrap">
+					<div class="con__main--search">
+						设备编号：
+						<!-- <span>CICU9913310</span> -->
+						<span> <%
+ 	String path = request.getContextPath();
+ 	String basePath = request.getScheme() + "://"
+ 			+ request.getServerName() + ":" + request.getServerPort()
+ 			+ path + "/";
+ 	String containerId = request.getParameter("containerId");//用request得到
+ %> <span class="setting_sbbh"></span>
+
+						</span>
+					</div>
+
+					<div class="con__main__table">
+						<table style="width:100%;">
+							<thead>
+								<tr>
+									<td><div class="leftDown--div1">序号</div></td>
+									<td><div class="">选项</div></td>
+								</tr>
+							</thead>
+							<tbody>
+								<tr data-url2="set__menu2--list1" data-url3="set__menu3--list1">
+									<td><div class="">2</div></td>
+									<td>
+										<div class="">冷藏箱控制设置</div>
+									</td>
+								</tr>
+								<!--<tr>-->
+								<!--<td><div class="">3</div></td>-->
+								<!--<td>-->
+								<!--<div class="">-->
+								<!--车辆日志-->
+								<!--</div>-->
+								<!--</td>-->
+								<!--</tr>-->
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+			<!--二级菜单--> <!--二级菜单 —— 冷藏箱控制设置 list1-->
+			<div class="set__menu2 set__menu2--list1">
+				<div class="set__menu--wrap">
+					<div class="con__main--search">冷藏箱控制设置</div>
+					<div class="con__main__table">
+						<table style="width:100%;">
+							<thead>
+								<tr>
+									<td><div class="leftDown--div1">序号</div></td>
+									<td><div class="">选项</div></td>
+								</tr>
+							</thead>
+							<tbody>
+								<tr data-url="set__menu3--wrap1">
+									<td>
+										<div>1</div>
+									</td>
+									<td>
+										<div onclick="showchiller()">温度设定</div>
+									</td>
+								</tr>
+								<tr data-url="set__menu3--wrap2">
+									<td>
+										<div>2</div>
+									</td>
+									<td>
+										<div onclick="showchiller1()">启动除霜</div>
+									</td>
+								</tr>
+								<tr data-url="set__menu3--wrap3">
+									<td>
+										<div>3</div>
+									</td>
+									<td>
+										<div onclick="showchiller2()">启动自检</div>
+									</td>
+								</tr>
+								<tr data-url="set__menu3--wrap4">
+									<td>
+										<div>4</div>
+									</td>
+									<td>
+										<div onclick="showchiller3()">清除告警</div>
+									</td>
+								</tr>
+								<tr data-url="set__menu3--wrap5">
+									<td>
+										<div>5</div>
+									</td>
+									<td>
+										<div onclick="showchiller4()">配置运行模式</div>
+									</td>
+								</tr>
+								<tr data-url="set__menu3--wrap6">
+									<td>
+										<div>6</div>
+									</td>
+									<td>
+										<div onclick="showchiller5()">远程开关机</div>
+									</td>
+								</tr>
+								<tr data-url="set__menu3--wrap7">
+									<td>
+										<div>7</div>
+									</td>
+									<td>
+										<div onclick="showchiller6()">新风门开关机</div>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+			<!--三级菜单--> <!--三级菜单 —— 冷藏箱控制的三级菜单 list1-->
+			<div class="set__menu3 set__menu3--list1">
+				<!--温度设定-->
+				<div class="set__menu--wrap set__menu3--wrap1">
+					<div class="con__main--search">温度设定</div>
+					<div class="set__menu3--main clearfix">
+						<div class="set__menu3--header">
+							<p>
+								冷藏箱编号：<span id="showcontainerId" class="setting_sbbh"></span>
+							</p>
+							<!-- <p>
+								PIC固件版本：<span>1071</span>
+							</p> -->
+							<p>
+								冷机类型：<span id="chiller"></span>
+							</p>
+						</div>
+						<div class="set__menu3--input">
+							设置隔箱温度：&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" id="temp"
+								maxlength="6" onfocus="{this.value=''};" />&nbsp;°C
+						</div>
+					</div>
+					<input class="set__menu3--send" type="button" value="发送" id="btn1" />
+				</div>
+				<!--启动除霜-->
+				<div class="set__menu--wrap set__menu3--wrap2">
+					<div class="con__main--search">启动除霜</div>
+					<div class="set__menu3--main clearfix">
+						<div class="set__menu3--header">
+							<p>
+								冷藏箱编号：<span id="showcontainerId" class="setting_sbbh"></span>
+							</p>
+							<!-- <p>
+								PIC固件版本：<span>1071</span>
+							</p> -->
+							<p>
+								冷机类型：<span id="chiller1"></span>
+							</p>
+						</div>
+						<div class="set__menu3--input">
+							<label id="setBootDef"> <input type="checkbox"
+								id="bootDef" />启动除霜
+							</label>
+						</div>
+					</div>
+					<input class="set__menu3--send" type="button" value="发送" id="btn2" />
+				</div>
+				<!--启动自检-->
+				<div class="set__menu--wrap set__menu3--wrap3">
+					<div class="con__main--search">启动自检</div>
+					<div class="set__menu3--main clearfix">
+						<div class="set__menu3--header">
+							<p>
+								冷藏箱编号：<span class="setting_sbbh"></span>
+							</p>
+							<!-- <p>
+								PIC固件版本：<span>1071</span>
+							</p> -->
+							<p>
+								冷机类型：<span id="chiller2"></span>
+							</p>
+						</div>
+						<div class="set__menu3--input">
+							<label> <input type="checkbox" id="selfCheck" />启动自检
+							</label>
+						</div>
+					</div>
+					<input class="set__menu3--send" type="button" value="发送" id="btn3" />
+				</div>
+				<!--清除告警-->
+				<div class="set__menu--wrap set__menu3--wrap4">
+					<div class="con__main--search">清除告警</div>
+					<div class="set__menu3--main clearfix">
+						<div class="set__menu3--header">
+							<p>
+								冷藏箱编号：<span class="setting_sbbh"></span>
+							</p>
+							<!-- <p>
+								PIC固件版本：<span>1071</span>
+							</p> -->
+							<p>
+								冷机类型：<span id="chiller3"></span>
+							</p>
+						</div>
+						<div class="set__menu3--input">
+							<label> <input type="checkbox" id="clearAlert" />清除告警
+							</label>
+						</div>
+					</div>
+					<input class="set__menu3--send" type="button" value="发送" id="btn4" />
+				</div>
+				<!--配置运行模式-->
+				<div class="set__menu--wrap set__menu3--wrap5">
+					<div class="con__main--search">配置运行模式</div>
+					<div class="set__menu3--main clearfix">
+						<div class="set__menu3--header">
+							<p>
+								冷藏箱编号：<span class="setting_sbbh"></span>
+							</p>
+							<!-- <p>
+								PIC固件版本：<span>1071</span>
+							</p> -->
+							<p>
+								冷机类型：<span id="chiller4"></span>
+							</p>
+						</div>
+						<div class="set__menu3--input">
+							配置启停模式：
+							<!--  <select name="">
+                  <option value="">请选择启停模式</option>
+                  <option value="">连续运转模式</option>
+                  <option value="">自动启停模式</option>
+                </select> -->
+							<input id="refRunMode_01" type="radio" name="refRunMode"
+								value="continuous">连续运转模式 <input id="refRunMode_02"
+								type="radio" name="refRunMode" value="auto">启停运转模式
+						</div>
+					</div>
+					<input class="set__menu3--send" type="button" value="发送" id="btn5" />
+				</div>
+				<!--远程开关机-->
+				<div class="set__menu--wrap set__menu3--wrap6">
+					<div class="con__main--search">远程开关机</div>
+					<div class="set__menu3--main clearfix">
+						<div class="set__menu3--header">
+							<p>
+								冷藏箱编号：<span class="setting_sbbh"></span>
+							</p>
+							<!-- <p>
+								PIC固件版本：<span>1071</span>
+							</p> -->
+							<p>
+								冷机类型：<span id="chiller5"></span>
+							</p>
+							<!-- <p>
+								当前电源状态：<span>Carrier</span>
+							</p> -->
+						</div>
+						<div class="set__menu3--input">
+							开关机选择：
+							<!-- <select name="">
+                  <option value="">关机</option>
+                  <option value="">开机</option>
+                </select> -->
+							<input id="remoteSwiMac_01" type="radio" name="remoteSwiMac"
+								value="on">开机 <input id="remoteSwiMac_02" type="radio"
+								name="remoteSwiMac" value="off">关机
+						</div>
+					</div>
+					<input class="set__menu3--send" type="button" value="发送" id="btn6" />
+				</div>
+				<!--新风门开关机-->
+				<div class="set__menu--wrap set__menu3--wrap7">
+					<div class="con__main--search">新风门开关机</div>
+					<div class="set__menu3--main clearfix">
+						<div class="set__menu3--header">
+							<p>
+								冷藏箱编号：<span class="setting_sbbh"></span>
+							</p>
+							<!-- <p>
+								PIC固件版本：<span>1071</span>
+							</p> -->
+							<p>
+								冷机类型：<span id="chiller6"></span>
+							</p>
+							<!-- <p>
+								当前电源状态：<span>Carrier</span>
+							</p> -->
+						</div>
+						<div class="set__menu3--input">
+							开关机选择：
+							<input id="remoteXFSwiMac_01" type="radio" name="remoteXFSwiMac"
+								value="on">开机 <input id="remoteXFSwiMac_02"
+								type="radio" name="remoteXFSwiMac" value="off">关机<br>
+							<input id="remoteXFSwiMac_03" type="radio" name="remoteXFSwiMac"
+								value="cfmOn">开启CFM控制量<input type="text" id="CFM"
+								maxlength="2" onblur="checkNum()" onfocus="{this.value=''}"/>
+							(仅允许输入0~50且能被5整除的数字)
+						</div>
+					</div>
+					<input class="set__menu3--send" type="button" value="发送" id="btn7" />
+				</div>
+			</div>
+			</main>
 			<main class="con__main tab_main" style="display:none;">
 				<span>告警信息</span>
 				<table id="alarm_table">
@@ -836,255 +1139,244 @@
 								var containerId = $("#containerId2").val();
 								containerId = containerId.replace(/\s*/g, "");
 								$.ajax({
-											url : "${PATH}/pc/bindtable/findBindtableBycompanyIdAndcontainerIdLikely.do",
-											data : {
-												"containerId" : containerId
-											},
-											type : "get",
-											dataType : "json",
-											success : function(result) {
-												var addHtml = $(
-														"#ccdatas_table tbody")
-														.empty();
-												var ccdatas = result.extend.maps;
-												var htmlStr = "";
-													$.each(
-																ccdatas,
-																function(index,
-																		item) {
-																	/* if(item.refSwiState == "off"){
-																		htmlStr += "<tr class='c-off'>";
-																	}else{
-																		htmlStr +="<tr>";
-																	} */
-																	htmlStr +="<tr>"
-																	htmlStr += "<td><div style='width:27px;'>"
-																			+ (index+1)
-																			+ "</div></td> ";
-																			
-																	htmlStr += "<td><div style='width:33px;'><button class='main__amend'>修改</button> </div></td>";
-																	htmlStr += "<td><div style='width:110px;' class='containerId '>"
-																			+ item.ccdata.containerId
-																			+ "</div></td>";
-																	if(item.ourccdata.nowTime != null){
-																		htmlStr += "<td><div style='width:115px;'>"
-																				+ item.ourccdata.nowTime
-																				+ "</div></td>";
-																	}else{
-																		htmlStr += "<td><div style='width:115px;'>"
-																				+ ""
-																				+ "</div></td>";
-																	}
-																	if(item.ourccdata.gpsPosition != null){
-																		htmlStr += "<td><div style='width:150px;'>"
-																				+ item.ourccdata.gpsPosition
-																				+ "</div></td>";
-																	}else{
-																		htmlStr += "<td><div style='width:150px;'>"
-																				+ ""
-																				+ "</div></td>";
-																	}
-																	if(item.ifAlert == "have"){
-																		htmlStr += "<td><div style='width:70px;'><font style='color: red;'>"
-																				+ "是"
-																				+ "</font></div></td>";
-																	}else if(item.ifAlert == "no"){
-																		htmlStr += "<td><div style='width:70px;'>"
-																				+ "不"
-																				+ "</div></td>";
-																	}else{
-																		htmlStr += "<td><div style='width:70px;'>"
-																				+ ""
-																				+ "</div></td>";
-																	}
-																	//备注
-																	if(item.remark != null){
-																		htmlStr += "<td><div style='width:100px;'>"
-																				+ item.remark + "</div></td>";
-																	}else{
-																		htmlStr += "<td><div style='width:100px;'>"
-																				+ "" + "</div></td>";
-																	}
-																	htmlStr += "<td><div style='width:100px;'>"
-																			+ item.carGoType + "</div></td>";
-																	
-																	if(item.oilLevel != null){
-																			htmlStr += "<td><div style='width:50px;'>"
-																			+ item.oilLevel
-																			+ "</div></td>";
-																	}else{
-																			htmlStr += "<td><div style='width:50px;'>"
-																			+ ""
-																			+ "</div></td>";
-																	}
-																	/* if(item.refSwiState == "off"){
-																		htmlStr += "<tr class='c-off'>";
-																	}else{
-																		htmlStr +="<tr>";
-																	} */
-																	if(item.setTemp != null){
-																		if(item.refSwiState == "off"){
-																			htmlStr += "<td><div style='width:70px; color:#ccc;'>"
-																			+ item.setTemp
-																			+ "</div></td>";
-																		}else{
-																			htmlStr += "<td><div style='width:70px;'>"
-																			+ item.setTemp
-																			+ "</div></td>";
-																		}	
-																	}else{
-																			htmlStr += "<td><div style='width:70px;'>"
-																			+ ""
-																			+ "</div></td>";
-																	}
-																	if(item.backWindTemp != null){
-																		if(item.refSwiState == "off"){
-																			htmlStr += "<td><div style='width:70px; color:#ccc;'>"
-																			+ item.backWindTemp
-																			+ "</div></td>";
-																		}else{
-																			htmlStr += "<td><div style='width:70px;'>"
-																			+ item.backWindTemp
-																			+ "</div></td>";
-																		}	
-																	}else{
-																			htmlStr += "<td><div style='width:70px;'>"
-																			+ ""
-																			+ "</div></td>";
-																	}
-																	
-																	if(item.ccdata.refBatVol != null && item.ccdata.refBatVol > 15){
-																		if(item.refSwiState == "off"){
-																			htmlStr += "<td><div style='width:95px; color:#ccc;'>"
-																					+ 15
-																					+ "</div></td>";
-																		}else{
-																			htmlStr += "<td><div style='width:95px;'>"
-																					+ 15
-																					+ "</div></td>";
-																		}		
-																	}else if(item.ccdata.refBatVol != null && item.ccdata.refBatVol < 0){
-																		if(item.refSwiState == "off"){
-																			htmlStr += "<td><div style='width:95px; color:#ccc;'>"
-																					+ 0
-																					+ "</div></td>";
-																		}else{
-																			htmlStr += "<td><div style='width:95px;'>"
-																					+ 0
-																					+ "</div></td>";
-																		}		
-																	}else if(item.ccdata.refBatVol != null){
-																		if(item.refSwiState == "off"){
-																			htmlStr += "<td><div style='width:95px; color:#ccc;'>"
-																				+ item.ccdata.refBatVol
-																				+ "</div></td>";
-																		}else{
-																			htmlStr += "<td><div style='width:95px;'>"
-																				+ item.ccdata.refBatVol
-																				+ "</div></td>";
-																		}
-																	}
-																	else{
-																		htmlStr += "<td><div style='width:95px;'>"
-																				+ ""
-																				+ "</div></td>";
-																	}
-																	if(item.ourccdata.gpsPower != null && item.ourccdata.gpsPower > 15){
-																		htmlStr += "<td><div style='width:70px;'>"
-																				+ 15
-																				+ "</div></td>";
-																	}else if(item.ourccdata.gpsPower != null && item.ourccdata.gpsPower < 0){
-																		htmlStr += "<td><div style='width:70px;'>"
-																				+ 0
-																				+ "</div></td>";
-																	}else if(item.ourccdata.gpsPower != null){
-																		htmlStr += "<td><div style='width:70px;'>"
-																				+ item.ourccdata.gpsPower
-																				+ "</div></td>";
-																	}
-																	else{
-																		htmlStr += "<td><div style='width:70px;'>"
-																				+ ""
-																				+ "</div></td>";
-																	}
-																	if(item.refSwiState != null){
-																		htmlStr += "<td><div style='width:64px;'>"
-																				+ item.refSwiState
-																				+ "</div></td>";
-																	}else{
-																		htmlStr += "<td><div style='width:64px;'>"
-																				+ ""
-																				+ "</div></td>";
-																	}
-																	htmlStr += "<td><div style='width:70px;'>"
-																			+ item.communicationState
-																			+ "</div></td>";
-																	htmlStr += "<td><div style='width:125px;'>"
-																			+ item.ccdata.deviceId
-																			+ "</div></td>";
-																	htmlStr += "<td><div style='width:115px;'>"
-																			+ item.ccdata.nowTime
-																			+ "</div></td>";
-																	htmlStr += "<td><div style='width:83px;'>"
-																			+ item.ccdata.lcxModel
-																			+ "</div></td>";
-																/* 	htmlStr += "<td><div style='width:115px;'>"
-																			+ item.trainId + "</div></td>"; */
-																	
-																	htmlStr += "<td><div style='width:100px;'>"
-																			+ item.stationName + "</div></td>";
-																	htmlStr += "<td><div style='width:100px;'>"
-																			+ item.yardName + "</div></td>";
-																/* 	htmlStr += "<td><div style='width:52px;'>"
-																			+ item.routeType + "</div></td>"; */
-																	htmlStr += "</tr>";
+									url : "${PATH}/pc/bindtable/findBindtableBycompanyIdAndcontainerIdLikely.do",
+									data : {
+										"containerId" : containerId
+									},
+									type : "get",
+									dataType : "json",
+									success : function(result) {
+										var addHtml = $("#ccdatas_table tbody").empty();
+										var ccdatas = result.extend.maps;
+										var htmlStr = "";
+											$.each(ccdatas,function(index,item) {
+													htmlStr +="<tr>"
+													htmlStr += "<td><div style='width:27px;'>"
+															+ (index+1)
+															+ "</div></td> ";
+															
+													htmlStr += "<td><div style='width:33px;'><button class='main__amend'>修改</button> </div></td>";
+													htmlStr += "<td><div style='width:110px;' class='containerId '>"
+															+ item.ccdata.containerId
+															+ "</div></td>";
+													htmlStr += "<td><div style='width:70px;'>"
+																+ item.buMenM
+																+ "</div></td>";
+													if(item.ourccdata.nowTime != null){
+														htmlStr += "<td><div style='width:115px;'>"
+																+ item.ourccdata.nowTime
+																+ "</div></td>";
+													}else{
+														htmlStr += "<td><div style='width:115px;'>"
+																+ ""
+																+ "</div></td>";
+													}
+													if(item.ourccdata.gpsPosition != null){
+														htmlStr += "<td><div style='width:150px;'>"
+																+ item.ourccdata.gpsPosition
+																+ "</div></td>";
+													}else{
+														htmlStr += "<td><div style='width:150px;'>"
+																+ ""
+																+ "</div></td>";
+													}
+													if(item.ifAlert == "have"){
+														htmlStr += "<td><div style='width:70px;'><font style='color: red;'>"
+																+ "是"
+																+ "</font></div></td>";
+													}else if(item.ifAlert == "no"){
+														htmlStr += "<td><div style='width:70px;'>"
+																+ "不"
+																+ "</div></td>";
+													}else{
+														htmlStr += "<td><div style='width:70px;'>"
+																+ ""
+																+ "</div></td>";
+													}
+													//备注
+													if(item.remark != null){
+														htmlStr += "<td><div style='width:100px;'>"
+																+ item.remark + "</div></td>";
+													}else{
+														htmlStr += "<td><div style='width:100px;'>"
+																+ "" + "</div></td>";
+													}
+													htmlStr += "<td><div style='width:100px;'>"
+															+ item.carGoType + "</div></td>";
+													
+													if(item.oilLevel != null){
+															htmlStr += "<td><div style='width:50px;'>"
+															+ item.oilLevel
+															+ "</div></td>";
+													}else{
+															htmlStr += "<td><div style='width:50px;'>"
+															+ ""
+															+ "</div></td>";
+													}
+													/* if(item.refSwiState == "off"){
+														htmlStr += "<tr class='c-off'>";
+													}else{
+														htmlStr +="<tr>";
+													} */
+													if(item.setTemp != null){
+														if(item.refSwiState == "off"){
+															htmlStr += "<td><div style='width:70px; color:#ccc;'>"
+															+ item.setTemp
+															+ "</div></td>";
+														}else{
+															htmlStr += "<td><div style='width:70px;'>"
+															+ item.setTemp
+															+ "</div></td>";
+														}	
+													}else{
+															htmlStr += "<td><div style='width:70px;'>"
+															+ ""
+															+ "</div></td>";
+													}
+													if(item.backWindTemp != null){
+														if(item.refSwiState == "off"){
+															htmlStr += "<td><div style='width:70px; color:#ccc;'>"
+															+ item.backWindTemp
+															+ "</div></td>";
+														}else{
+															htmlStr += "<td><div style='width:70px;'>"
+															+ item.backWindTemp
+															+ "</div></td>";
+														}	
+													}else{
+															htmlStr += "<td><div style='width:70px;'>"
+															+ ""
+															+ "</div></td>";
+													}
+													
+													if(item.ccdata.refBatVol != null && item.ccdata.refBatVol > 15){
+														if(item.refSwiState == "off"){
+															htmlStr += "<td><div style='width:95px; color:#ccc;'>"
+																	+ 15
+																	+ "</div></td>";
+														}else{
+															htmlStr += "<td><div style='width:95px;'>"
+																	+ 15
+																	+ "</div></td>";
+														}		
+													}else if(item.ccdata.refBatVol != null && item.ccdata.refBatVol < 0){
+														if(item.refSwiState == "off"){
+															htmlStr += "<td><div style='width:95px; color:#ccc;'>"
+																	+ 0
+																	+ "</div></td>";
+														}else{
+															htmlStr += "<td><div style='width:95px;'>"
+																	+ 0
+																	+ "</div></td>";
+														}		
+													}else if(item.ccdata.refBatVol != null){
+														if(item.refSwiState == "off"){
+															htmlStr += "<td><div style='width:95px; color:#ccc;'>"
+																+ item.ccdata.refBatVol
+																+ "</div></td>";
+														}else{
+															htmlStr += "<td><div style='width:95px;'>"
+																+ item.ccdata.refBatVol
+																+ "</div></td>";
+														}
+													}
+													else{
+														htmlStr += "<td><div style='width:95px;'>"
+																+ ""
+																+ "</div></td>";
+													}
+													if(item.ourccdata.gpsPower != null && item.ourccdata.gpsPower > 15){
+														htmlStr += "<td><div style='width:70px;'>"
+																+ 15
+																+ "</div></td>";
+													}else if(item.ourccdata.gpsPower != null && item.ourccdata.gpsPower < 0){
+														htmlStr += "<td><div style='width:70px;'>"
+																+ 0
+																+ "</div></td>";
+													}else if(item.ourccdata.gpsPower != null){
+														htmlStr += "<td><div style='width:70px;'>"
+																+ item.ourccdata.gpsPower
+																+ "</div></td>";
+													}
+													else{
+														htmlStr += "<td><div style='width:70px;'>"
+																+ ""
+																+ "</div></td>";
+													}
+													if(item.refSwiState != null){
+														htmlStr += "<td><div style='width:64px;'>"
+																+ item.refSwiState
+																+ "</div></td>";
+													}else{
+														htmlStr += "<td><div style='width:64px;'>"
+																+ ""
+																+ "</div></td>";
+													}
+													htmlStr += "<td><div style='width:70px;'>"
+															+ item.communicationState
+															+ "</div></td>";
+													htmlStr += "<td><div style='width:125px;'>"
+															+ item.ccdata.deviceId
+															+ "</div></td>";
+													htmlStr += "<td><div style='width:115px;'>"
+															+ item.ccdata.nowTime
+															+ "</div></td>";
+													htmlStr += "<td><div style='width:83px;'>"
+															+ item.ccdata.lcxModel
+															+ "</div></td>";
+												/* 	htmlStr += "<td><div style='width:115px;'>"
+															+ item.trainId + "</div></td>"; */
+													
+													htmlStr += "<td><div style='width:100px;'>"
+															+ item.stationName + "</div></td>";
+													htmlStr += "<td><div style='width:100px;'>"
+															+ item.yardName + "</div></td>";
+												/* 	htmlStr += "<td><div style='width:52px;'>"
+															+ item.routeType + "</div></td>"; */
+													htmlStr += "</tr>";
 
-																});
+												});
 												addHtml.append(htmlStr);
 											}
 										});
 							});
 			/* }); */
 			//点击设置按钮跳转设置页面并传值
-			$("#j-setting").click(function() {
+			/* $("#j-setting").click(function() {
 				
-			});
+			}); */
 			
 					
-				//未查看围栏告警数目
-				function getCountOfNoReadedGeomessageBeforeDays() {
-					var countOfNoReaded = 0;
-	
-					$
-							.ajax({
-								url : "${pageContext.request.contextPath}/pc/alert/getCountOfNoReadedGeomessageBeforeDays.do",
-								data : "",
-								async : false,
-								type : "get",
-								dataType : "json",
-								success : function(result) {
-									countOfNoReaded = result;
-	
-								}
-							});
-					return countOfNoReaded;
-				}
+			//未查看围栏告警数目
+			function getCountOfNoReadedGeomessageBeforeDays() {
+				var countOfNoReaded = 0;
+				$.ajax({
+					url : "${pageContext.request.contextPath}/pc/alert/getCountOfNoReadedGeomessageBeforeDays.do",
+					data : "",
+					async : false,
+					type : "get",
+					dataType : "json",
+					success : function(result) {
+						countOfNoReaded = result;
+
+					}
+				});
+				return countOfNoReaded;
+			}
 			
 			//未查看警告记录数
 			function askCountOfNoReadedAlert() {
 				var countOfNoReaded = 0;
-
 				$.ajax({
-							url : "${pageContext.request.contextPath}/pc/alert/getCountOfNoReadedALertsBeforeDays.do",
-							data : "",
-							async : false,
-							type : "get",
-							dataType : "json",
-							success : function(result) {
-								countOfNoReaded = result;
-
-							}
-						});
+					url : "${pageContext.request.contextPath}/pc/alert/getCountOfNoReadedALertsBeforeDays.do",
+					data : "",
+					async : false,
+					type : "get",
+					dataType : "json",
+					success : function(result) {
+						countOfNoReaded = result;
+					}
+				});
 				return countOfNoReaded;
 			}
 
@@ -1325,7 +1617,6 @@
 						ccdataScrollTop();
 					}
 				}
-				
 
 			var containerId1;
 			//1、点击冷藏箱列表，相应传感器
@@ -1337,6 +1628,7 @@
 				build_sensor_table(containerId1);
 				doInitMap(containerId1);
 				build_waring(containerId1);
+				$('.setting_sbbh').text(containerId1);
 			});
 			//解析警告提示为  当前选中冷箱的前一天的告警提示
 			function build_waring(containerId){
@@ -1345,16 +1637,16 @@
 				var startTime = getNowFormatDate(preDate);
 				var endTime = getNowFormatDate(curDate);
 				$.ajax({
-					url : "${pageContext.request.contextPath}/pc/alert/showAlertsInTwoTimeAndContainerId.do",
-					data : {
+					url: "${pageContext.request.contextPath}/pc/alert/showAlertsInTwoTimeAndContainerId.do",
+					data: {
 						"containerId" : containerId,
 						"startTime"  : startTime,
 						"endTime"    : endTime
 					},
-					type : "get",
-					success : function(result) {
+					type: "get",
+					success: function(result) {
 						$("#show_alarm").html(result);
-					} 
+					}
 				});
 			}
 			//解析显示传感器数据
@@ -1374,9 +1666,7 @@
 								var sensorStr = "";
 
 								$.each(ccdata,function(index, item) {
-								   //var mydateInputStart = document.getElementById("showContainerID");
 									$("#showContainerID").html(item.ccdata.containerId);
-									//mydateInputStart.value=item.ccdata.containerId;
 									if(item.ccdata.nowTime == undefined){
 										item.ccdata.nowTime = "";
 									}
@@ -1421,38 +1711,6 @@
 								sensorStr += "<td><div class='c-sensor5'></div></td>";
 								sensorStr +="</tr>";
 	
-									/* 	sensorStr +="<tr>";
-										sensorStr += "<td><div>3</div></td> ";	
-										sensorStr += "<td><div>后门开关</div></td>";
-										sensorStr += "<td><div>"+item.ccdata.backDoorState+"</div></td>";
-										sensorStr += " <td><div>on/off</div></td>";
-										sensorStr += "<td><div><button data-id='setMenu3' class='setMenu__btn'>设置</button></div></td>";
-										sensorStr += "</tr>";
-										
-										sensorStr +="<tr>";
-										sensorStr += "<td><div>4</div></td> ";	
-										sensorStr += "<td><div>箱内湿度</div></td>";
-										sensorStr += "<td><div>"+item.ccdata.tankHum+"</div></td>";
-										sensorStr += " <td><div>%</div></td>";
-										sensorStr += "<td><div><button data-id='setMenu4' class='setMenu__btn'>设置</button></div></td>";
-										sensorStr += "</tr>"; */
-	
-									/* 		sensorStr +="<tr>";
-											sensorStr += "<td><div>5</div></td> ";	
-											sensorStr += "<td><div>油箱油位</div></td>";
-											sensorStr += "<td><div>"+item.ccdata.oilLevel+"</div></td>";
-											sensorStr += " <td><div>%</div></td>";
-											sensorStr += "<td><div><button data-id='setMenu5' class='setMenu__btn'>设置</button></div></td>";
-											sensorStr += "</tr>"; */
-	
-									/*    sensorStr +="<tr>";
-									sensorStr += "<td><div>5</div></td> ";	
-									sensorStr += "<td><div>GPS电压</div></td>";
-									sensorStr += "<td><div>"+item.ccdata.gpsBatVol+"</div></td>";
-									sensorStr += " <td><div>V</div></td>";
-									sensorStr += "<td><div><button data-id='setMenu6' class='setMenu__btn'>设置</button></div></td>";
-									sensorStr += "</tr>"; */
-
 									if(item.ccdata.refSwiState == "off"){
 										sensorStr += "<tr class='c-off'>";
 									}else{
@@ -1513,32 +1771,6 @@
 									sensorStr += " <td><div class='c-sensor4'>°C</div></td>";
 									sensorStr += "<td><div class='c-sensor5'><button data-id='setMenu4' class='setMenu__btn'>设置</button></div></td>";
 									sensorStr += "</tr>";
-
-									/* sensorStr +="<tr>";
-									sensorStr += "<td><div>5</div></td> ";	
-									sensorStr += "<td><div>中部温度</div></td>";
-									sensorStr += "<td><div>"+item.ccdata.cenBoxTemp+"</div></td>";
-									sensorStr += " <td><div>°C</div></td>";
-									sensorStr += "<td><div><button data-id='setMenu5' class='setMenu__btn'>设置</button></div></td>";
-									sensorStr += "</tr>"; */
-
-									/* sensorStr +="<tr>";
-									sensorStr += "<td><div>9</div></td> ";	
-									sensorStr += "<td><div>尾部箱温</div></td>";
-									sensorStr += "<td><div>"+item.ccdata.tailBoxTemp+"</div></td>";
-									sensorStr += " <td><div>°C</div></td>";
-									sensorStr += "<td><div><button data-id='setMenu10' class='setMenu__btn'>设置</button></div></td>";
-									sensorStr += "</tr>"; */
-									/* 
-									sensorStr += "<tr>";
-									sensorStr += "<td><div>5</div></td> ";
-									sensorStr += "<td><div>油箱温度</div></td>";
-									sensorStr += "<td><div>"
-											+ item.ourccdata.oilTemp
-											+ "</div></td>";
-									sensorStr += " <td><div>°C</div></td>";
-									sensorStr += "<td><div><button data-id='setMenu6' class='setMenu__btn'>设置</button></div></td>";
-									sensorStr += "</tr>"; */
 
 									if(item.ccdata.refSwiState == "off"){
 										sensorStr += "<tr class='c-off'>";
@@ -1651,7 +1883,6 @@
 									}
 									sensorStr += " <td><div class='c-sensor4'>open/close</div></td>";
 									sensorStr += "<td><div class='c-sensor5'><button data-id='setMenu11' class='setMenu__btn'>设置</button></div></td>";
-									//sensorStr += "<td><div class='c-sensor5'><button>设置</button></div></td>";
 									sensorStr += "</tr>";
 									
 									if(item.ccdata.refSwiState == "off"){
@@ -1666,12 +1897,6 @@
 												+ item.ccdata.refRunMode
 												+ "</div></td>";
 									}
-								/* 	else if(item.ccdata.refRunMode == "auto"){
-										sensorStr += "<td><div>"
-											+ "启停"
-											+ "</div></td>";
-									}
-									 */
 									else{
 										sensorStr += "<td><div class='c-sensor3'>"
 												+ ""
@@ -1680,15 +1905,6 @@
 									sensorStr += " <td><div class='c-sensor4'>连续/启停</div></td>";
 									sensorStr += "<td><div class='c-sensor5'><button class='setMenu__btn1'>设置</button></div></td>";
 									sensorStr += "</tr>";
-									<%--
-									sensorStr += "<td><div class='c-sensor1'>13</div></td> ";
-								sensorStr += "<td><div class='c-sensor2'>请求周期</div></td>";
-								sensorStr += "<td><div class='c-sensor3'>"
-												+ item.cycleMinute
-												+ "</div></td>";
-								sensorStr += " <td><div class='c-sensor4'>分钟</div></td>";
-									sensorStr += "<td><div class='c-sensor5'><button class='setMenu__btn' data-id='setMenu12'>设置</button></div></td>";
-									sensorStr += "</tr>";--%>
 								});
 								sensorHtml.append(sensorStr);
 								var role1 =<%=role1%>;
@@ -2041,39 +2257,6 @@
 				});
 			}
 
-			//油箱温度设置
-			<%-- function oilTemp() {
-				var role1 =<%=role1%>;
-				if(role1 == 1){
-					return;
-				}
-				var minoilTemp = $('#minoilTemp').val();
-				var maxoilTemp = $('#maxoilTemp').val();
-				var containerId = containerId1;
-				var type = 'oilTemp';
-				$.ajax({
-					url : '${PATH}/pc/updateOurCcdata.do',
-					type : 'post',
-					data : {
-						'containerId' : containerId,
-						'type' : type,
-						'minoilTemp' : minoilTemp,
-						'maxoilTemp' : maxoilTemp
-					},
-					dataType : 'JSON',
-					success : function(result) {
-						var field = result.state;
-						var mess = result.message;
-						if (field == '0') {
-							layer.msg(mess);
-							return;
-						} else {
-							layer.msg(mess);
-						}
-					}
-				});
-			} --%>
-
 			//箱内湿度设置
 			function boxHum() {
 				var role1 =<%=role1%>;
@@ -2214,10 +2397,6 @@
 			function backDoorStateFun() {
 				var DoorState = $("#door").val();
 
-				/* 	   var DoorState = $('#door').find("option:selected").val(); */
-				/* 	   var DoorState = $('#door :selected').val(); */
-				/* 	   var DoorState = $('#door option:selected').val(); */
-
 				var containerId = containerId1;
 				var type = 'backDoorState';
 				$.ajax({
@@ -2243,68 +2422,6 @@
 				});
 			}
 			
-			//设置请求周期 <span>请输入周期：</span><input type="text" id="cycleMinute" />&nbsp;（分钟1-10）
-			<%--function setCycleMinute() {
-				var role1 =<%=role1%>;
-				if(role1 == 1){
-					return;
-				}
-				var cycleMinute = $('#cycleMinute').val();
-				var containerId = containerId1;
-				var type = 'cycleMinute';
-				$.ajax({
-					url : '${PATH}/pc/updateContainerSet.do',
-					type : 'post',
-					data : {
-						'containerId' : containerId,
-						'type' : type,
-						'cycleMinute' : cycleMinute
-					},
-					dataType : 'JSON',
-					success : function(result) {
-						var field = result.state;
-						var mess = result.message;
-						if (field == '0') {
-							layer.msg(mess);
-							return;
-						} else {
-							layer.msg(mess);
-						}
-					}
-				});
-			}
-			function enviTemp() {
-				var role1 =<%=role1%>;
-				if(role1 == 1){
-					return;
-				}
-				var minEnviTemp = $('#minEnviTemp').val();
-				var maxEnviTemp = $('#maxEnviTemp').val();
-				var containerId = containerId1;
-				var type = 'enviTemp';
-				$.ajax({
-					url : '${PATH}/pc/updateContainerSet.do',
-					type : 'post',
-					data : {
-						'containerId' : containerId,
-						'type' : type,
-						'minEnviTemp' : minEnviTemp,
-						'maxEnviTemp' : maxEnviTemp
-					},
-					dataType : 'JSON',
-					success : function(result) {
-						var field = result.state;
-						var mess = result.message;
-						if (field == '0') {
-							layer.msg(mess);
-							return;
-						} else {
-							layer.msg(mess);
-						}
-					}
-				});
-			}
-			--%>
 			/* 冷藏箱列表左右滚动标题滚动 */
 			$("#ccdatas_table").on("scroll",function(){
 				//console.log($(this).scrollLeft());
@@ -2314,8 +2431,6 @@
 				sessionStorage.lastScrollTop = $(this).scrollTop();
 			});
 			
-			/* 排序小三角点击变化    start */
-				/* 冷藏箱编号 */
 			/* 排序小三角点击变化    start */
 				/* 冷藏箱编号 */
 			$(".j-sort1").click(function(){
@@ -2529,9 +2644,7 @@
 					var containerTr = $("#ccdatas_table>tbody>tr");
 					for (var i = 0; i < containerTr.length; i++) {
 						if ($(containerTr[i]).find("td").eq(2).find("div").text() == cId2) {
-							//$(containerTr[i]).addClass("tr__active");
 							$(containerTr[i]).click();
-							//console.log($(containerTr[i]).position().top);
 							break;
 						};
 					}
@@ -2591,15 +2704,6 @@
 				
 			}
 			
-			//showgaojingxinxi()
-				function showgaojingxinxi(){
-					$("#gaojingxinxi").css("display","block");
-					$("#weilantongzhi").css("display","none");
-				}
-				function showweilantongzhi(){
-					$("#gaojingxinxi").css("display","none");
-					$("#weilantongzhi").css("display","block");
-				}
 	</script>
 	<script>
 		/*点击修改传感器头部的字体颜色*/
@@ -2617,10 +2721,10 @@
 				if(id == 2){
 					var cId = $("#ccdatas_table").find(".tr__active").find(".containerId ").text();
 					if (cId != "" && cId.replace(/\s+/g, "") != "") {
-					<%-- href="${PATH}/pc/seting.jsp?containerId=" --%>
-						this.firstChild.href = "${PATH}/pc/seting.jsp?containerId="+ cId;
+						$('.tab_main').hide();
+						$('.tab_main:nth-of-type('+ id +')').show();
 					} else {
-						alert("请选择（点击）一个冷藏箱！！！");
+						layer.msg("请选择（点击）一个冷藏箱！！！");
 					}
 				}else{
 					$('.tab_main').hide();
