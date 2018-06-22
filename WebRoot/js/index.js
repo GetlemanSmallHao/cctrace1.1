@@ -114,13 +114,12 @@ $(".amendBind").on("click",".main__amend",function(e){
   var selectArr = $(".con__modal").find("select");
   var xhzArr = $(selectArr[0]).find("option");
   var dcArr = $(selectArr[1]).find("option");
-  console.log(divArr);
   $(inputArr[0]).val($(divArr[2]).text());
-  $(inputArr[1]).val($(divArr[17]).text());
-  $(inputArr[2]).val($(divArr[7]).text());
-  $(inputArr[3]).val($(divArr[6]).text());
+  $(inputArr[1]).val($(divArr[18]).text());
+  $(inputArr[2]).val($(divArr[8]).text());
+  $(inputArr[3]).val($(divArr[7]).text());
   for(var i = 0;i < xhzArr.length;i++){
-	  console.log($(xhzArr[i]).text().replace(/\s*/g, ""));
+	  //console.log($(xhzArr[i]).text().replace(/\s*/g, ""));
 	  if($(divArr[18]).text().replace(/\s*/g, "") == $(xhzArr[i]).text().replace(/\s*/g, "")){
 		  $(xhzArr[i]).prop("selected",true).siblings("option").prop("selected",false);
 		  break;

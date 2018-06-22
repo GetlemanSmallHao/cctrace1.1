@@ -122,6 +122,7 @@
                   <td><div class="">序号</div></td>
                   <td><div class="">操作者</div></td>
                   <td><div class="">操作的冷藏箱</div></td>
+                  <td><div class="">所属部门</div></td>
                   <td><div class="">操作时间</div></td>
                   <td><div class="">操作内容</div></td>
                   <td><div class="">设定值</div></td>
@@ -304,7 +305,6 @@
 			data:{"startTime":sTime,"endTime":eTime,"containerId":cID,"pn":pn},
 			type:"POST",
 			success:function(result){
-				console.log(result)
 				var page = result.extend.page.pageNum;
   				var totalPage = result.extend.page.pages;
 				if(totalPage < 1){
@@ -327,6 +327,7 @@
 		var page =result.extend.page;
 		var htmlStr = "";
 		$.each(logs,function(index,item){
+		console.log(item)
 			htmlStr += "<tr>";
 			htmlStr += "<td><div class='leftDown--div1'>"+(index + 1)+"</div></td> ";	
 			if(item.userName != null){
@@ -335,6 +336,7 @@
 				htmlStr += "<td><div class='containerId '>"+""+"</div></td>";
 			}
 			htmlStr += "<td><div class='leftDown--div2'>"+item.containerId+"</div></td>";
+			htmlStr += "<td><div class='leftDown--div2'>"+item.buMenM+"</div></td>";
 			htmlStr += "<td><div class='leftDown--div2'>"+item.time+"</div></td>";
 			if(item.command =="clearAlert"){
 				htmlStr += "<td><div class='leftDown--div2'>"+"清除警告"+"</div></td>";

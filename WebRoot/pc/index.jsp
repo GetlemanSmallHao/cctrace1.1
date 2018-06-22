@@ -107,7 +107,7 @@
 								<td><div style="width:27px;">序号</div></td>
 								<td><div style="width:33px;" class="main__caozuo">操作</div></td>
 								<td><div class="j-sort1" data-status="up" style="width:110px;">冷藏箱编号<span class="xsj xsjUp"></span></div></td>
-								<td><div class="" style="width:70px;">冷藏箱箱型</div></td>
+								<td><div class="" style="width:55px;">所属部门</div></td>
 								<td><div class="j-sort7" data-status="up" style="width:115px;">GPS接收时间<span class="xsj xsjUp"></span></div></td>
 								<td><div class="j-sort10" data-status="up" style="width:150px;">地理位置<span class="xsj xsjUp"></span></div></td>
 								<td><div class="j-sort9" data-status="up" style="width:70px;">冷机告警<span class="xsj xsjUp"></span></div></td>
@@ -971,6 +971,7 @@
 	 --%>
 			var init;//刷新冷藏箱列表定时器的容器
 			var order;
+			var concontainerId_setting;
 			//显示警告信息
 			$(function(){
 				setInterval(function() {
@@ -1159,7 +1160,7 @@
 													htmlStr += "<td><div style='width:110px;' class='containerId '>"
 															+ item.ccdata.containerId
 															+ "</div></td>";
-													htmlStr += "<td><div style='width:70px;'>"
+													htmlStr += "<td><div style='width:55px;'>"
 																+ item.buMenM
 																+ "</div></td>";
 													if(item.ourccdata.nowTime != null){
@@ -1430,7 +1431,7 @@
 					htmlStr += "<td><div style='width:110px;' class='containerId '>"
 							+ item.ccdata.containerId
 							+ "</div></td>";
-					htmlStr += "<td><div style='width:70px;'>"
+					htmlStr += "<td><div style='width:55px;'>"
 							+ item.buMenM
 							+ "</div></td>";
 					if(item.ourccdata.nowTime != null){
@@ -1629,6 +1630,7 @@
 				doInitMap(containerId1);
 				build_waring(containerId1);
 				$('.setting_sbbh').text(containerId1);
+				concontainerId_setting = containerId1;
 			});
 			//解析警告提示为  当前选中冷箱的前一天的告警提示
 			function build_waring(containerId){
@@ -2782,6 +2784,493 @@
 				});
 			});
 		});
+		//显示冷机类型
+		function showchiller() {
+			$.ajax({
+				url : "${PATH}/pc/seting/showContainerchillerType.do",
+				data : {
+					"containerId" : concontainerId_setting
+				},
+				type : "get",
+				success : function(result) {
+					/* 				data = eval("(" + result + ")"); */
+					/* alert(result.chillerType); */
+					/* alert(result.chillerType); */
+					$('#chiller').html(result.chillerType);
+				}
+			});
+			$.ajax({
+				url : "${PATH}/pc/seting/showCommandSetValue.do",
+				data : {
+					"containerId" : concontainerId_setting,
+					"commandType" : 'temSet'
+				},
+				type : "get",
+				success : function(result) {
+					$('#temp').val(result);
+				}
+			});
+			
+		}
+		//显示冷机类型
+		function showchiller1() {
+			$.ajax({
+				url : "${PATH}/pc/seting/showContainerchillerType.do",
+				data : {
+					"containerId" : concontainerId_setting
+				},
+				type : "get",
+				success : function(result) {
+					$('#chiller1').html(result.chillerType);
+				}
+			});
+		}
+		//显示冷机类型
+		function showchiller2() {
+			$.ajax({
+				url : "${PATH}/pc/seting/showContainerchillerType.do",
+				data : {
+					"containerId" : concontainerId_setting
+				},
+				type : "get",
+				success : function(result) {
+					$('#chiller2').html(result.chillerType);
+				}
+			});
+			
+			
+		}
+		//显示冷机类型
+		function showchiller3() {
+			$.ajax({
+				url : "${PATH}/pc/seting/showContainerchillerType.do",
+				data : {
+					"containerId" : concontainerId_setting
+				},
+				type : "get",
+				success : function(result) {
+					$('#chiller3').html(result.chillerType);
+				}
+			});
+		}
+		//显示冷机类型
+		function showchiller4() {
+			$.ajax({
+				url : "${PATH}/pc/seting/showContainerchillerType.do",
+				data : {
+					"containerId" : concontainerId_setting
+				},
+				type : "get",
+				success : function(result) {
+					$('#chiller4').html(result.chillerType);
+				}
+			});
+
+			$.ajax({
+				url : "${PATH}/pc/seting/showCommandSetValue.do",
+				data : {
+					"containerId" : concontainerId_setting,
+					"commandType" : 'refRunMode'
+				},
+				type : "get",
+				success : function(result) {
+					if (result == 'continuous') {
+						$("#refRunMode_01").attr("checked", "checked");
+					}else if(result == 'auto'){
+						$("#refRunMode_02").attr("checked", "checked");
+					}else{
+						$("#refRunMode_01").attr("checked", false);
+						$("#refRunMode_02").attr("checked", false);
+					}
+				}
+			});
+		}
+		//显示冷机类型
+		function showchiller5() {
+			$.ajax({
+				url : "${PATH}/pc/seting/showContainerchillerType.do",
+				data : {
+					"containerId" : concontainerId_setting
+				},
+				type : "get",
+				success : function(result) {
+					$('#chiller5').html(result.chillerType);
+				}
+			});
+			$.ajax({
+				url : "${PATH}/pc/seting/showCommandSetValue.do",
+				data : {
+					"containerId" : concontainerId_setting,
+					"commandType" : 'remoteSwiMac'
+				},
+				type : "get",
+				success : function(result) {
+					if (result == 'on') {
+						$("#remoteSwiMac_01").attr("checked", "checked");
+					}else if(result == 'off'){
+						$("#remoteSwiMac_02").attr("checked", "checked");
+					}else{
+						$("#remoteSwiMac_01").attr("checked", false);
+						$("#remoteSwiMac_02").attr("checked", false);
+					}
+				}
+			});
+		}
+		//显示冷机类型
+		function showchiller6() {
+			$.ajax({
+				url : "${PATH}/pc/seting/showContainerchillerType.do",
+				data : {
+					"containerId" : concontainerId_setting
+				},
+				type : "get",
+				success : function(result) {
+					$('#chiller6').html(result.chillerType);
+				}
+			});
+			$.ajax({
+				url : "${PATH}/pc/seting/showCommandSetValue.do",
+				data : {
+					"containerId" : concontainerId_setting,
+					"commandType" : 'remoteXFSwiMac'
+				},
+				type : "get",
+				success : function(result) {
+					if (result == 'on') {
+						$("#remoteXFSwiMac_01").attr("checked", "checked");
+					}else if(result == 'off'){
+						$("#remoteXFSwiMac_02").attr("checked", "checked");
+					}else{
+						$("#remoteXFSwiMac_01").attr("checked", false);
+						$("#remoteXFSwiMac_02").attr("checked", false);
+					}
+				}
+			});
+		}
+		function checkNum(){
+			var x=document.getElementById("CFM").value;
+			if(x<=0||x>50||(x%5!=0)){
+				document.getElementById("CFM").value=null;
+			}
+		}
+		var wait = 10;
+		function time(o, o1, o2, o3, o4, o5, o6) {
+			if (wait == 0) {
+				o.removeAttribute("disabled");
+				o.value = "发送";
+
+				o1.removeAttribute("disabled");
+				o1.value = "发送";
+
+				o2.removeAttribute("disabled");
+				o2.value = "发送";
+
+				o3.removeAttribute("disabled");
+				o3.value = "发送";
+
+				o4.removeAttribute("disabled");
+				o4.value = "发送";
+
+				o5.removeAttribute("disabled");
+				o5.value = "发送";
+				
+				o6.removeAttribute("disabled");
+				o6.value = "发送";
+
+				wait = 10;
+			} else {
+				o.setAttribute("disabled", true);
+				o.value = wait + "秒后可再点击";
+
+				o1.setAttribute("disabled", true);
+				o1.value = wait + "秒后可再点击";
+
+				o2.setAttribute("disabled", true);
+				o2.value = wait + "秒后可再点击";
+
+				o3.setAttribute("disabled", true);
+				o3.value = wait + "秒后可再点击";
+
+				o4.setAttribute("disabled", true);
+				o4.value = wait + "秒后可再点击";
+
+				o5.setAttribute("disabled", true);
+				o5.value = wait + "秒后可再点击";
+				
+				o6.setAttribute("disabled", true);
+				o6.value = wait + "秒后可再点击";
+				wait--;
+				setTimeout(function() {
+					time(o, o1, o2, o3, o4, o5, o6)
+				}, 1000)
+			}
+		}
+
+		var id1 = document.getElementById("btn1");
+		var id2 = document.getElementById("btn2");
+		var id3 = document.getElementById("btn3");
+		var id4 = document.getElementById("btn4");
+		var id5 = document.getElementById("btn5");
+		var id6 = document.getElementById("btn6");
+		var id7 = document.getElementById("btn7");
+		//温度设定
+		id1.onclick = function() {
+			time(id1, id2, id3, id4, id5, id6, id7);
+			var setTemp = $("#temp").val();
+			var chillerType = $("#chiller").text();
+			$.ajax({
+				url : "${PATH}/pc/seting/setTemp.do",
+				data : {
+					"containerId" : containerId,
+					"deviceId" : deviceId,
+					"setTemp" : setTemp,
+					"chillerType" : chillerType
+				},
+				type : "get",
+				success : function(result) {
+
+					var field = result.state;
+					if (field == '0') {
+						var num = Math.random();
+						layer.msg(result.message);
+						return;
+					}
+					layer.msg(result.message);
+				}
+			});
+
+		}
+		//启动除霜
+		id2.onclick = function() {
+			time(id1, id2, id3, id4, id5, id6, id7);
+			var bootDef;
+			var chillerType = $("#chiller1").text();
+			if ($("#bootDef").is(':checked')) {
+				bootDef = "on";
+			} else {
+				bootDef = "off";
+			}
+			$.ajax({
+				url : "${PATH}/pc/seting/bootDef.do",
+				data : {
+					"containerId" : containerId,
+					"deviceId" : deviceId,
+					"bootDef" : bootDef,
+					"chillerType" : chillerType
+				},
+				type : "get",
+				success : function(result) {
+
+					var field = result.state;
+					if (field == '0') {
+						var num = Math.random();
+						layer.msg(result.message);
+						return;
+					}
+					layer.msg(result.message);
+				}
+			});
+		}
+		//自检
+		id3.onclick = function() {
+			time(id1, id2, id3, id4, id5, id6, id7);
+			var selfCheck;
+			var chillerType = $("#chiller2").text();
+			if ($("#selfCheck").is(':checked')) {
+				selfCheck = "on";
+			} else {
+				selfCheck = "off";
+			}
+			$.ajax({
+				url : "${PATH}/pc/seting/selfCheck.do",
+				data : {
+					"containerId" : containerId,
+					"deviceId" : deviceId,
+					"selfCheck" : selfCheck,
+					"chillerType" : chillerType
+				},
+				type : "get",
+				success : function(result) {
+
+					var field = result.state;
+					if (field == '0') {
+						var num = Math.random();
+						layer.msg(result.message);
+						return;
+					}
+					layer.msg(result.message);
+				}
+			});
+		}
+		//清除警告
+		id4.onclick = function() {
+			time(id1, id2, id3, id4, id5, id6, id7);
+			var clearAlert;
+			var chillerType = $("#chiller3").text();
+			if ($("#clearAlert").is(':checked')) {
+				clearAlert = "on";
+			} else {
+				clearAlert = "off";
+			}
+			$.ajax({
+				url : "${PATH}/pc/seting/clearAlert.do",
+				data : {
+					"containerId" : containerId,
+					"deviceId" : deviceId,
+					"clearAlert" : clearAlert,
+					"chillerType" : chillerType
+				},
+				type : "get",
+				success : function(result) {
+
+					var field = result.state;
+					if (field == '0') {
+						var num = Math.random();
+						layer.msg(result.message);
+						return;
+					}
+					layer.msg(result.message);
+				}
+			});
+		}
+		//运行模式
+		id5.onclick = function() {
+			time(id1, id2, id3, id4, id5, id6, id7);
+			getVal_01();
+			hasValue = false,//定义变量
+			refRunMode = checkedVal_01;
+			var chillerType = $("#chiller4").text();
+
+			console.log("$$" + refRunMode);
+			$.ajax({
+				url : "${PATH}/pc/seting/refRunMode.do",
+				data : {
+					"containerId" : containerId,
+					"deviceId" : deviceId,
+					"refRunMode" : refRunMode,
+					"chillerType" : chillerType
+				},
+				type : "get",
+				success : function(result) {
+
+					var field = result.state;
+					if (field == '0') {
+						var num = Math.random();
+						layer.msg(result.message);
+						return;
+					}
+					layer.msg(result.message);
+				}
+			});
+
+		}
+		//远程开关机
+		id6.onclick = function() {
+			time(id1, id2, id3, id4, id5, id6, id7);
+			getVal();
+			var chillerType = $("#chiller5").text();
+			var remoteSwiMac = checkedVal;
+			console.log("##" + remoteSwiMac);
+			$.ajax({
+				url : "${PATH}/pc/seting/remoteSwiMac.do",
+				data : {
+					"containerId" : containerId,
+					"deviceId" : deviceId,
+					"remoteSwiMac" : remoteSwiMac,
+					"chillerType" : chillerType
+				},
+				type : "get",
+				success : function(result) {
+
+					var field = result.state;
+					if (field == '0') {
+						var num = Math.random();
+						layer.msg(result.message);
+						return;
+					}
+					layer.msg(result.message);
+				}
+			});
+		}
+		//新风门开关机
+		id7.onclick = function() {
+			time(id1, id2, id3, id4, id5, id6, id7);
+			getVal_02();
+			var chillerType = $("#chiller6").text();
+			var remoteXFSwiMac = checkedVal_02;
+			var setCfm = $("#CFM").val();
+			console.log("##" + remoteXFSwiMac);
+			$.ajax({
+				url : "${PATH}/pc/seting/remoteXFSwiMac.do",
+				data : {
+					"containerId" : containerId,
+					"deviceId" : deviceId,
+					"remoteXFSwiMac" : remoteXFSwiMac,
+					"chillerType" : chillerType,
+					"setCfm":setCfm
+				},
+				type : "get",
+				success : function(result) {
+
+					var field = result.state;
+					if (field == '0') {
+						var num = Math.random();
+						layer.msg(result.message);
+						return;
+					}
+					layer.msg(result.message);
+				}
+			});
+		}
+		//（2）radio选定操作
+		var oRadio_02 = document.getElementsByName("remoteXFSwiMac");
+		hasValue_02 = false,//定义变量
+		checkedVal_02 = "";
+		function getVal_02() { //获取radio选中值函数
+			for (i = 0; i < oRadio_02.length; i++) {//循环数组
+				if (oRadio_02[i].checked) {//判断当前项是否被选中
+					//已选中的操作，获取选中的值	
+					hasValue_02 = true;
+					checkedVal_02 = oRadio_02[i].value;
+					//return checkedVal;
+				} else {
+					hasValue = false;
+				}
+			}
+		}
+		/* 设置冷机运行模式 */
+		//（1）radio选定操作
+		var oRadio_01 = document.getElementsByName("refRunMode");
+		hasValue_01 = false,//定义变量
+		checkedVal_01 = "";
+		function getVal_01() { //获取radio选中值函数
+			for (i = 0; i < oRadio_01.length; i++) {//循环数组
+				if (oRadio_01[i].checked) {//判断当前项是否被选中
+					//已选中的操作，获取选中的值
+					hasValue_01 = true;
+					checkedVal_01 = oRadio_01[i].value;
+					//return checkedVal;
+				} else {
+					hasValue = false;
+				}
+			}
+		}
+		//（1）radio选定操作
+		var oRadio = document.getElementsByName("remoteSwiMac");
+		hasValue = false,//定义变量
+		checkedVal = "";
+		function getVal() { //获取radio选中值函数
+			for (i = 0; i < oRadio.length; i++) {//循环数组
+				if (oRadio[i].checked) {//判断当前项是否被选中
+					//已选中的操作，获取选中的值
+					hasValue = true;
+					checkedVal = oRadio[i].value;
+					//return checkedVal;
+				} else {
+					hasValue = false;
+				}
+			}
+		}
 	</script>
 </body>
 </html>
