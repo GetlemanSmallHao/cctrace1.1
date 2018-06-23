@@ -975,7 +975,8 @@
 	 --%>
 			var init;//刷新冷藏箱列表定时器的容器
 			var order;
-			var concontainerId_setting;
+			var containerId_setting;
+			var deviceId;
 			//显示警告信息
 			$(function(){
 				setInterval(function() {
@@ -1320,7 +1321,7 @@
 													htmlStr += "<td><div style='width:70px;'>"
 															+ item.communicationState
 															+ "</div></td>";
-													htmlStr += "<td><div style='width:125px;'>"
+													htmlStr += "<td><div style='width:125px;' class='deviceId'>"
 															+ item.ccdata.deviceId
 															+ "</div></td>";
 													htmlStr += "<td><div style='width:115px;'>"
@@ -1579,7 +1580,7 @@
 					htmlStr += "<td><div style='width:70px;'>"
 							+ item.communicationState
 							+ "</div></td>";
-					htmlStr += "<td><div style='width:125px;'>"
+					htmlStr += "<td><div style='width:125px;' class='deviceId'>"
 							+ item.ccdata.deviceId
 							+ "</div></td>";
 					htmlStr += "<td><div style='width:115px;'>"
@@ -1634,7 +1635,8 @@
 				doInitMap(containerId1);
 				build_waring(containerId1);
 				$('.setting_sbbh').text(containerId1);
-				concontainerId_setting = containerId1;
+				containerId_setting = containerId1;
+				deviceId = $(this).find(".deviceId").text();
 			});
 			//解析警告提示为  当前选中冷箱的前一天的告警提示
 			function build_waring(containerId){
@@ -2795,7 +2797,7 @@
 			$.ajax({
 				url : "${PATH}/pc/seting/showContainerchillerType.do",
 				data : {
-					"containerId" : concontainerId_setting
+					"containerId" : containerId_setting
 				},
 				type : "get",
 				success : function(result) {
@@ -2808,7 +2810,7 @@
 			$.ajax({
 				url : "${PATH}/pc/seting/showCommandSetValue.do",
 				data : {
-					"containerId" : concontainerId_setting,
+					"containerId" : containerId_setting,
 					"commandType" : 'temSet'
 				},
 				type : "get",
@@ -2823,7 +2825,7 @@
 			$.ajax({
 				url : "${PATH}/pc/seting/showContainerchillerType.do",
 				data : {
-					"containerId" : concontainerId_setting
+					"containerId" : containerId_setting
 				},
 				type : "get",
 				success : function(result) {
@@ -2836,7 +2838,7 @@
 			$.ajax({
 				url : "${PATH}/pc/seting/showContainerchillerType.do",
 				data : {
-					"containerId" : concontainerId_setting
+					"containerId" : containerId_setting
 				},
 				type : "get",
 				success : function(result) {
@@ -2851,7 +2853,7 @@
 			$.ajax({
 				url : "${PATH}/pc/seting/showContainerchillerType.do",
 				data : {
-					"containerId" : concontainerId_setting
+					"containerId" : containerId_setting
 				},
 				type : "get",
 				success : function(result) {
@@ -2864,7 +2866,7 @@
 			$.ajax({
 				url : "${PATH}/pc/seting/showContainerchillerType.do",
 				data : {
-					"containerId" : concontainerId_setting
+					"containerId" : containerId_setting
 				},
 				type : "get",
 				success : function(result) {
@@ -2875,7 +2877,7 @@
 			$.ajax({
 				url : "${PATH}/pc/seting/showCommandSetValue.do",
 				data : {
-					"containerId" : concontainerId_setting,
+					"containerId" : containerId_setting,
 					"commandType" : 'refRunMode'
 				},
 				type : "get",
@@ -2896,7 +2898,7 @@
 			$.ajax({
 				url : "${PATH}/pc/seting/showContainerchillerType.do",
 				data : {
-					"containerId" : concontainerId_setting
+					"containerId" : containerId_setting
 				},
 				type : "get",
 				success : function(result) {
@@ -2906,7 +2908,7 @@
 			$.ajax({
 				url : "${PATH}/pc/seting/showCommandSetValue.do",
 				data : {
-					"containerId" : concontainerId_setting,
+					"containerId" : containerId_setting,
 					"commandType" : 'remoteSwiMac'
 				},
 				type : "get",
@@ -2927,7 +2929,7 @@
 			$.ajax({
 				url : "${PATH}/pc/seting/showContainerchillerType.do",
 				data : {
-					"containerId" : concontainerId_setting
+					"containerId" : containerId_setting
 				},
 				type : "get",
 				success : function(result) {
@@ -2937,7 +2939,7 @@
 			$.ajax({
 				url : "${PATH}/pc/seting/showCommandSetValue.do",
 				data : {
-					"containerId" : concontainerId_setting,
+					"containerId" : containerId_setting,
 					"commandType" : 'remoteXFSwiMac'
 				},
 				type : "get",
@@ -3024,17 +3026,18 @@
 			time(id1, id2, id3, id4, id5, id6, id7);
 			var setTemp = $("#temp").val();
 			var chillerType = $("#chiller").text();
+			console.log(setTemp,chillerType)
 			$.ajax({
 				url : "${PATH}/pc/seting/setTemp.do",
 				data : {
-					"containerId" : containerId,
+					"containerId" : containerId_setting,
 					"deviceId" : deviceId,
 					"setTemp" : setTemp,
 					"chillerType" : chillerType
 				},
 				type : "get",
 				success : function(result) {
-
+					console.log(result)
 					var field = result.state;
 					if (field == '0') {
 						var num = Math.random();
@@ -3059,7 +3062,7 @@
 			$.ajax({
 				url : "${PATH}/pc/seting/bootDef.do",
 				data : {
-					"containerId" : containerId,
+					"containerId" : containerId_setting,
 					"deviceId" : deviceId,
 					"bootDef" : bootDef,
 					"chillerType" : chillerType
@@ -3090,7 +3093,7 @@
 			$.ajax({
 				url : "${PATH}/pc/seting/selfCheck.do",
 				data : {
-					"containerId" : containerId,
+					"containerId" : containerId_setting,
 					"deviceId" : deviceId,
 					"selfCheck" : selfCheck,
 					"chillerType" : chillerType
@@ -3121,7 +3124,7 @@
 			$.ajax({
 				url : "${PATH}/pc/seting/clearAlert.do",
 				data : {
-					"containerId" : containerId,
+					"containerId" : containerId_setting,
 					"deviceId" : deviceId,
 					"clearAlert" : clearAlert,
 					"chillerType" : chillerType
@@ -3151,7 +3154,7 @@
 			$.ajax({
 				url : "${PATH}/pc/seting/refRunMode.do",
 				data : {
-					"containerId" : containerId,
+					"containerId" : containerId_setting,
 					"deviceId" : deviceId,
 					"refRunMode" : refRunMode,
 					"chillerType" : chillerType
@@ -3180,7 +3183,7 @@
 			$.ajax({
 				url : "${PATH}/pc/seting/remoteSwiMac.do",
 				data : {
-					"containerId" : containerId,
+					"containerId" : containerId_setting,
 					"deviceId" : deviceId,
 					"remoteSwiMac" : remoteSwiMac,
 					"chillerType" : chillerType
@@ -3209,7 +3212,7 @@
 			$.ajax({
 				url : "${PATH}/pc/seting/remoteXFSwiMac.do",
 				data : {
-					"containerId" : containerId,
+					"containerId" : containerId_setting,
 					"deviceId" : deviceId,
 					"remoteXFSwiMac" : remoteXFSwiMac,
 					"chillerType" : chillerType,

@@ -327,7 +327,6 @@
 		var page =result.extend.page;
 		var htmlStr = "";
 		$.each(logs,function(index,item){
-		console.log(item)
 			htmlStr += "<tr>";
 			htmlStr += "<td><div class='leftDown--div1'>"+(index + 1)+"</div></td> ";	
 			if(item.userName != null){
