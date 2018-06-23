@@ -118,6 +118,7 @@ $(".amendBind").on("click",".main__amend",function(e){
   $(inputArr[1]).val($(divArr[18]).text());
   $(inputArr[2]).val($(divArr[8]).text());
   $(inputArr[3]).val($(divArr[7]).text());
+  $(inputArr[4]).val($(divArr[3]).text());
   for(var i = 0;i < xhzArr.length;i++){
 	  //console.log($(xhzArr[i]).text().replace(/\s*/g, ""));
 	  if($(divArr[18]).text().replace(/\s*/g, "") == $(xhzArr[i]).text().replace(/\s*/g, "")){

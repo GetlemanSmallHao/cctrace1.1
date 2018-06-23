@@ -175,6 +175,10 @@
 						<b style="display:inline-block; width:110px; font-weight:500;">备注信息：</b>
 						<input type="text" id="remark" name="remark" />
 					</span>
+					<span>
+						<b style="display:inline-block; width:110px; font-weight:500;">所属部门：</b>
+						<input type="text" id="buMenM" name="buMenM" />
+					</span>
 					<span class="con__modal--btn">
 						<button onclick="bindtableUpdate()">保 存</button>
 						<button class="con__modal--cancel rt">取 消</button>
@@ -1928,6 +1932,7 @@
 				var carGoType = $('#carGoType').val();
 				var remark = $('#remark').val();
 				var lcxModel = $('#lcxModel').val();
+				var buMenM = $('#buMenM').val();
 				var nodeSel1 = document.getElementById("theNextStation"); //获取select元素
 				var index1 = nodeSel1.selectedIndex; // 选中项的索引
 				var stationName = $(nodeSel1.options[index1]).text(); // 获取值
@@ -1948,7 +1953,8 @@
 						'stationName' : stationName,
 						'yardName' : yardName,
 						'remark'   : remark,
-						'lcxModel' : lcxModel
+						'lcxModel' : lcxModel,
+						'buMenM' : buMenM
  					},
 					dataType : 'JSON',
 					success : function(result) {

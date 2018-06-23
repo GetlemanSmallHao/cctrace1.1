@@ -232,7 +232,7 @@ public class BindtableController {
 							Map<String, Object> map1 = new HashMap<String, Object>();
 							map1.put("ccdata", ccdata);
 							map1.put("ourccdata", ourCcdata);
-							map1.put("bindtable",bindTable);
+							map1.put("bindtable", bindTable);
 							map1.put("trainId", trainId);
 							map1.put("carGoType", carGoType);
 							map1.put("stationName", stationName);
@@ -392,7 +392,7 @@ public class BindtableController {
 				Map<String, Object> map1 = new HashMap<String, Object>();
 				map1.put("ccdata", ccdata1);
 				map1.put("ourccdata", ourccdata);
-				map1.put("bindtable",bindTable);
+				map1.put("bindtable", bindTable);
 				map1.put("trainId", trainId);
 				map1.put("carGoType", carGoType);
 				map1.put("stationName", stationName);
@@ -541,7 +541,7 @@ public class BindtableController {
 				Map<String, Object> map1 = new HashMap<String, Object>();
 				map1.put("ccdata", ccdata1);
 				map1.put("ourccdata", ourccdata);
-				map1.put("bindtable",bindTable);
+				map1.put("bindtable", bindTable);
 				map1.put("trainId", trainId);
 				map1.put("carGoType", carGoType);
 				map1.put("stationName", stationName);
@@ -781,7 +781,7 @@ public class BindtableController {
 					Map<String, Object> map1 = new HashMap<String, Object>();
 					map1.put("ccdata", ccdata1);
 					map1.put("ourccdata", ourccdata);
-					map1.put("bindtable",bindTable);
+					map1.put("bindtable", bindTable);
 					map1.put("trainId", trainId);
 					map1.put("carGoType", carGoType);
 					map1.put("stationName", stationName);
@@ -914,7 +914,7 @@ public class BindtableController {
 					Map<String, Object> map1 = new HashMap<String, Object>();
 					map1.put("ccdata", ccdata1);
 					map1.put("ourccdata", ourCcdata);
-					map1.put("bindtable",bindTable);
+					map1.put("bindtable", bindTable);
 					map1.put("trainId", trainId);
 					map1.put("carGoType", carGoType);
 					map1.put("stationName", stationName);
@@ -940,129 +940,133 @@ public class BindtableController {
 					// Container container =
 					// daoService.getContainerBycontarinId(ccdata
 					// .getContainerId());
-					OurCcdata1 ourCcdata = daoService
-							.selectOurCcdataBycontainerId1(ccdata
-									.getContainerId());
-					Map<String, Object> mapAlert = new HashMap<String, Object>();
-					Date nowDate2 = DateUtil.getNowDate();
-					long start = DateUtil.getLongFromDate(nowDate2);
-					long end = start - 24 * 60 * 60 * 1000;
-					mapAlert.put("containerId", ccdata.getContainerId());
-					mapAlert.put("startTime", end);
-					mapAlert.put("endTime", start);
-					count = daoService.selectAlertInBeforeSeconds(mapAlert);
-					String routeType;
-					String buMenM;
-					String trainId;
-					String carGoType;
-					String stationName = "";
-					String yardName = "";
-					int theNextStationId;
-					int yardId;
-					String nowTime;
-					Double backWindTemp;
-					Double oilLevel;
-					Double setTemp;
-					String refSwiState;
-					String communicationState;
-					String ifAlert = "";
+					if (bindTable != null) {
 
-					if (null != bindTable.getRouteType()) {
-						routeType = bindTable.getRouteType();
-					} else {
-						routeType = "";
-					}
-					if (null != bindTable.getBuMenM()) {
-						buMenM = bindTable.getBuMenM();
-					} else {
-						buMenM = "";
-					}
-					if (null != bindTable.getTrainId()) {
-						trainId = bindTable.getTrainId();
-					} else {
-						trainId = "";
-					}
-					if (null != bindTable.getCarGoType()) {
-						carGoType = bindTable.getCarGoType();
-					} else {
-						carGoType = "";
-					}
-					// 下货站名称
-					if (null != bindTable.getTheNextStationId()) {
-						if (daoService.getTheNextStationById(bindTable
-								.getTheNextStationId()) != null)
-							stationName = daoService.getTheNextStationById(
-									bindTable.getTheNextStationId())
-									.getStationName();
+						OurCcdata1 ourCcdata = daoService
+								.selectOurCcdataBycontainerId1(ccdata
+										.getContainerId());
+						Map<String, Object> mapAlert = new HashMap<String, Object>();
+						Date nowDate2 = DateUtil.getNowDate();
+						long start = DateUtil.getLongFromDate(nowDate2);
+						long end = start - 24 * 60 * 60 * 1000;
+						mapAlert.put("containerId", ccdata.getContainerId());
+						mapAlert.put("startTime", end);
+						mapAlert.put("endTime", start);
+						count = daoService.selectAlertInBeforeSeconds(mapAlert);
+						String routeType;
+						String buMenM;
+						String trainId;
+						String carGoType;
+						String stationName = "";
+						String yardName = "";
+						int theNextStationId;
+						int yardId;
+						String nowTime;
+						Double backWindTemp;
+						Double oilLevel;
+						Double setTemp;
+						String refSwiState;
+						String communicationState;
+						String ifAlert = "";
 
-					} else {
-						stationName = "";
-					}
-					// 堆场名称
-					if (null != bindTable.getYardId()) {
-						if (daoService.getYardbyId(bindTable.getYardId()) != null) {
-							yardName = daoService.getYardbyId(
-									bindTable.getYardId()).getYardName();
-						}
-					} else {
-						yardName = "";
-					}
-					// 系统时间
-					if (null != ccdata.getNowTime()) {
-
-						nowTime = ccdata.getNowTime();
-
-					} else {
-						nowTime = "";
-					}
-					// 开关机状态
-					if (StringUtil.isNotEmpty(ccdata.getRefSwiState())) {
-
-						refSwiState = ccdata.getRefSwiState();
-						// 显示冷机是否报警
-						if (refSwiState.equals("on") && count > 0) {
-							ifAlert = "have";
-						} else if (refSwiState.equals("on") && (count <= 0)) {
-							ifAlert = "no";
-						} else if (refSwiState.equals("off")) {
-							ifAlert = "";
-						}
-					} else {
-						refSwiState = "";
-					}
-					// 显示通讯状态
-					if (ccdata.getReceiveLongTime() != null) {
-						long longTimeGet = ccdata.getReceiveLongTime();
-						Date nowDate = DateUtil.getNowDate();
-						long longTimeNow = DateUtil.getLongFromDate(nowDate);
-						if ((longTimeNow - longTimeGet) > (2 * 60000)) {
-							communicationState = "断开";
+						if (null != bindTable.getRouteType()) {
+							routeType = bindTable.getRouteType();
 						} else {
-							communicationState = "连接";
+							routeType = "";
 						}
-					} else {
-						communicationState = "";
-					}
+						if (null != bindTable.getBuMenM()) {
+							buMenM = bindTable.getBuMenM();
+						} else {
+							buMenM = "";
+						}
+						if (null != bindTable.getTrainId()) {
+							trainId = bindTable.getTrainId();
+						} else {
+							trainId = "";
+						}
+						if (null != bindTable.getCarGoType()) {
+							carGoType = bindTable.getCarGoType();
+						} else {
+							carGoType = "";
+						}
+						// 下货站名称
+						if (null != bindTable.getTheNextStationId()) {
+							if (daoService.getTheNextStationById(bindTable
+									.getTheNextStationId()) != null)
+								stationName = daoService.getTheNextStationById(
+										bindTable.getTheNextStationId())
+										.getStationName();
 
-					Map<String, Object> map1 = new HashMap<String, Object>();
-					map1.put("ccdata", ccdata);
-					map1.put("ourccdata", ourCcdata);
-					map1.put("bindtable",bindTable);
-					map1.put("trainId", trainId);
-					map1.put("carGoType", carGoType);
-					map1.put("stationName", stationName);
-					map1.put("yardName", yardName);
-					map1.put("nowTime", nowTime);
-					map1.put("routeType", routeType);
-					map1.put("backWindTemp", ccdata.getBackWindTemp());
-					map1.put("oilLevel", ourCcdata.getOilLevel());
-					map1.put("setTemp", ccdata.getTempSet());
-					map1.put("refSwiState", refSwiState);
-					map1.put("communicationState", communicationState);
-					map1.put("ifAlert", ifAlert);
-					map1.put("remark", bindTable.getRemark());
-					map1.put("buMenM", bindTable.getBuMenM());
-					maps.add(map1);
+						} else {
+							stationName = "";
+						}
+						// 堆场名称
+						if (null != bindTable.getYardId()) {
+							if (daoService.getYardbyId(bindTable.getYardId()) != null) {
+								yardName = daoService.getYardbyId(
+										bindTable.getYardId()).getYardName();
+							}
+						} else {
+							yardName = "";
+						}
+						// 系统时间
+						if (null != ccdata.getNowTime()) {
+
+							nowTime = ccdata.getNowTime();
+
+						} else {
+							nowTime = "";
+						}
+						// 开关机状态
+						if (StringUtil.isNotEmpty(ccdata.getRefSwiState())) {
+
+							refSwiState = ccdata.getRefSwiState();
+							// 显示冷机是否报警
+							if (refSwiState.equals("on") && count > 0) {
+								ifAlert = "have";
+							} else if (refSwiState.equals("on") && (count <= 0)) {
+								ifAlert = "no";
+							} else if (refSwiState.equals("off")) {
+								ifAlert = "";
+							}
+						} else {
+							refSwiState = "";
+						}
+						// 显示通讯状态
+						if (ccdata.getReceiveLongTime() != null) {
+							long longTimeGet = ccdata.getReceiveLongTime();
+							Date nowDate = DateUtil.getNowDate();
+							long longTimeNow = DateUtil
+									.getLongFromDate(nowDate);
+							if ((longTimeNow - longTimeGet) > (2 * 60000)) {
+								communicationState = "断开";
+							} else {
+								communicationState = "连接";
+							}
+						} else {
+							communicationState = "";
+						}
+
+						Map<String, Object> map1 = new HashMap<String, Object>();
+						map1.put("ccdata", ccdata);
+						map1.put("ourccdata", ourCcdata);
+						map1.put("bindtable", bindTable);
+						map1.put("trainId", trainId);
+						map1.put("carGoType", carGoType);
+						map1.put("stationName", stationName);
+						map1.put("yardName", yardName);
+						map1.put("nowTime", nowTime);
+						map1.put("routeType", routeType);
+						map1.put("backWindTemp", ccdata.getBackWindTemp());
+						map1.put("oilLevel", ourCcdata.getOilLevel());
+						map1.put("setTemp", ccdata.getTempSet());
+						map1.put("refSwiState", refSwiState);
+						map1.put("communicationState", communicationState);
+						map1.put("ifAlert", ifAlert);
+						map1.put("remark", bindTable.getRemark());
+						map1.put("buMenM", bindTable.getBuMenM());
+						maps.add(map1);
+					}
 				}
 			}
 			map.addAttribute("maps", maps);
@@ -1212,7 +1216,7 @@ public class BindtableController {
 				Map<String, Object> map1 = new HashMap<String, Object>();
 				map1.put("ccdata", ccdata);
 				map1.put("ourccdata", ourCcdata);
-				map1.put("bindtable",bindTable);
+				map1.put("bindtable", bindTable);
 				map1.put("trainId", trainId);
 				map1.put("carGoType", carGoType);
 				map1.put("stationName", stationName);
@@ -1389,7 +1393,7 @@ public class BindtableController {
 			Map<String, Object> map1 = new HashMap<String, Object>();
 			map1.put("ccdata", ccdata);
 			map1.put("ourccdata", ourCcdata);
-			map1.put("bindtable",bindTable);
+			map1.put("bindtable", bindTable);
 			map1.put("chillerType", container.getChillerType());
 			map1.put("trainId", trainId);
 			map1.put("carGoType", carGoType);
@@ -1470,8 +1474,8 @@ public class BindtableController {
 	@ResponseBody
 	@RequestMapping("updateBindtableInfo")
 	public Msg updateBindtableInfo(HttpServletRequest request,
-			String containerId, String carGoType, String trainId,
-			String stationName, String yardName, String remark, String lcxModel) {
+			String containerId, String carGoType, String trainId, String stationName,
+			String yardName, String remark, String lcxModel, String buMenM) {
 		BindTable bindTable = daoService.getBindTableByContainerId(containerId);
 		Ccdata1 cc1 = daoService.selectCcdataByContainerId1(containerId);
 		Integer companyId = bindTable.getCompanyId();
@@ -1486,6 +1490,7 @@ public class BindtableController {
 		bindTable.setBindTime(bindTime);
 		bindTable.setBindLongTime(bindLongTime);
 		bindTable.setRemark(remark);
+		bindTable.setBuMenM(buMenM);;
 		if (StringUtil.isNotEmpty(lcxModel) && cc1 != null) {
 			cc1.setLcxModel(lcxModel);
 			daoService.updateCcdataById1(cc1);
