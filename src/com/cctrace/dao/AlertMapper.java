@@ -92,6 +92,17 @@ public interface AlertMapper {
 
 	// 查询两段时间内的信息
 	public List<Alert> selectShowAlertInTwoTime(Map<String, Object> map);
+	
+	/**
+	 * 新增模块
+	 * @param map
+	 * @return
+	 */
+	public List<Alert> selectShowReaded(Map<String, Object> map);
+	
+	public List<Alert> selectShowBuMenM(Map<String, Object> map);
+	
+	public List<Alert> selectShowAlarmNum(Map<String, Object> map);
 
 	Integer selectAlertInBeforeSeconds(Map<String, Object> map);
 

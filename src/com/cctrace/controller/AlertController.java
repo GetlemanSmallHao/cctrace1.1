@@ -392,6 +392,61 @@ public class AlertController {
 		mm.addAttribute("alerts", alerts);
 		return "showSelectWarning.jsp";
 	}
+	
+	/**
+	 * 
+	 * 新增模块，筛查已未读、部门、告警代码
+	 */
+	@RequestMapping(value = "/showReaded")
+	public String showReaded(HttpServletRequest request,
+			@RequestParam String readed, ModelMap mm) {
+		String mess = "";
+		Integer flag = ConstantCode.ERROR;
+		List<Alert> alerts = null;
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("readed", readed);
+		if (daoService.selectShowReaded(map).size() > 0) {
+			alerts = daoService.selectShowReaded(map);
+			mess = "查询到警告信息";
+			flag = ConstantCode.SUCCESS;
+		}
+		mm.addAttribute("alerts", alerts);
+		return "showSelectWarning.jsp";
+	}
+	
+	@RequestMapping(value = "/showBuMenM")
+	public String showBuMenM(HttpServletRequest request,
+			@RequestParam String buMenM, ModelMap mm) {
+		String mess = "";
+		Integer flag = ConstantCode.ERROR;
+		List<Alert> alerts = null;
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("buMenM", buMenM);
+		if (daoService.selectShowBuMenM(map).size() > 0) {
+			alerts = daoService.selectShowBuMenM(map);
+			mess = "查询到警告信息";
+			flag = ConstantCode.SUCCESS;
+		}
+		mm.addAttribute("alerts", alerts);
+		return "showSelectWarning.jsp";
+	}
+	
+	@RequestMapping(value = "/showAlarmNum")
+	public String showAlarmNum(HttpServletRequest request,
+			@RequestParam Integer alarm_num, ModelMap mm) {
+		String mess = "";
+		Integer flag = ConstantCode.ERROR;
+		List<Alert> alerts = null;
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("alarm_num", alarm_num);
+		if (daoService.selectShowAlarmNum(map).size() > 0) {
+			alerts = daoService.selectShowAlarmNum(map);
+			mess = "查询到警告信息";
+			flag = ConstantCode.SUCCESS;
+		}
+		mm.addAttribute("alerts", alerts);
+		return "showSelectWarning.jsp";
+	}
 
 	private User getCurrentUser(HttpServletRequest request) {
 		HttpSession session = request.getSession();

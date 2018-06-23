@@ -16,18 +16,19 @@
 		<result column="updateTime " jdbcType="VARCHAR" property="updateTime " />
 		<result column="updateLongTime" jdbcType="BIGINT" property="updateLongTime" />
 		<result column="companyId" jdbcType="INTEGER" property="companyId" />
+		<result column="buMenM" jdbcType="VARCHAR" property="buMenM" />
 	</resultMap>
 
 	<sql id="Base_Column_List">
-		id, containerId, alertTime, alertLongTime, alertType,
-		alertContent, lat, lon, readed,alarm_num,gpsPosition,updateTime,updateLongTime,
-		companyId
+		a.id, a.containerId, a.alertTime, a.alertLongTime, a.alertType, a.alertContent,
+		a.lat, a.lon, a.readed, a.alarm_num, a.gpsPosition, a.updateTime, a.updateLongTime,
+		a.companyId, b.buMenM
 	</sql>
 
-	<select id="selectAllAlerts" resultType="com.cctrace.entity.Alert">
+	<select id="selectAllAlerts" resultMap="BaseResultMap">
 		select
 		<include refid="Base_Column_List" />
-		from alert
+		from alert a inner join bindtable b on a.`containerId`=b.`containerId`
 		where 1=1
 	</select>
 	<!-- 通过公司id查看预警 -->
@@ -39,23 +40,21 @@
 	</select>
 	
 	<!-- 根据设备号、预警号和24小时内查询最新一条预警-->
-	<select id="selectAlertOnByContainerId" parameterType="java.util.Map"
-	 resultType="com.cctrace.entity.Alert" >
+	<select id="selectAlertOnByContainerId" resultMap="BaseResultMap" >
 		select 
 		<include refid="Base_Column_List" />
-		from alert 
-		where containerId=#{containerId} and readed='no'
-		and alarm_num=#{alarm_num} and alertLongTime between #{startTime} and #{endTime}
-		order by id desc limit 1
+		from alert a inner join bindtable b on a.`containerId`=b.`containerId`
+		where a.containerId=#{containerId} and a.readed='no'
+		and a.alarm_num=#{alarm_num} and a.alertLongTime between #{startTime} and #{endTime}
+		order by a.id desc limit 1
 	</select>
 	<!-- 根据设备号、预警号和24小时内查询所有预警-->
-	<select id="selectAllAlertOnByContainerId" parameterType="java.util.Map"
-	 resultType="com.cctrace.entity.Alert" >
+	<select id="selectAllAlertOnByContainerId" resultMap="BaseResultMap" >
 		select 
 		<include refid="Base_Column_List" />
-		from alert 
-		where containerId=#{containerId} and readed='no'
-		and alertLongTime between #{startTime} and #{endTime}
+		from alert a inner join bindtable b on a.`containerId`=b.`containerId`
+		where a.containerId=#{containerId} and a.readed='no'
+		and a.alertLongTime between #{startTime} and #{endTime}
 	</select>
 
 	<select id="selectMaxAlertId" resultType="java.lang.Integer">
@@ -64,70 +63,63 @@
 		alert
 	</select>
 
-	<select id="selectAlertById" parameterType="java.lang.Integer"
-		resultType="com.cctrace.entity.Alert">
+	<select id="selectAlertById" resultMap="BaseResultMap">
 		select
 		<include refid="Base_Column_List" />
-		from alert
-		where id = #{id}
+		from alert a inner join bindtable b on a.`containerId`=b.`containerId`
+		where a.id = #{id}
 	</select>
 
-	<select id="selectAlertsByCompanyIdAndDays" parameterType="java.util.Map"
-		resultType="com.cctrace.entity.Alert">
+	<select id="selectAlertsByCompanyIdAndDays" resultMap="BaseResultMap">
 		select
 		<include refid="Base_Column_List" />
-		from alert
-		where containerId in
+		from alert a inner join bindtable b on a.`containerId`=b.`containerId`
+		where a.containerId in
 		(select containerId from container where
-		companyId = #{companyId}) and alertLongTime = #{longTime}
+		companyId = #{companyId}) and a.alertLongTime = #{longTime}
 	</select>
 
-	<select id="selectAlertsByCompanyId" parameterType="java.lang.Integer"
-		resultType="com.cctrace.entity.Alert">
+	<select id="selectAlertsByCompanyId" resultMap="BaseResultMap">
 		select
 		<include refid="Base_Column_List" />
-		from alert
-		where containerId in
+		from alert a inner join bindtable b on a.`containerId`=b.`containerId`
+		where a.containerId in
 		(select containerId from container where
 		companyId = #{companyId})
 	</select>
 
 	<!-- 看是否存在班列警告信息 -->
-	<select id="selectIfAlertBytrainId" parameterType="java.lang.String"
-		resultType="com.cctrace.entity.Alert">
+	<select id="selectIfAlertBytrainId" resultMap="BaseResultMap">
 		SELECT
 		<include refid="Base_Column_List" />
-		FROM alert
-		WHERE containerId IN
+		FROM alert a inner join bindtable b on a.`containerId`=b.`containerId`
+		WHERE a.containerId IN
 		(SELECT containerId
 		FROM bindtable WHERE
 		containerId = #{containerId})
 	</select>
 
-	<select id="selectNotreadedAlertsByCompanyId" parameterType="java.lang.Integer"
-		resultType="com.cctrace.entity.Alert">
+	<select id="selectNotreadedAlertsByCompanyId" resultMap="BaseResultMap">
 		select
 		<include refid="Base_Column_List" />
-		from alert
-		where containerId in
+		from alert a inner join bindtable b on a.`containerId`=b.`containerId`
+		where a.containerId in
 		(select containerId from container where
-		companyId = #{companyId}) and readed
+		companyId = #{companyId}) and a.readed
 		= 'no'
 	</select>
 
-	<select id="selectAlertsByContainderId" parameterType="java.lang.String"
-		resultType="com.cctrace.entity.Alert">
+	<select id="selectAlertsByContainderId" resultMap="BaseResultMap">
 		select
 		<include refid="Base_Column_List" />
-		from alert
-		where containerId = #{containerId}
+		from alert a inner join bindtable b on a.`containerId`=b.`containerId`
+		where a.containerId = #{containerId}
 	</select>
 
-	<select id="selectAlertsByCompanyIdInFourDays" parameterType="java.util.Map"
-		resultType="com.cctrace.entity.Alert">
-		Select <include refid="Base_Column_List" /> From (
-		select <include refid="Base_Column_List" /> from alert where   containerId in (select containerId from container
-			where companyId = #{companyId}) and alertLongTime > #{beginTime} order by id desc ) A
+	<select id="selectAlertsByCompanyIdInFourDays" resultMap="BaseResultMap">
+		Select <include refid="Base_Column_List" /> 
+		From alert a inner join bindtable b on a.`containerId`=b.`containerId` where a.containerId in (select containerId from container
+			where companyId = #{companyId}) and a.alertLongTime > #{beginTime} order by a.id desc
 			<!--  
 		Union 
 		Select <include refid="Base_Column_List" /> From (
@@ -135,57 +127,48 @@
    			where companyId = #{companyId}) and alertLongTime > #{beginTime} and readed='yes' order by id desc ) B -->
 	</select>
 	<!-- 找到最新的时间，往回溯 -->
-	<select id="selectLastAlertsTimeByCompanyId" parameterType="java.lang.Integer"
-		resultType="com.cctrace.entity.Alert">
+	<select id="selectLastAlertsTimeByCompanyId" resultMap="BaseResultMap">
 		SELECT 
 		<include refid="Base_Column_List" />
-		FROM alert
-		WHERE containerId IN (SELECT containerId FROM container
+		FROM alert a inner join bindtable b on a.`containerId`=b.`containerId`
+		WHERE a.containerId IN (SELECT containerId FROM container
 		WHERE companyId =
 		#{companyId})
-		ORDER BY alertTime DESC
+		ORDER BY a.alertTime DESC
 	</select>
 
-	<select id="selectAlertsByCompanyIdAndContainerIdLikely"
-		parameterType="java.util.Map" resultType="com.cctrace.entity.Alert">
+	<select id="selectAlertsByCompanyIdAndContainerIdLikely" resultMap="BaseResultMap">
 		select
 		<include refid="Base_Column_List" />
-		from alert
-		where containerId in (select containerId from container
-		where companyId = #{companyId}) and containerId like
-		concat('%',#{containerId},'%') and alertLongTime > #{beginTime}
+		from alert a inner join bindtable b on a.`containerId`=b.`containerId`
+		where a.containerId in (select containerId from container
+		where companyId = #{companyId}) and a.containerId like
+		concat('%',#{containerId},'%') and a.alertLongTime > #{beginTime}
 		group
-		by alertLongTime desc
+		by a.alertLongTime desc
 	</select>
 
-	<select id="selectAlertsByCompanyIdAndContainerIdAndAlertTypeLikely"
-		parameterType="java.util.Map" resultType="com.cctrace.entity.Alert">
+	<select id="selectAlertsByCompanyIdAndContainerIdAndAlertTypeLikely" resultMap="BaseResultMap">
 		select
 		<include refid="Base_Column_List" />
-		from alert
-		where containerId in (select containerId from container
+		from alert a inner join bindtable b on a.`containerId`=b.`containerId`
+		where a.containerId in (select containerId from container
 		where companyId=#{companyId} and containerId like
 		concat('%',#{containerId},'%'))
-		and alertType like
-		concat('%',#{alertType},'%') and alertLongTime >
+		and a.alertType like
+		concat('%',#{alertType},'%') and a.alertLongTime >
 		#{beginTime}
-		group
-		by
-		alertLongTime desc
+		group by a.alertLongTime desc
 	</select>
 
-	<select id="selectAlertsByCompanyIdAndAlertTypeLikely"
-		parameterType="java.util.Map" resultType="com.cctrace.entity.Alert">
+	<select id="selectAlertsByCompanyIdAndAlertTypeLikely" resultMap="BaseResultMap">
 		select
 		<include refid="Base_Column_List" />
-		from alert where containerId in (select containerId from container
+		from alert a inner join bindtable b on a.`containerId`=b.`containerId` where a.containerId in (select containerId from container
 		where companyId=#{companyId})
-		and alertType like
-		concat('%',#{alertType},'%') and alertLongTime >
-		#{beginTime}
-		group
-		by
-		alertLongTime desc
+		and a.alertType like
+		concat('%',#{alertType},'%') and a.alertLongTime >
+		#{beginTime} group by a.alertLongTime desc
 	</select>
 	<!-- 什么鬼？？？？ -->
 	<select id="selectMaxAlertIdByCompanyId" parameterType="java.lang.Integer"
@@ -416,6 +399,7 @@
 		</if>
 		ORDER BY alertTime DESC
 	</select>
+	
 	<!-- 查询？秒前的警告信息 -->
 	<select id="selectAlertInBeforeSeconds" parameterType="java.util.Map" resultType="java.lang.Integer">
 		SELECT count(id) FROM alert WHERE containerId = #{containerId}
@@ -440,6 +424,24 @@
 		select containerId from alert where containerId IN (select containerId
 		from container where companyId = #{companyId}) group by containerId
 	
+	</select>
+	
+	<!-- 新增模块 -->
+	<!-- 查询已未读的警告信息 -->
+	<select id="selectShowReaded" parameterType="java.util.Map"
+		resultType="com.cctrace.entity.Alert">
+		SELECT * FROM alert WHERE readed= #{readed} ORDER BY id DESC
+	</select>
+	<!-- 查询部门的警告信息 -->
+	<select id="selectShowBuMenM" resultMap="BaseResultMap">
+		SELECT 
+		<include refid="Base_Column_List" />
+		FROM alert a inner join bindtable b on a.containerId=b.containerId WHERE buMenM= #{buMenM} ORDER BY id DESC
+	</select>
+	<!-- 查询告警代码的警告信息 -->
+	<select id="selectShowAlarmNum" parameterType="java.util.Map"
+		resultType="com.cctrace.entity.Alert">
+		SELECT * FROM alert WHERE alarm_num= #{alarm_num} ORDER BY id DESC
 	</select>
 	
 	<!-- 配置缓存 -->

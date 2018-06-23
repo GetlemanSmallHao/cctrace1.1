@@ -250,6 +250,30 @@ public class AlertMapperImpl implements AlertMapper {
 				"com.cctrace.dao.AlertMapper.selectShowAlertInTwoTime", map);
 		return alerts;
 	}
+	
+	/**
+	 * 新增模块
+	 */
+	@Override
+	public List<Alert> selectShowReaded(Map<String, Object> map) {
+		List<Alert> alerts = sqlSession.selectList(
+				"com.cctrace.dao.AlertMapper.selectShowReaded", map);
+		return alerts;
+	}
+	
+	@Override
+	public List<Alert> selectShowBuMenM(Map<String, Object> map) {
+		List<Alert> alerts = sqlSession.selectList(
+				"com.cctrace.dao.AlertMapper.selectShowBuMenM", map);
+		return alerts;
+	}
+	
+	@Override
+	public List<Alert> selectShowAlarmNum(Map<String, Object> map) {
+		List<Alert> alerts = sqlSession.selectList(
+				"com.cctrace.dao.AlertMapper.selectShowAlarmNum", map);
+		return alerts;
+	}
 
 	@Override
 	public Integer selectAlertInBeforeSeconds(Map<String, Object> map) {

@@ -346,6 +346,16 @@ public interface DaoService {
 	public List<Alert> selectNewAlertInTwoTime(Map<String, Object> map);
 
 	public List<Alert> selectShowAlertInTwoTime(Map<String, Object> map);
+	/**
+	 * 新增模块
+	 * @param map
+	 * @return
+	 */
+	public List<Alert> selectShowReaded(Map<String, Object> map);
+	
+	public List<Alert> selectShowBuMenM(Map<String, Object> map);
+	
+	public List<Alert> selectShowAlarmNum(Map<String, Object> map);
 
 	public Integer selectAlertInBeforeSeconds(Map<String, Object> map);
 
