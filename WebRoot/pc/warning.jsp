@@ -90,6 +90,7 @@
 							<tr>
 								<td><div class="">序号</div></td>
 								<td><div class="">冷藏箱编号</div></td>
+								<td><div class="">所属部门</div></td>
 								<td><div class="">报警开始时间</div></td>
 								<td><div class="">最近一次报警时间</div></td>
 								<td><div class="">告警编号   </div></td>
@@ -113,6 +114,7 @@
 										<tr>
 											<td><div class="leftDown--div2">${status.index+1}</div></td>
 											<td><div class="leftDown--div2">${alert.containerId}</div></td>
+											<td><div class="leftDown--div2">${alert.buMenM}</div></td>
 											<td><div class="leftDown--div3">${alert.alertTime}</div></td>
 											<td><div class="leftDown--div3">${alert.updateTime}</div></td>
 											<td><div class="leftDown--div2">${alert.alarm_num }</div></td>
@@ -141,11 +143,13 @@
 	</div>
 	</main>
 	<!-- 删除提示窗 -->
-	<div class="popup_div">
-		<i class="fa fa-info-circle fa-3x" aria-hidden="true"></i>
-		<p class="popup_read">确认已读</p>
-		<span class="popup_go">确认</span>
-		<span class="popup_hide">取消</span>
+	<div class="popup_bg">
+		<div class="popup_div">
+			<i class="fa fa-info-circle fa-3x" aria-hidden="true"></i>
+			<p class="popup_read">确认已读</p>
+			<span class="popup_go">确认</span>
+			<span class="popup_hide">取消</span>
+		</div>
 	</div>
 	<script type="text/javascript"
 		src="${pageContext.request.contextPath}/js/jquery-1.11.3.js"></script>
@@ -289,12 +293,12 @@
 				layer.msg("这是一个已读的信息!");
 				return;
 			}
-			$('.popup_div').show();
+			$('.popup_bg').show();
 			$('.popup_hide').on('click',function(){
-				$('.popup_div').hide();
+				$('.popup_bg').hide();
 			});
 			$('.popup_go').on('click',function(){
-				$('.popup_div').hide();
+				$('.popup_bg').hide();
 				$.ajax({
 					url:"${pageContext.request.contextPath}/pc/alert/modifyAlertReadStateByAlertId.do",
 					data:{"alertId":alertId},

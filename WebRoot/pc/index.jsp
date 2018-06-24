@@ -914,6 +914,7 @@
 						<tr>
 							<td><div class="">序号</div></td>
 							<td><div class="">冷藏箱编号</div></td>
+							<td><div class="">所属部门</div></td>
 							<td><div class="">报警开始时间</div></td>
 							<td><div class="">最近一次报警时间</div></td>
 							<td><div class="">告警编号   </div></td>
@@ -953,13 +954,15 @@
 		</div>
 	</div>
 </main>
-<!-- 删除提示窗 -->
-<div class="popup_div">
-	<i class="fa fa-info-circle fa-3x" aria-hidden="true"></i>
-	<p class="popup_read">确认已读</p>
-	<span class="popup_go">确认</span>
-	<span class="popup_hide">取消</span>
-</div>
+	<!-- 删除提示窗 -->
+	<div class="popup_bg">
+		<div class="popup_div">
+			<i class="fa fa-info-circle fa-3x" aria-hidden="true"></i>
+			<p class="popup_read">确认已读</p>
+			<span class="popup_go">确认</span>
+			<span class="popup_hide">取消</span>
+		</div>
+	</div>
 	<script src="${PATH}/js/jquery-3.2.1.js"></script>
 	<script src="${PATH}/js/index.js"></script>
 	<script src="${PATH}/js/layer_3.1.0/layer.js"></script>
@@ -1707,7 +1710,7 @@
 									sensorStr += " <td><div class='c-sensor4'>V</div></td>";
 									sensorStr += "<td><div class='c-sensor5'><button data-id='setMenu1' class='setMenu__btn'>设置</button></div></td>";
 									sensorStr += "</tr>";
-								if(item.ccdata.refSwiState == "off"){
+									if(item.ccdata.refSwiState == "off"){
 										sensorStr += "<tr class='c-off'>";
 									}else{
 										sensorStr +="<tr>";
@@ -2772,12 +2775,12 @@
 				layer.msg("这是一个已读的信息!");
 				return;
 			}
-			$('.popup_div').show();
+			$('.popup_bg').show();
 			$('.popup_hide').on('click',function(){
-				$('.popup_div').hide();
+				$('.popup_bg').hide();
 			});
 			$('.popup_go').on('click',function(){
-				$('.popup_div').hide();
+				$('.popup_bg').hide();
 				$.ajax({
 					url:"${pageContext.request.contextPath}/pc/alert/modifyAlertReadStateByAlertId.do",
 					data:{"alertId":alertId},
