@@ -397,24 +397,46 @@ public class AlertController {
 	 * 
 	 * 新增模块，筛查已未读、部门、告警代码
 	 */
-	@RequestMapping(value = "/showReaded")
-	public String showReaded(HttpServletRequest request,
-			@RequestParam String readed, ModelMap mm) {
+	@RequestMapping(value = "/showThreeKindOfWarning")
+	public String showThreeKindOfWarning(HttpServletRequest request,
+			@RequestParam String searchAlert, ModelMap mm) {
+		String readed;
+		String buMenM;
+		Integer alarm_num;
 		String mess = "";
 		Integer flag = ConstantCode.ERROR;
 		List<Alert> alerts = null;
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("readed", readed);
-		if (daoService.selectShowReaded(map).size() > 0) {
-			alerts = daoService.selectShowReaded(map);
-			mess = "查询到警告信息";
-			flag = ConstantCode.SUCCESS;
+		if(searchAlert.equals("已读") || searchAlert.equals("未读")){
+			readed=searchAlert;
+			map.put("readed", readed);
+			if (daoService.selectShowReaded(map).size() > 0) {
+				alerts = daoService.selectShowReaded(map);
+				mess = "查询到警告信息";
+				flag = ConstantCode.SUCCESS;
+			}
+		}else if(searchAlert.equals("班列") || searchAlert.equals("冷链")){
+			buMenM=searchAlert;
+			map.put("buMenM", buMenM);
+			if (daoService.selectShowBuMenM(map).size() > 0) {
+				alerts = daoService.selectShowBuMenM(map);
+				mess = "查询到警告信息";
+				flag = ConstantCode.SUCCESS;
+			}
+		}else{
+			alarm_num=Integer.valueOf(searchAlert);
+			map.put("alarm_num", alarm_num);
+			if (daoService.selectShowAlarmNum(map).size() > 0) {
+				alerts = daoService.selectShowAlarmNum(map);
+				mess = "查询到警告信息";
+				flag = ConstantCode.SUCCESS;
+			}
 		}
 		mm.addAttribute("alerts", alerts);
 		return "showSelectWarning.jsp";
 	}
 	
-	@RequestMapping(value = "/showBuMenM")
+	/*@RequestMapping(value = "/showBuMenM")
 	public String showBuMenM(HttpServletRequest request,
 			@RequestParam String buMenM, ModelMap mm) {
 		String mess = "";
@@ -446,7 +468,7 @@ public class AlertController {
 		}
 		mm.addAttribute("alerts", alerts);
 		return "showSelectWarning.jsp";
-	}
+	}*/
 
 	private User getCurrentUser(HttpServletRequest request) {
 		HttpSession session = request.getSession();
