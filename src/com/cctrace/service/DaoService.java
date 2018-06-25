@@ -290,6 +290,7 @@ public interface DaoService {
 			Map<String, Object> map);
 	
 	public List<CommandStore> selectLogShowInTwoTimesWithCommandTypeLike(Map<String, Object> map);
+
 	/**
 	 * Alert表相关的服务
 	 */

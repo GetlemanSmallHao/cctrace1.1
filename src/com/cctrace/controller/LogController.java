@@ -129,65 +129,65 @@ public class LogController {
 		return Msg.success().add("page", page);
 
 	}
-    /**
- * @author lusiyuan
- * @param request
- * @param startTime
- * @param endTime
- * @param commandType
- * @param pn
- * @return
- */
-@ResponseBody
-@RequestMapping("/getLogsForCommandType")
-public Msg getLogsForCommandType(HttpServletRequest request, String startTime,
-		String endTime, String commandType,
-		@RequestParam(value = "pn", defaultValue = "1") Integer pn) {
-	long startLongTime;
-	String commandType1 = commandType.trim();
-	long endLongTime;
-	List<CommandStore> commandStores = null;
-	User user = (User) request.getSession().getAttribute("user");
-	if (startTime == null) {
-		startLongTime = 0;
-	} else {
-		startLongTime = DateUtil.getLongFromStr(startTime,
-				"yyyy-MM-dd HH:mm:ss");
+	
+	 /**
+	 * @author lusiyuan
+	 * @param request
+	 * @param startTime
+	 * @param endTime
+	 * @param commandType
+	 * @param pn
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping("/getLogsForCommandType")
+	public Msg getLogsForCommandType(HttpServletRequest request, String startTime,
+			String endTime, String commandType,
+			@RequestParam(value = "pn", defaultValue = "1") Integer pn) {
+		long startLongTime;
+		String commandType1 = commandType.trim();
+		long endLongTime;
+		List<CommandStore> commandStores = null;
+		User user = (User) request.getSession().getAttribute("user");
+		if (startTime == null) {
+			startLongTime = 0;
+		} else {
+			startLongTime = DateUtil.getLongFromStr(startTime,
+					"yyyy-MM-dd HH:mm:ss");
+		}
+		if (endTime == null){
+			endLongTime = DateUtil.getLongFromDate(new Date());
+		} else {
+			endLongTime = DateUtil.getLongFromStr(endTime,
+					"yyyy-MM-dd HH:mm:ss");
+		}
+
+		Map<String, Object> map1 = new HashMap<String, Object>();
+		Map<String, Object> map2 = new HashMap<String, Object>();
+
+		if (StringUtil.isNotEmpty(commandType)) {
+			map2.put("start", startLongTime);
+			map2.put("end", endLongTime);
+			map2.put("commandType", commandType1);
+			map2.put("companyId", user.getCompanyId());
+			// 在查询之前只需要调用，传入页码，以及每页的大小
+			PageHelper.startPage(pn, 10);
+			// startPage后面紧跟的这个查询就是一个分页查询
+			commandStores = daoService
+					.selectLogShowInTwoTimesWithCommandTypeLike(map2);
+		} else {
+			map1.put("start", startLongTime);
+			map1.put("end", endLongTime);
+			map1.put("companyId", user.getCompanyId());
+			// 在查询之前只需要调用，传入页码，以及每页的大小
+			PageHelper.startPage(pn, 10);
+			// startPage后面紧跟的这个查询就是一个分页查询
+			commandStores = daoService.selectCommandForLogShowInTwoTimes(map1);
+			// 封装了详细的分页信息,包括有我们查询出来的数据，传入连续显示的页数
+		}
+		PageInfo page = new PageInfo(commandStores, 5);
+		return Msg.success().add("page", page);
+
 	}
-	if (endTime == null){
-		endLongTime = DateUtil.getLongFromDate(new Date());
-	} else {
-		endLongTime = DateUtil.getLongFromStr(endTime,
-				"yyyy-MM-dd HH:mm:ss");
-	}
-
-	Map<String, Object> map1 = new HashMap<String, Object>();
-	Map<String, Object> map2 = new HashMap<String, Object>();
-
-	if (StringUtil.isNotEmpty(commandType)) {
-		map2.put("start", startLongTime);
-		map2.put("end", endLongTime);
-		map2.put("commandType", commandType1);
-		map2.put("companyId", user.getCompanyId());
-		// 在查询之前只需要调用，传入页码，以及每页的大小
-		PageHelper.startPage(pn, 10);
-		// startPage后面紧跟的这个查询就是一个分页查询
-		commandStores = daoService
-				.selectLogShowInTwoTimesWithCommandTypeLike(map2);
-	} else {
-		map1.put("start", startLongTime);
-		map1.put("end", endLongTime);
-		map1.put("companyId", user.getCompanyId());
-		// 在查询之前只需要调用，传入页码，以及每页的大小
-		PageHelper.startPage(pn, 10);
-		// startPage后面紧跟的这个查询就是一个分页查询
-		commandStores = daoService.selectCommandForLogShowInTwoTimes(map1);
-		// 封装了详细的分页信息,包括有我们查询出来的数据，传入连续显示的页数
-	}
-	PageInfo page = new PageInfo(commandStores, 5);
-	return Msg.success().add("page", page);
-
-}
-
 
 }

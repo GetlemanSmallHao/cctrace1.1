@@ -1721,7 +1721,6 @@ public class DaoServiceImpl implements DaoService {
 				.selectLogShowInTwoTimesWithCommandTypeLike(map);
 		return commandStores;
 	}
-
 	
 
 }

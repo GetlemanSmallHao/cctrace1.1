@@ -72,7 +72,7 @@ public class LogMapperImpl implements LogMapper{
 		commandStores = sqlSession.selectList("com.cctrace.dao.CommandStoreMapper.selectLogShowInTwoTimesWithContainerIdLike", map);
 		return commandStores;
 	}
-
+	
 	@Override
 	public List<CommandStore> selectLogShowInTwoTimesWithCommandTypeLike(
 			Map<String, Object> map) {
