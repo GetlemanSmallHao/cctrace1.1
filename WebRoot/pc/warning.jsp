@@ -229,7 +229,6 @@
 			},
 			type : "get",
 			success : function(result) {
-			console.log(result)
 				$("#showSelectAlerts").html(result);
 			} 
 		});
@@ -241,7 +240,6 @@
 			data : {searchAlert: warning_screen},
 			type : "get",
 			success : function(result) {
-			console.log(result)
 				$("#showSelectAlerts").html(result);
 			} 
 		});

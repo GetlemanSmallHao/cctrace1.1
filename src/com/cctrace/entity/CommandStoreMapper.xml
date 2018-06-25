@@ -239,7 +239,7 @@
 	</select>
 	-->
 	<select id="selectLogShowInTwoTimesWithContainerIdLike" resultMap="WithBCResultMap">
-		SELECT <include refid="WithBase_Column_List" /> FROM command_store C inner join bindtable B on C.`contianerId`=B.`containerId`
+		SELECT <include refid="WithBase_Column_List" /> FROM command_store C inner join bindtable B on C.`containerId`=B.`containerId`
 		WHERE C.longTime BETWEEN #{start} and #{end} AND C.containerId IN (SELECT containerId FROM container WHERE companyId = #{companyId} AND containerId LIKE CONCAT('%',#{containerId},'%'))
 		ORDER BY C.longTime DESC
 	</select>
