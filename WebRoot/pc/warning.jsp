@@ -72,7 +72,7 @@
 			<div>
 				<div class="con__main--search">
 				<!-- 	<form id="form" onsubmit="false" method="post"> -->
-						集装箱编号：<input type="text" id="containerId" name="containerId" autocomplete="off" />
+						集装箱编号：<input type="text" id="containerId" name="containerId" autocomplete="off" style="width:120px;"/>
 						开始时间： <input class="laydate-icon" id="startTime" name="startTime" value="" autocomplete="off"/> 
 						结束时间： <input class="laydate-icon" id="endTime" name="endTime" value="" autocomplete="off"/>
 						<!-- 	<select
@@ -82,6 +82,8 @@
 							<option value="">在地标外</option>
 						</select> -->
 						<input type="button" id="search" value="查询" onclick="searchAlert();"/>
+						筛选条件：<input type="text" id="warning_screen" name="warning_screen" autocomplete="off" style="width:70px;"/>
+						<input type="button" id="" value="查询" onclick="warning_screen();"/>
 					<!-- </form> -->
 				</div>
 				<div class="con__main__table">
@@ -162,7 +164,6 @@
     $(document).on('keyup', function(event) {
         if (event.keyCode == "13") {
             //回车执行查询
-            //alert(111);
            searchAlert();
         }
     });
@@ -226,6 +227,18 @@
 				"startTime"  : startTime,
 				"endTime"    : endTime
 			},
+			type : "get",
+			success : function(result) {
+			console.log(result)
+				$("#showSelectAlerts").html(result);
+			} 
+		});
+	}
+	function warning_screen(){
+		let warning_screen = $.trim($("#warning_screen").val());
+		$.ajax({
+			url : "${pageContext.request.contextPath}/pc/alert/showThreeKindOfWarning.do",
+			data : {searchAlert: warning_screen},
 			type : "get",
 			success : function(result) {
 			console.log(result)

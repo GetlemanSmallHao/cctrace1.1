@@ -1,5 +1,6 @@
 package com.cctrace.controller;
 
+import java.io.UnsupportedEncodingException;
 import java.text.ParseException;
 import java.util.Date;
 import java.util.HashMap;
@@ -396,10 +397,12 @@ public class AlertController {
 	/**
 	 * 
 	 * 新增模块，筛查已未读、部门、告警代码
+	 * @throws UnsupportedEncodingException 
 	 */
 	@RequestMapping(value = "/showThreeKindOfWarning")
 	public String showThreeKindOfWarning(HttpServletRequest request,
-			@RequestParam String searchAlert, ModelMap mm) {
+			@RequestParam String searchAlert, ModelMap mm) throws UnsupportedEncodingException {
+		searchAlert = new String(searchAlert.getBytes("ISO-8859-1"),"UTF-8");
 		String readed;
 		String buMenM;
 		Integer alarm_num;
@@ -408,6 +411,11 @@ public class AlertController {
 		List<Alert> alerts = null;
 		Map<String, Object> map = new HashMap<String, Object>();
 		if(searchAlert.equals("已读") || searchAlert.equals("未读")){
+			if(searchAlert.equals("已读")){
+				searchAlert="yes";
+			}else{
+				searchAlert="no";
+			}
 			readed=searchAlert;
 			map.put("readed", readed);
 			if (daoService.selectShowReaded(map).size() > 0) {
