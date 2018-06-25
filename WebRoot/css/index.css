@@ -883,6 +883,18 @@ img {
   height: 19px;
 }
 /* 弹窗公共样式 */
+.popup_bg{
+	width:100%;
+	height:100%;
+	position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 10;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: none;
+}
 .popup_div{
 	width: 275px;
 	height: 165px;
@@ -895,7 +907,6 @@ img {
 	border-radius: 10px;
 	background: #f8f8f8;
 	text-align: center;
-	display: none;
 }
 .popup_div i{
 	color: #70b3ad;

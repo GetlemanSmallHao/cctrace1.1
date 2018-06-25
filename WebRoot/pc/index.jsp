@@ -175,6 +175,10 @@
 						<b style="display:inline-block; width:110px; font-weight:500;">备注信息：</b>
 						<input type="text" id="remark" name="remark" />
 					</span>
+					<span>
+						<b style="display:inline-block; width:110px; font-weight:500;">所属部门：</b>
+						<input type="text" id="buMenM" name="buMenM" />
+					</span>
 					<span class="con__modal--btn">
 						<button onclick="bindtableUpdate()">保 存</button>
 						<button class="con__modal--cancel rt">取 消</button>
@@ -910,6 +914,7 @@
 						<tr>
 							<td><div class="">序号</div></td>
 							<td><div class="">冷藏箱编号</div></td>
+							<td><div class="">所属部门</div></td>
 							<td><div class="">报警开始时间</div></td>
 							<td><div class="">最近一次报警时间</div></td>
 							<td><div class="">告警编号   </div></td>
@@ -949,13 +954,15 @@
 		</div>
 	</div>
 </main>
-<!-- 删除提示窗 -->
-<div class="popup_div">
-	<i class="fa fa-info-circle fa-3x" aria-hidden="true"></i>
-	<p class="popup_read">确认已读</p>
-	<span class="popup_go">确认</span>
-	<span class="popup_hide">取消</span>
-</div>
+	<!-- 删除提示窗 -->
+	<div class="popup_bg">
+		<div class="popup_div">
+			<i class="fa fa-info-circle fa-3x" aria-hidden="true"></i>
+			<p class="popup_read">确认已读</p>
+			<span class="popup_go">确认</span>
+			<span class="popup_hide">取消</span>
+		</div>
+	</div>
 	<script src="${PATH}/js/jquery-3.2.1.js"></script>
 	<script src="${PATH}/js/index.js"></script>
 	<script src="${PATH}/js/layer_3.1.0/layer.js"></script>
@@ -971,7 +978,8 @@
 	 --%>
 			var init;//刷新冷藏箱列表定时器的容器
 			var order;
-			var concontainerId_setting;
+			var containerId_setting;
+			var deviceId;
 			//显示警告信息
 			$(function(){
 				setInterval(function() {
@@ -1316,7 +1324,7 @@
 													htmlStr += "<td><div style='width:70px;'>"
 															+ item.communicationState
 															+ "</div></td>";
-													htmlStr += "<td><div style='width:125px;'>"
+													htmlStr += "<td><div style='width:125px;' class='deviceId'>"
 															+ item.ccdata.deviceId
 															+ "</div></td>";
 													htmlStr += "<td><div style='width:115px;'>"
@@ -1575,7 +1583,7 @@
 					htmlStr += "<td><div style='width:70px;'>"
 							+ item.communicationState
 							+ "</div></td>";
-					htmlStr += "<td><div style='width:125px;'>"
+					htmlStr += "<td><div style='width:125px;' class='deviceId'>"
 							+ item.ccdata.deviceId
 							+ "</div></td>";
 					htmlStr += "<td><div style='width:115px;'>"
@@ -1630,7 +1638,8 @@
 				doInitMap(containerId1);
 				build_waring(containerId1);
 				$('.setting_sbbh').text(containerId1);
-				concontainerId_setting = containerId1;
+				containerId_setting = containerId1;
+				deviceId = $(this).find(".deviceId").text();
 			});
 			//解析警告提示为  当前选中冷箱的前一天的告警提示
 			function build_waring(containerId){
@@ -1701,7 +1710,7 @@
 									sensorStr += " <td><div class='c-sensor4'>V</div></td>";
 									sensorStr += "<td><div class='c-sensor5'><button data-id='setMenu1' class='setMenu__btn'>设置</button></div></td>";
 									sensorStr += "</tr>";
-								if(item.ccdata.refSwiState == "off"){
+									if(item.ccdata.refSwiState == "off"){
 										sensorStr += "<tr class='c-off'>";
 									}else{
 										sensorStr +="<tr>";
@@ -1926,6 +1935,7 @@
 				var carGoType = $('#carGoType').val();
 				var remark = $('#remark').val();
 				var lcxModel = $('#lcxModel').val();
+				var buMenM = $('#buMenM').val();
 				var nodeSel1 = document.getElementById("theNextStation"); //获取select元素
 				var index1 = nodeSel1.selectedIndex; // 选中项的索引
 				var stationName = $(nodeSel1.options[index1]).text(); // 获取值
@@ -1946,7 +1956,8 @@
 						'stationName' : stationName,
 						'yardName' : yardName,
 						'remark'   : remark,
-						'lcxModel' : lcxModel
+						'lcxModel' : lcxModel,
+						'buMenM' : buMenM
  					},
 					dataType : 'JSON',
 					success : function(result) {
@@ -2764,12 +2775,12 @@
 				layer.msg("这是一个已读的信息!");
 				return;
 			}
-			$('.popup_div').show();
+			$('.popup_bg').show();
 			$('.popup_hide').on('click',function(){
-				$('.popup_div').hide();
+				$('.popup_bg').hide();
 			});
 			$('.popup_go').on('click',function(){
-				$('.popup_div').hide();
+				$('.popup_bg').hide();
 				$.ajax({
 					url:"${pageContext.request.contextPath}/pc/alert/modifyAlertReadStateByAlertId.do",
 					data:{"alertId":alertId},
@@ -2789,7 +2800,7 @@
 			$.ajax({
 				url : "${PATH}/pc/seting/showContainerchillerType.do",
 				data : {
-					"containerId" : concontainerId_setting
+					"containerId" : containerId_setting
 				},
 				type : "get",
 				success : function(result) {
@@ -2802,7 +2813,7 @@
 			$.ajax({
 				url : "${PATH}/pc/seting/showCommandSetValue.do",
 				data : {
-					"containerId" : concontainerId_setting,
+					"containerId" : containerId_setting,
 					"commandType" : 'temSet'
 				},
 				type : "get",
@@ -2817,7 +2828,7 @@
 			$.ajax({
 				url : "${PATH}/pc/seting/showContainerchillerType.do",
 				data : {
-					"containerId" : concontainerId_setting
+					"containerId" : containerId_setting
 				},
 				type : "get",
 				success : function(result) {
@@ -2830,7 +2841,7 @@
 			$.ajax({
 				url : "${PATH}/pc/seting/showContainerchillerType.do",
 				data : {
-					"containerId" : concontainerId_setting
+					"containerId" : containerId_setting
 				},
 				type : "get",
 				success : function(result) {
@@ -2845,7 +2856,7 @@
 			$.ajax({
 				url : "${PATH}/pc/seting/showContainerchillerType.do",
 				data : {
-					"containerId" : concontainerId_setting
+					"containerId" : containerId_setting
 				},
 				type : "get",
 				success : function(result) {
@@ -2858,7 +2869,7 @@
 			$.ajax({
 				url : "${PATH}/pc/seting/showContainerchillerType.do",
 				data : {
-					"containerId" : concontainerId_setting
+					"containerId" : containerId_setting
 				},
 				type : "get",
 				success : function(result) {
@@ -2869,7 +2880,7 @@
 			$.ajax({
 				url : "${PATH}/pc/seting/showCommandSetValue.do",
 				data : {
-					"containerId" : concontainerId_setting,
+					"containerId" : containerId_setting,
 					"commandType" : 'refRunMode'
 				},
 				type : "get",
@@ -2890,7 +2901,7 @@
 			$.ajax({
 				url : "${PATH}/pc/seting/showContainerchillerType.do",
 				data : {
-					"containerId" : concontainerId_setting
+					"containerId" : containerId_setting
 				},
 				type : "get",
 				success : function(result) {
@@ -2900,7 +2911,7 @@
 			$.ajax({
 				url : "${PATH}/pc/seting/showCommandSetValue.do",
 				data : {
-					"containerId" : concontainerId_setting,
+					"containerId" : containerId_setting,
 					"commandType" : 'remoteSwiMac'
 				},
 				type : "get",
@@ -2921,7 +2932,7 @@
 			$.ajax({
 				url : "${PATH}/pc/seting/showContainerchillerType.do",
 				data : {
-					"containerId" : concontainerId_setting
+					"containerId" : containerId_setting
 				},
 				type : "get",
 				success : function(result) {
@@ -2931,7 +2942,7 @@
 			$.ajax({
 				url : "${PATH}/pc/seting/showCommandSetValue.do",
 				data : {
-					"containerId" : concontainerId_setting,
+					"containerId" : containerId_setting,
 					"commandType" : 'remoteXFSwiMac'
 				},
 				type : "get",
@@ -3018,17 +3029,18 @@
 			time(id1, id2, id3, id4, id5, id6, id7);
 			var setTemp = $("#temp").val();
 			var chillerType = $("#chiller").text();
+			console.log(setTemp,chillerType)
 			$.ajax({
 				url : "${PATH}/pc/seting/setTemp.do",
 				data : {
-					"containerId" : containerId,
+					"containerId" : containerId_setting,
 					"deviceId" : deviceId,
 					"setTemp" : setTemp,
 					"chillerType" : chillerType
 				},
 				type : "get",
 				success : function(result) {
-
+					console.log(result)
 					var field = result.state;
 					if (field == '0') {
 						var num = Math.random();
@@ -3053,7 +3065,7 @@
 			$.ajax({
 				url : "${PATH}/pc/seting/bootDef.do",
 				data : {
-					"containerId" : containerId,
+					"containerId" : containerId_setting,
 					"deviceId" : deviceId,
 					"bootDef" : bootDef,
 					"chillerType" : chillerType
@@ -3084,7 +3096,7 @@
 			$.ajax({
 				url : "${PATH}/pc/seting/selfCheck.do",
 				data : {
-					"containerId" : containerId,
+					"containerId" : containerId_setting,
 					"deviceId" : deviceId,
 					"selfCheck" : selfCheck,
 					"chillerType" : chillerType
@@ -3115,7 +3127,7 @@
 			$.ajax({
 				url : "${PATH}/pc/seting/clearAlert.do",
 				data : {
-					"containerId" : containerId,
+					"containerId" : containerId_setting,
 					"deviceId" : deviceId,
 					"clearAlert" : clearAlert,
 					"chillerType" : chillerType
@@ -3145,7 +3157,7 @@
 			$.ajax({
 				url : "${PATH}/pc/seting/refRunMode.do",
 				data : {
-					"containerId" : containerId,
+					"containerId" : containerId_setting,
 					"deviceId" : deviceId,
 					"refRunMode" : refRunMode,
 					"chillerType" : chillerType
@@ -3174,7 +3186,7 @@
 			$.ajax({
 				url : "${PATH}/pc/seting/remoteSwiMac.do",
 				data : {
-					"containerId" : containerId,
+					"containerId" : containerId_setting,
 					"deviceId" : deviceId,
 					"remoteSwiMac" : remoteSwiMac,
 					"chillerType" : chillerType
@@ -3203,7 +3215,7 @@
 			$.ajax({
 				url : "${PATH}/pc/seting/remoteXFSwiMac.do",
 				data : {
-					"containerId" : containerId,
+					"containerId" : containerId_setting,
 					"deviceId" : deviceId,
 					"remoteXFSwiMac" : remoteXFSwiMac,
 					"chillerType" : chillerType,

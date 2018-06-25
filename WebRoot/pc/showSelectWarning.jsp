@@ -11,8 +11,10 @@
 	<c:otherwise>
 		<c:forEach items="${alerts}" var="alert" varStatus="status">
 			<tr>
+				<div>${alert }</div>
 				<td><div class="leftDown--div2">${status.index+1}</div></td>
 				<td><div class="leftDown--div2">${alert.containerId}</div></td>
+				<td><div class="leftDown--div2">${alert.buMenM}</div></td>
 				<td><div class="leftDown--div3">${alert.alertTime}</div></td>
 				<td><div class="leftDown--div3">${alert.updateTime}</div></td>
 				<td><div class="leftDown--div2">${alert.alarm_num }</div></td>
