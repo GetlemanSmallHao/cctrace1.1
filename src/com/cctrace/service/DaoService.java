@@ -288,7 +288,8 @@ public interface DaoService {
 	// 暂时用查询代替
 	public List<CommandStore> selectLogShowInTwoTimesWithContainerIdLike(
 			Map<String, Object> map);
-
+	
+	public List<CommandStore> selectLogShowInTwoTimesWithCommandTypeLike(Map<String, Object> map);
 	/**
 	 * Alert表相关的服务
 	 */

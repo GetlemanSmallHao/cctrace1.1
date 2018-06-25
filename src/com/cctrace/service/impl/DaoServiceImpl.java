@@ -1693,6 +1693,14 @@ public class DaoServiceImpl implements DaoService {
 		return alertMapper.selectCommandStoreByMap(map);
 	}
 
+	@Override
+	public List<CommandStore> selectLogShowInTwoTimesWithCommandTypeLike(
+			Map<String, Object> map) {
+		List<CommandStore> commandStores = logMapper
+				.selectLogShowInTwoTimesWithCommandTypeLike(map);
+		return commandStores;
+	}
+
 	
 
 }
