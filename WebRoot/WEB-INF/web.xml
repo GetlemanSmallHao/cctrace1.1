@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://java.sun.com/xml/ns/javaee"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+	id="WebApp_ID" version="3.0">
+	<display-name>cctrace1.1</display-name>
+	<welcome-file-list>
+		<welcome-file>/pc/login.jsp</welcome-file>
+	</welcome-file-list>
+	<context-param>
+		<param-name>webAppRootKey</param-name>
+		<param-value>mutipartssdje</param-value>
+	</context-param>
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>classpath:config/beans.xml</param-value>
+	</context-param>
+	<listener>
+		<display-name>spring容器加载时的监听器</display-name>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+	
+	<listener>    
+    <listener-class>    
+        org.springframework.web.context.request.RequestContextListener    
+    </listener-class>    
+	</listener>
+	 <error-page>
+        <error-code>500</error-code>
+        <location>/pc/login.jsp</location>
+      </error-page>
+	<filter>
+		<filter-name>ChineseFilter</filter-name>
+		<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+		<init-param>
+			<param-name>encoding</param-name>
+			<param-value>UTF-8</param-value>
+		</init-param>
+	</filter>
+
+	<filter-mapping>
+		<filter-name>ChineseFilter</filter-name>
+		<url-pattern>*.do</url-pattern>
+	</filter-mapping>
+
+	<servlet>
+		<servlet-name>springMvc</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>classpath:config/mvc.xml</param-value>
+		</init-param>
+		<load-on-startup>4</load-on-startup>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>springMvc</servlet-name>
+		<url-pattern>*.do</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>verifyCode</servlet-name>
+		<servlet-class>com.cctrace.servlet.VerifyCodeServlet</servlet-class>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>verifyCode</servlet-name>
+		<url-pattern>/verifyCode.do</url-pattern>
+	</servlet-mapping>
+	<!-- socket服务监听器 -->
+	<context-param>
+		<param-name>socketPort</param-name>
+		<param-value>8085</param-value>
+	</context-param>
+	<listener>
+		<description>Socket随项目启动</description>
+		<listener-class>com.cctrace.socketServers.listener.SocketListener</listener-class>
+	</listener>
+	
+	<!--  <listener>  
+        <listener-class>com.cctrace.socketServers.dataHandle.ContextListener</listener-class>    
+	</listener>  -->
+	
+	
+</web-app>

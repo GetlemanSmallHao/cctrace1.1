@@ -1,0 +1,713 @@
+//全局样式
+* {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+blockquote, body, button, dd, dl, dt, fieldset, form, h1, h2, h3, h4, h5, h6, hr, input, legend, li, ol, p, pre, td, textarea, th, ul {
+  margin: 0;
+  padding: 0;
+}
+body {
+  font: normal 12px arial, sans-serif;
+  font-size: 12px;
+  overflow-y:hidden;
+  background-color:#fff;
+  min-width:1200px;
+  min-height:521px;
+  //不允许网页文字被选中
+  //-webkit-user-select:none;
+  //-moz-user-select:none;
+  //-ms-user-select:none;
+  //user-select:none;
+
+}
+body, html {
+  height:100%;
+}
+ul, ol { list-style: none; }
+a {
+  color:#676a6d;
+  text-decoration: none;
+}
+img{
+  vertical-align: middle;
+}
+.width--1200{
+  width:1200px;
+  margin:0 auto;
+}
+//a:hover, a:focus {
+//  color: #3b98c8;
+//  text-decoration: none;
+//}
+.lf{float:left;}
+.rt{float:right;}
+.clearfix:before{
+  content:"";
+  display:table;
+}
+.clearfix:after{
+  content:"";
+  display:table;
+  clear:both;
+}
+//头部
+.header{
+  height:40px;
+}
+//左右上下大框架
+.main{
+  width:100%;
+  height:-moz-calc(~"100% - 40px - 25px");
+  height:-webkit-calc(~"100% - 40px - 25px");
+  height:calc(~"100% - 40px - 25px");
+  padding:5px;
+  padding-top:0;
+}
+.con__boxManage--menu,.con__boxManage,.con__map,.con__container,.con__warning,.con__sensor{
+  border:3px solid transparent;
+}
+.header{
+  height:40px;
+  line-height:40px;
+  width:100%;
+  .header__wrap{
+    width:1200px;
+    margin:0 auto;
+    p{
+      float:right;
+      a{
+        float:left;
+        margin-right:30px;
+      }
+    }
+  }
+}
+//导航条
+.navBar{
+  height:25px;
+  background-color:#ccc;
+  margin:0 8px;
+  border-radius:3px;
+  .navBar__wrap{
+
+  }
+}
+//主页模块
+.con__container{
+  float:left;
+  height:60%;
+  width:75%;
+}
+.con__warning{
+  float:left;
+  height:60%;
+  width:25%;
+}
+.con__sensor{
+  float:left;
+  height:40%;
+  width:100%;
+}
+//冷藏箱管理页面
+.con__boxManage{//冷藏箱信息列表
+  float:left;
+  width:36%;
+  height:100%;
+}
+.con__boxManage--menu{//当前冷藏箱信息
+  float:left;
+  width:64%;
+  height:100%;
+}
+//setting页面模块
+.con__map--set,.con__container--set,.con__warning--set,.con__sensor--set{
+  border:3px solid transparent;
+}
+.con__warning--set{
+  height:40%;
+}
+.con__container--set{
+  float:left;
+  height:40%;
+  width:75%;
+}
+.con__sensor--set{
+  float:left;
+  height:60%;
+  width:100%;
+}
+//设置页面本集装箱信息  箱子管理页面  告警信息页面
+.container__wrap,.warning__wrap,.boxManage__wrap,.leftUp__wrap,.map__wrap,.leftDown__wrap,.sensor__wrap{
+  width:100%;
+  height:100%;
+  border:5px solid #bbb;
+  border-radius:3px;
+}
+//上下左右头部导航栏
+.con__header{
+  height:20px;
+  width:100%;
+  background-color:#ccc;
+  li{
+    float:left;
+    width:85px;
+    text-align:center;
+    margin:0 1px;
+    border:2px solid #676a6d;
+    background-color:#676a6d;
+    color:#fff;
+    border-top-left-radius:3px;
+    border-top-right-radius:3px;
+    cursor:pointer;
+  }
+  li.con__header--active{
+    color:#333;
+    background: -webkit-linear-gradient(top, #fff, #e3e3e3);
+    background: -o-linear-gradient(top, #fff, #e3e3e3);
+    background: -moz-linear-gradient(top, #fff, #e3e3e3);
+    background: linear-gradient(top, #fff, #e3e3e3);
+    //border-image:-webkit-linear-gradient(top, #f3f3f3, #e3e3e3);
+    //border-image:-o-linear-gradient(top, #f3f3f3, #e3e3e3);
+    //border-image:-moz-linear-gradient(top, #f3f3f3, #e3e3e3);
+    //border-image:linear-gradient(top, #f3f3f3, #e3e3e3);  }
+    border-color:#e3e3e3;
+  }
+
+//上下左右内容主体
+.con__main{
+  width:100%;
+  height:-moz-calc(~"100% - 20px");
+  height:-webkit-calc(~"100% - 20px");
+  height:calc(~"100% - 20px");
+  //background-color:#ccc;
+  border:3px solid #e3e3e3;
+  //overflow:auto;
+  &>div{
+    width:100%;
+    height:100%;
+    //没有搜索框的con__main下的div溢出出现滑动条
+    &.con__main--overauto{
+      overflow:auto;
+    }
+  }
+  .con__main__table{
+    height:-moz-calc(~"100% - 28px");
+    height:-webkit-calc(~"100% - 28px");
+    height:calc(~"100% - 28px");
+    overflow:auto;
+    //所有table中鼠标点击增加class，选中效果
+    .tr__active{
+      background-color: #e1e1e1;
+    }
+  }
+}
+//页面加载中
+.con__loading{
+  position:absolute;
+  top:50%;
+  left:50%;
+  margin-top:-64px;
+  margin-left:-64px;
+  display:none;
+}
+//内容展示表格部分
+.con__main{
+  position:relative;
+  .con__main--search{
+    padding-left:10px;
+    height:28px;
+    line-height: 28px;
+    background: -webkit-linear-gradient(top, #D4D4E9, #9797D4);
+    background: -o-linear-gradient(top, #D4D4E9, #9797D4);
+    background: -moz-linear-gradient(top, #D4D4E9, #9797D4);
+    background: linear-gradient(top, #D4D4E9, #9797D4);
+    color:#fff;
+    input{
+      border:1px solid transparent;
+      border-radius:2px;
+      padding:2px;
+      height:21px;
+    }
+    select{
+      border:1px solid transparent;
+      border-radius:2px;
+      height:21px;
+      vertical-align: middle;
+    }
+    button{
+      width:50px;
+      height:24px;
+      line-height: 24px;
+      border:1px solid #888;
+      border-radius: 3px;
+      background-color:#666;
+      color:#fff;
+      cursor: pointer;
+      margin-left:10px;
+    }
+  }
+  table{
+    border-left:1px solid #B3AFDB;
+    border-top:1px solid #B3AFDB;
+    border-collapse:collapse;
+  }
+  td{
+    border-right:1px solid #B3AFDB;
+    border-bottom:1px solid #B3AFDB;
+  }
+  thead>tr{
+    background-color:#7E7EC4;
+    color:#fff;
+  }
+  tr>td:first-child{
+    background-color:#7E7EC4;
+    color:#fff;
+  }
+  tbody tr{
+    cursor: pointer;
+    &:hover{
+      background-color:#e1e1e1;
+    }
+  }
+  tr div{
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    padding:1px;
+  }
+}
+//主页修改模态框样式
+.con__modal{
+  position:fixed;
+  top:0;
+  left:0;
+  right:0;
+  bottom:0;
+  z-index:999;
+  background-color:rgba(0,0,0,.5);
+  display:none;
+  .con__modal--wrap{
+    position:absolute;
+    top:50%;
+    left:50%;
+    width:500px;
+    min-height:265px;
+    margin-top:-170px;
+    margin-left:-250px;
+    padding:30px 80px;
+    background-color:#ccf;
+    border-radius:5px;
+    &>span{
+      float:left;
+      width:100%;
+      height:30px;
+      line-height: 30px;
+      font-size: 16px;
+      input{
+        float:right;
+        margin-right:30px;
+        font-size: 16px;
+        vertical-align: middle;
+        height:24px;
+        margin-top:3px;
+        border-radius:3px;
+        border:none;
+      }
+    }
+    .con__modal--btn{
+      padding:16px 80px 0 50px;
+      button{
+        width:90px;
+        height:35px;
+        border:1px solid #9797D4;
+        background-color:#7E7EC4;
+        border-radius:3px;
+        cursor:pointer;
+        font-size:17px;
+        color:#fff;
+      }
+    }
+  }
+}
+//设置页面下方设置部分内容
+.set__menu{
+  .set__menu1,.set__menu2,.set__menu3{
+    height:100%;
+    float:left;
+    border:2px solid transparent;
+  }
+  .set__menu--wrap{
+    width:100%;
+    height:100%;
+    border:2px solid #ccc;
+    border-radius:3px;
+    position:relative;
+    //.con__main__table{
+    //  overflow-x: hidden;
+    //}
+  }
+  .set__menu1{
+    width:20%;
+  }
+  .set__menu2{
+    width:30%;
+    display:none;
+  }
+  .set__menu3{
+    width:50%;
+    display:none;
+    .set__menu--wrap{//三级菜单下的所有子页面都隐藏
+      display:none;
+    }
+    .set__menu3--header{
+      p{
+        margin:10px 20px;
+      }
+    }
+    .set__menu3--input{
+      margin:10px 20px;
+      input[type="text"]{
+        width:60px;
+      }
+    }
+    .set__menu3--main{
+      position: relative;
+      height:-moz-calc(~"100% - 70px");
+      height:-webkit-calc(~"100% - 70px");
+      height:calc(~"100% - 70px");
+    }
+    .set__menu3--send{
+      position:absolute;
+      width:60px;
+      height:28px;
+      background-color:#7E7EC4;
+      border:1px solid #afaff7;
+      border-radius:2px;
+      right:140px;
+      bottom:13px;
+      cursor:pointer;
+    }
+  }
+}
+//冷藏箱管理页面-当前冷藏箱修改删除部分
+.con__boxManage .con__header .con__header--add{
+  float:right;
+  margin-right:15px;
+  color:#333;
+  line-height: 20px;
+  i{
+    float:left;
+    width:20px;
+    height:20px;
+    background:url(../img/refresh.png) no-repeat 2px 2px;
+  }
+}
+.con__boxManage--menu{
+  &>div{
+    display:none;
+  }
+  .con__main>div>span{
+    display:inline-block;
+    width:100%;
+    height:40px;
+    line-height: 40px;
+    padding-left: 40px;
+    input{
+      margin-left:50px;
+      border:1px solid #ccc;
+      border-radius: 3px;
+      padding:2px;
+    }
+  }
+  .con__main span.boxManage__main--header{
+    height:25px;
+    line-height: 25px;
+    background-color:#9f7fa5;
+    color:#fff;
+  }
+}
+//定位加围栏页面
+.con__container__map,.con__map__map,.con__map__track{
+  border:3px solid transparent;
+}
+.con__container__map{
+  float:left;
+  width:35%;
+  height:100%;
+  .con__main--track{
+    height:-moz-calc(~"100% - 55px");
+    height:-webkit-calc(~"100% - 55px");
+    height:calc(~"100% - 55px");
+  }
+}
+.con__map__map{
+  float:right;
+  width:65%;
+  height:100%;
+}
+  //时间插件部分
+.conMap__track__time{
+  height:35px;
+  line-height: 35px;
+  border: 3px solid #e3e3e3;
+  border-bottom:none;
+  input{
+    margin-right:5px;
+    width:150px;
+  }
+}
+//地理围栏页面
+.con__rail,.con__rail__map{
+  border:3px solid transparent;
+}
+.con__rail{
+  float:left;
+  width:35%;
+  height:100%;
+}
+.con__rail__map{
+  float:left;
+  width:65%;
+  height:100%;
+}
+  //围栏页面左边地理围栏
+#infoPanel{
+  padding-left:30px;
+}
+.railLeftMain>div{
+  height:30px;
+  line-height:30px;
+  width:100%;
+  input{
+    width: 210px;
+    height:20px;
+    line-height: 20px;
+    float:right;
+    font-size: 15px;
+    border:1px solid #ccc;
+    border-radius: 3px;
+    margin-top:5px;
+    margin-right: 50px;
+  }
+}
+.railLeft--btn{
+  width: 70px;
+  height: 20px;
+  line-height: 20px;
+  font-size: 15px;
+  border-radius: 3px;
+  margin: 5px 0;
+  background-color: #3879d9;
+  color: #fff;
+  border: 1px solid #6bacfc;
+}
+.selectRail{
+  height:30px;
+  line-height: 30px;
+  select{
+    width: 210px;
+    height:22px;
+    line-height: 22px;
+    float:right;
+    font-size: 15px;
+    border:1px solid #ccc;
+    border-radius: 3px;
+    margin-top:4px;
+    margin-right: 50px;
+  }
+  &+input{
+    float:right;
+    margin-right: 190px;
+  }
+}
+//告警页面
+.con__warnDetails,.warn__warning{
+  border:3px solid transparent;
+}
+.con__warnDetails{
+  float:left;
+  height:100%;
+  width:75%;
+}
+.warn__warning{
+  float:left;
+  height:100%;
+  width:25%;
+}
+.warnDetails__wrap{
+  width: 100%;
+  height: 100%;
+  border: 5px solid #bbb;
+  border-radius: 3px;
+}
+//维护用户页面
+.con__user,.con__userDetails{
+  border:3px solid transparent;
+}
+.con__user{
+  float:left;
+  height:100%;
+  width:30%;
+}
+.con__userDetails{
+  float:left;
+  height:100%;
+  width:70%;
+}
+.user__wrap{
+  width: 100%;
+  height: 100%;
+  border: 5px solid #bbb;
+  border-radius: 3px;
+}
+  //创建新用户按钮
+.btn--createUser{
+  float: right;
+  margin-right: 15px;
+  color: #333;
+  line-height: 20px;
+}
+/*右侧样式*/
+/*维护用户账户*/
+.con__userDetails {
+  .con__main {
+    .found--user {
+      width: 100%;
+      background: #A17EA8;
+      color: #fff;
+      padding-left: 15px;
+      height: 22px;
+      line-height: 22px;
+    }
+    ///*底部保存按钮等*/
+    //.user__footer {
+    //  width: 100%;
+    //  position: absolute;
+    //  bottom: 0px;
+    //  right: 0px;
+    //}
+  }
+  /*用户页面*/
+  .con__main--createUser {
+    width: 100%;
+    .active {
+      background-color: #FCFEBC;
+      border: 1px solid #7D8474;
+    }
+    input {
+      width:200px;
+    }
+  }
+  /*默认页面*/
+  .con__main--defaultUser {
+    p {
+      margin: 30px 80px;
+      b {
+        font-size: 20px;
+        color: #3E4347;
+      }
+    }
+  }
+}
+/*测试隐藏*/
+.hide{
+  display: none;
+}
+//创建新用户和修改用户信息内的样式
+.con__main--createUser,.con__main--changeUser{
+  &>div{
+    height:40px;
+    line-height: 40px;
+    &>span{
+      display:inline-block;
+      width:120px;
+      margin-left:50px;
+      font-size:12px;
+    }
+    &>input,select{
+      width:200px;
+      padding-left:10px;
+    }
+  }
+}
+//创建新用户用户名称样式（input框小一些）
+.con__main--createUser>div{
+  font-size:0;
+}
+.con__main--createUser>.found__user--name{
+  &>b{
+    display:inline-block; width:40px;
+    font-size:12px;
+  }
+  &>input{
+    width:160px;
+  }
+}
+.change_Password{
+  margin-left:100px;
+}
+//修改密码框样式
+.con__main--changeUser{
+  position:relative;
+  .changeUser--password{
+    position:absolute;
+    top:110px;
+    right:200px;
+    height:185px;
+    width:300px;
+    border: 3px solid #e3e3e3;
+    border-radius:3px;
+    overflow: hidden;
+    display:none;
+    p {
+      height:50px;
+      line-height: 50px;
+      &>span{
+        display:inline-block;
+        padding-left:15px;
+        width:80px;
+      }
+    }
+    .changeUser--password--btn{
+      width:200px;
+      margin:0 auto;
+      &>button{
+        float:left;
+        width: 80px;
+        margin: 10px 10px;
+        border: 1px solid #4A424D;
+        background-color: #A17EA6;
+        cursor: pointer;
+      }
+    }
+  }
+}
+//下方按钮统一样式
+.footer__btn {
+  border-top: 1px dashed #333;
+  width: 100%;
+  position: absolute;
+  bottom: 0px;
+  right: 0px;
+  button,input {
+    float: right;
+    width: 125px;
+    margin: 10px 10px;
+    border: 1px solid #4A424D;
+    background-color: #A17EA6;
+    cursor:pointer;
+  }
+  .btn--delete {
+    border: 1px solid #C6C6C6;
+    background-color: #D9D9D9;
+  }
+}
+
+
+
+
+
+
+

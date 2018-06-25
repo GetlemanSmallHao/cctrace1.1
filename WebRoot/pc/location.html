@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+  <meta charset="UTF-8">
+  <title>轨迹页面</title>
+  <link rel="stylesheet" href="css/laydate.css"/>
+  <link rel="stylesheet" href="css/index.css"/>
+</head>
+<body>
+  <!--头部-->
+  <header class="header">
+    <div class="header__wrap">
+      <img style="height:39px;" src="img/logo.png" alt=""/>
+      <p>
+        <a href="javascript:;">用户名</a>
+        <a href="javascript:;">退出</a>
+      </p>
+    </div>
+  </header>
+  <!--导航-->
+  <nav class="navBar">
+    <div class="navBar__wrap width--1200">
+      导航条个人中心等
+    </div>
+  </nav>
+  <main class="main">
+    <!--左上角地图-->
+    <div class="con__container__map bindEvent clearfix">
+      <div class="map__wrap">
+        <header class="con__header">
+          <ul>
+            <li class="con__header--active">班列</li>
+          </ul>
+          
+        </header>
+        <main class="con__main" id="xhrContainer">
+          冷藏箱信息列表
+         <!--  <img style="display:block;" class="con__loading" src="img/loading.gif" alt=""/>    -->     </main>
+      </div>
+    </div>
+    <!--右上角地图信息-->
+    <div class="con__map__map bindEvent clearfix">
+      <div class="map__wrap">
+        <header class="con__header">
+          <ul>
+     <!--        <li>班列</li> -->
+            <li class="con__header--active">定位</li>
+         <!--    <li>轨迹</li>
+            <li>围栏</li> -->
+          </ul>
+        </header>
+        <main class="con__main">
+          地图所在位置
+        </main>
+      </div>
+    </div>
+  </main>
+<script src="js/map.js"></script>
+<script src="js/laydate.js"></script>
+<script>
+  var start = {
+    elem: '#startTime',
+    format: 'YYYY-MM-DD hh:mm:ss',
+    min: '2014-01-01 00:00:00', //设定最小日期为当前日期
+    max: laydate.now(), //最大日期
+    istime: true,
+    istoday: true,
+    choose: function(datas){
+      end.min = datas; //开始日选好后，重置结束日的最小日期
+      end.start = datas //将结束日的初始值设定为开始日
+    }
+  };
+  var end = {
+    elem: '#endTime',
+    format: 'YYYY-MM-DD hh:mm:ss',
+    min: '2014-01-01 00:00:00',
+    max: laydate.now(),
+    istime: true,
+    istoday: true,
+    choose: function(datas){
+      start.max = datas; //结束日选好后，重置开始日的最大日期
+    }
+  };
+  laydate(start);
+  laydate(end);
+</script>
+
+</body>
+</html>
