@@ -1421,6 +1421,27 @@ public class DaoServiceImpl implements DaoService {
 		List<Alert> alerts = alertMapper.selectShowAlertInTwoTime(map);
 		return alerts;
 	}
+	
+	/**
+	 * 新增模块
+	 */
+	@Override
+	public List<Alert> selectShowReaded(Map<String, Object> map) {
+		List<Alert> alerts = alertMapper.selectShowReaded(map);
+		return alerts;
+	}
+	
+	@Override
+	public List<Alert> selectShowBuMenM(Map<String, Object> map) {
+		List<Alert> alerts = alertMapper.selectShowBuMenM(map);
+		return alerts;
+	}
+	
+	@Override
+	public List<Alert> selectShowAlarmNum(Map<String, Object> map) {
+		List<Alert> alerts = alertMapper.selectShowAlarmNum(map);
+		return alerts;
+	}
 
 	/**
 	 * OurCcdata1表

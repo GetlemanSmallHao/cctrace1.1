@@ -47,56 +47,59 @@ public class DealTXData {
 		String command = cs.getCommand();
 		String display = cs.getDisplay();
 		String value = cs.getValue();
+		String status = cs.getStatus();
 		if (cs == null) {
 			return null;
 		}
 		String data1 = data.substring(2, 4);
 		String data2 = data.substring(4, 6);
 
-		if (data1.equals("CD") && data2.equals("00")
-				&& command.equals("remoteSwiMac")) {
-			cc.setRefSwiState(value);
-			daoService.updateCcdataById1(cc);
-		} else if (data1.equals("CE") && data2.equals("00")
-				&& command.equals("refRunMode")) {
-			cc.setRefRunMode(value);
-			daoService.updateCcdataById1(cc);
-
-		} else if (data1.equals("CE") && data2.equals("00")
-				&& command.equals("temSet")) {
-			Double val = Double.parseDouble(value);
-			cc.setTempSet(val);
-			daoService.updateCcdataById1(cc);
-		} else if (data1.equals("CE") && data2.equals("00")
-				&& command.equals("clearAlert")) {
-			Map<String, Object> map = new HashMap<String, Object>();
-			map.put("containerId", cn.getContainerId());
-			map.put("startTime", System.currentTimeMillis()
-					- (24 * 60 * 60 * 1000));
-			map.put("endTime", System.currentTimeMillis());
-			List<Alert> listA = daoService.selectAllAlertOnByContainerId(map);
-			if (listA != null) {
-				for (int i = 0; i < listA.size(); i++) {
-					listA.get(i).setReaded("yes");
-					daoService.updateAlertById(listA.get(i));
+		if(status != "Y"){
+			if (data1.equals("CD") && data2.equals("00")
+					&& command.equals("remoteSwiMac")) {
+				cc.setRefSwiState(value);
+				daoService.updateCcdataById1(cc);
+			} else if (data1.equals("CE") && data2.equals("00")
+					&& command.equals("refRunMode")) {
+				cc.setRefRunMode(value);
+				daoService.updateCcdataById1(cc);
+	
+			} else if (data1.equals("CE") && data2.equals("00")
+					&& command.equals("temSet")) {
+				Double val = Double.parseDouble(value);
+				cc.setTempSet(val);
+				daoService.updateCcdataById1(cc);
+			} else if (data1.equals("CE") && data2.equals("00")
+					&& command.equals("clearAlert")) {
+				Map<String, Object> map = new HashMap<String, Object>();
+				map.put("containerId", cn.getContainerId());
+				map.put("startTime", System.currentTimeMillis()
+						- (24 * 60 * 60 * 1000));
+				map.put("endTime", System.currentTimeMillis());
+				List<Alert> listA = daoService.selectAllAlertOnByContainerId(map);
+				if (listA != null) {
+					for (int i = 0; i < listA.size(); i++) {
+						listA.get(i).setReaded("yes");
+						daoService.updateAlertById(listA.get(i));
+					}
 				}
+	
 			}
-
-		}
-
-		if (data2.equals("00")) {
-			cs.setStatus("Y");
-			cs.setDisplay(value);
-			daoService.updateCommandStoreById(cs);
-		} else {
-			if (cs.getStatus().equals("Y")) {
-
-			} else {
-				cs.setStatus("N");
-				// cs.setDisplay(value);
+	
+			if (data2.equals("00")) {
+				cs.setStatus("Y");
+				cs.setDisplay(value);
 				daoService.updateCommandStoreById(cs);
+			} else {
+				if (cs.getStatus().equals("Y")) {
+	
+				} else {
+					cs.setStatus("N");
+					// cs.setDisplay(value);
+					daoService.updateCommandStoreById(cs);
+				}
+	
 			}
-
 		}
 		return null;
 

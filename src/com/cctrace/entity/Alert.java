@@ -31,6 +31,9 @@ public class Alert implements Serializable {
 	private Long updateLongTime;
 	// 公司id
 	private Integer companyId;
+	
+	//关联表
+	private String buMenM;
 
 	public Alert() {
 		super();
@@ -40,7 +43,7 @@ public class Alert implements Serializable {
 			Long alertLongTime, String alertType, String alertContent,
 			Double lat, Double lon, String readed, Integer alarm_num,
 			String gpsPosition, String updateTime, Long updateLongTime,
-			Integer companyId) {
+			Integer companyId, String buMenM) {
 		super();
 		this.id = id;
 		this.containerId = containerId;
@@ -56,6 +59,7 @@ public class Alert implements Serializable {
 		this.updateTime = updateTime;
 		this.updateLongTime = updateLongTime;
 		this.companyId = companyId;
+		this.buMenM=buMenM;
 	}
 
 	public Integer getCompanyId() {
@@ -170,6 +174,14 @@ public class Alert implements Serializable {
 		this.updateLongTime = updateLongTime;
 	}
 
+	public String getBuMenM() {
+		return buMenM;
+	}
+
+	public void setBuMenM(String buMenM) {
+		this.buMenM = buMenM;
+	}
+
 	@Override
 	public String toString() {
 		return "Alert [id=" + id + ", containerId=" + containerId
@@ -179,7 +191,7 @@ public class Alert implements Serializable {
 				+ lon + ", readed=" + readed + ", alarm_num=" + alarm_num
 				+ ", gpsPosition=" + gpsPosition + ", updateTime=" + updateTime
 				+ ", updateLongTime=" + updateLongTime + ", companyId="
-				+ companyId + "]";
+				+ companyId + ", buMenM=" + buMenM + "]";
 	}
 
 	@Override
@@ -196,6 +208,7 @@ public class Alert implements Serializable {
 				+ ((alertTime == null) ? 0 : alertTime.hashCode());
 		result = prime * result
 				+ ((alertType == null) ? 0 : alertType.hashCode());
+		result = prime * result + ((buMenM == null) ? 0 : buMenM.hashCode());
 		result = prime * result
 				+ ((companyId == null) ? 0 : companyId.hashCode());
 		result = prime * result
@@ -246,6 +259,11 @@ public class Alert implements Serializable {
 			if (other.alertType != null)
 				return false;
 		} else if (!alertType.equals(other.alertType))
+			return false;
+		if (buMenM == null) {
+			if (other.buMenM != null)
+				return false;
+		} else if (!buMenM.equals(other.buMenM))
 			return false;
 		if (companyId == null) {
 			if (other.companyId != null)

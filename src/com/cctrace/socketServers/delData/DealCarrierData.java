@@ -32,6 +32,7 @@ public class DealCarrierData {
 		Ccdata1 cc = daoService.selectLastCcdataByContainerId1(containerId);
 		String command = cs.getCommand();
 		String value = cs.getValue();
+		String status = cs.getStatus();
 		// 过滤无效数据
 		if (cs == null || cn == null) {
 			return null;
@@ -42,6 +43,8 @@ public class DealCarrierData {
 		realData = removeSSS(realData);
 		String data1 = realData.substring(4, 6);
 		String data2 = "";
+		
+		if(status != "Y"){
 		
 			// 冷机运行模式返回
 			if ("A1".equals(data1) && command.equals("refRunMode")) {
@@ -96,6 +99,8 @@ public class DealCarrierData {
 					daoService.updateCommandStoreById(cs);
 				}
 			}
+		}
+			
 
 		return null;
 	}
