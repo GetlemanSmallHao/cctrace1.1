@@ -78,6 +78,7 @@ public class LogMapperImpl implements LogMapper{
 			Map<String, Object> map) {
 		List<CommandStore> commandStores = null;
 		commandStores = sqlSession.selectList("com.cctrace.dao.CommandStoreMapper.selectLogShowInTwoTimesWithCommandTypeLike", map);
+		System.out.println(commandStores);
 		return commandStores;
 	}
 	

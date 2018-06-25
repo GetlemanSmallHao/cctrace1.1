@@ -141,33 +141,36 @@ public class LogController {
 	 */
 	@ResponseBody
 	@RequestMapping("/getLogsForCommandType")
-	public Msg getLogsForCommandType(HttpServletRequest request, String startTime,
-			String endTime, String commandType,
+	public Msg getLogsForCommandType(HttpServletRequest request, String commandType,
 			@RequestParam(value = "pn", defaultValue = "1") Integer pn) {
-		long startLongTime;
 		String commandType1 = commandType.trim();
-		long endLongTime;
 		List<CommandStore> commandStores = null;
 		User user = (User) request.getSession().getAttribute("user");
-		if (startTime == null) {
-			startLongTime = 0;
-		} else {
-			startLongTime = DateUtil.getLongFromStr(startTime,
-					"yyyy-MM-dd HH:mm:ss");
-		}
-		if (endTime == null){
-			endLongTime = DateUtil.getLongFromDate(new Date());
-		} else {
-			endLongTime = DateUtil.getLongFromStr(endTime,
-					"yyyy-MM-dd HH:mm:ss");
-		}
 
 		Map<String, Object> map1 = new HashMap<String, Object>();
 		Map<String, Object> map2 = new HashMap<String, Object>();
+		
+		if(commandType1.equals("设置温度")){
+			commandType1="temSet";
+		}else if(commandType1.equals("启动除霜")){
+			commandType1="bootDef";
+		}else if(commandType1.equals("清除警告")){
+			commandType1="clearAlert";
+		}else if(commandType1.equals("自检")){
+			commandType1="selfCheck";
+		}else if(commandType1.equals("设置运行模式")){
+			commandType1="refRunMode";
+		}else if(commandType1.equals("远程开关机")){
+			commandType1="remoteSwiMac";
+		}else if(commandType1.equals("新风门开关机")){
+			commandType1="remoteXFSwiMac";
+		}else if(commandType1.equals("cfm开机设置")){
+			commandType1="cfmSet";
+		}else{
+			commandType1="";
+		}
 
 		if (StringUtil.isNotEmpty(commandType)) {
-			map2.put("start", startLongTime);
-			map2.put("end", endLongTime);
 			map2.put("commandType", commandType1);
 			map2.put("companyId", user.getCompanyId());
 			// 在查询之前只需要调用，传入页码，以及每页的大小
@@ -175,16 +178,14 @@ public class LogController {
 			// startPage后面紧跟的这个查询就是一个分页查询
 			commandStores = daoService
 					.selectLogShowInTwoTimesWithCommandTypeLike(map2);
-		} else {
-			map1.put("start", startLongTime);
-			map1.put("end", endLongTime);
+		} /*else {
 			map1.put("companyId", user.getCompanyId());
 			// 在查询之前只需要调用，传入页码，以及每页的大小
 			PageHelper.startPage(pn, 10);
 			// startPage后面紧跟的这个查询就是一个分页查询
 			commandStores = daoService.selectCommandForLogShowInTwoTimes(map1);
 			// 封装了详细的分页信息,包括有我们查询出来的数据，传入连续显示的页数
-		}
+		}*/
 		PageInfo page = new PageInfo(commandStores, 5);
 		return Msg.success().add("page", page);
 

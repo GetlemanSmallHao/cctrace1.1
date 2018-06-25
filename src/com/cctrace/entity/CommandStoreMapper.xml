@@ -245,10 +245,9 @@
 	</select>
 	
 	<!-- 暂时用于日志显示加冷藏箱模糊查询(根据操作类型查询)  -->
-	<select id="selectLogShowInTwoTimesWithCommandTypeLike" parameterType="java.util.Map" resultType="com.cctrace.entity.CommandStore">
-		SELECT <include refid="Base_Column_List" /> FROM command_store WHERE longTime BETWEEN #{start} and #{end}
-		AND containerId IN (SELECT containerId FROM container WHERE companyId = #{companyId} AND command LIKE CONCAT('%',#{commandType},'%'))
-		ORDER BY longTime DESC
+	<select id="selectLogShowInTwoTimesWithCommandTypeLike" resultMap="WithBCResultMap">
+		SELECT <include refid="WithBase_Column_List" /> FROM command_store C inner join bindtable B on C.`containerId`=B.`containerId`
+		WHERE C.command=#{commandType} ORDER BY C.id DESC
 	</select>
 
 	<!-- 配置缓存 -->
