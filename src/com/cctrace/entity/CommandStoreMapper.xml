@@ -243,7 +243,12 @@
 		WHERE C.longTime BETWEEN #{start} and #{end} AND C.containerId IN (SELECT containerId FROM container WHERE companyId = #{companyId} AND containerId LIKE CONCAT('%',#{containerId},'%'))
 		ORDER BY C.longTime DESC
 	</select>
-
+	<!-- 暂时用于日志显示加冷藏箱模糊查询(根据操作类型查询)  -->
+	<select id="selectLogShowInTwoTimesWithCommandTypeLike" parameterType="java.util.Map" resultType="com.cctrace.entity.CommandStore">
+		SELECT <include refid="Base_Column_List" /> FROM command_store WHERE longTime BETWEEN #{start} and #{end}
+		AND containerId IN (SELECT containerId FROM container WHERE companyId = #{companyId} AND command LIKE CONCAT('%',#{commandType},'%'))
+		ORDER BY longTime DESC
+	</select>
 	<!-- 配置缓存 -->
 	<!-- <cache eviction="FIFO" flushInterval="10000" size="128" readOnly="true" 
 		/> -->

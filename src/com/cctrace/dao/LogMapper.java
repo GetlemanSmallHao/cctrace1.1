@@ -27,4 +27,6 @@ public interface LogMapper {
 	 */
 	List<CommandStore> selectCommandForLogShowInTwoTimes(Map<String, Object> map);
 	List<CommandStore> selectLogShowInTwoTimesWithContainerIdLike(Map<String, Object> map);
+	//根据操作类型进行模糊查询
+	List<CommandStore> selectLogShowInTwoTimesWithCommandTypeLike(Map<String, Object> map);
 }
