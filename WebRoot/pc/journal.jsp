@@ -114,6 +114,8 @@
               <input id="endTime" class="laydate-icon">
                  冷藏箱编号：<input type="text" name = "containerId111" id = "containerId111"/>
               <button class="j-timeSearch">查询</button>
+               操作内容：<input type="text" name="commandType" id="commandType"/>
+               <button class="commandTypeSearch">查询</button>
             </div>
             <div class="con__main__table" style="height: -webkit-calc(100% - 110px); height: calc(100% - 110px); overflow:hidden;">
               <table id="logs_table">
@@ -317,6 +319,25 @@
 			}
 	  });
   	}
+	$('.commandTypeSearch').on('click',function(){
+  		var commandType = $('#commandType').val();
+  		 $.ajax({
+		  url:"${PATH}/getLogsForCommandType.do",
+			data:{commandType:commandType,"pn":1},
+			type:"POST",
+			success:function(result){
+				var page = result.extend.page.pageNum;
+  				var totalPage = result.extend.page.pages;
+				if(totalPage < 1){
+					alert("数据查询为零条!");
+					return false;
+				}
+				//解析显示日志数据
+				build_logs_table(result);
+  				hxpage(page,totalPage);// 重新解析分页条 
+			}
+	  });
+  	});
 	$(function(){
 	 	ajax123(1);
 	});
