@@ -32,32 +32,18 @@
 <link rel="stylesheet" href="${PATH}/css/index.css" />
 <style>
 	/* 传感器部分表格宽度样式 */
-	 .c-sensor1{
-	 	width:28px;
-	 }
-	 .c-sensor2{
-	 	width:90px;
-	 }
-	 .c-sensor3{
-	 	width:64px;
-	 }
-	 .c-sensor4{
-	 	width:62px;
-	 }
-	 .c-sensor5{
-	 	width:33px;
-	 }
+	 .c-sensor1{width:28px;}
+	 .c-sensor2{width:90px;}
+	 .c-sensor3{width:64px;}
+	 .c-sensor4{width:62px;}
+	 .c-sensor5{width:33px;}
 	 /* 关机时表格行样式*/
-	 .c-off{
-	 	color:gray;background-color: #DDDDDD;
-	 }
+	 .c-off{color:gray;background-color: #DDDDDD;}
 	 /* 排序小三角 */
 	 .j-sort1,.j-sort2,.j-sort3,.j-sort4,.j-sort5,.j-sort6,.j-sort7,.j-sort8,.j-sort9,.j-sort9,.j-sort10,.j-sort11{
 	 	position:relative;
 	 }
-	 .xsj{
-	 	position:absolute;right:8px;
-	 }
+	 .xsj{position:absolute;right:8px;}
 	 .xsjUp{
 		top:2px;display:inline-block;width:0;height:0;border:5px solid #fff;
 	 	border-top-color:transparent;border-left-color:transparent;border-right-color:transparent;
@@ -79,10 +65,9 @@
 	 	-webkit-width:100%;-moz-width:100%;width:100%; }
 </style>
 </head>
-
 <body>
 	<jsp:include page="header.jsp" flush="true"></jsp:include>
-	<main class="main"> <!--<div class="con__map bindEvent clearfix">地图</div>-->
+	<main class="main">
 	<!-- 冷藏箱列表模块 -->
 	<div class="con__container clearfix">
 		<div class="container__wrap">
@@ -93,106 +78,90 @@
 				</ul>
 			</header>
 		
-		
 			<main class="con__main amendBind"> <!-- 绑定表列表 -->
-			<div>
-				<div class="con__main--search">
-					冷藏箱编号：<input type="text" id="containerId2" autocomplete="off" name="containerId" />
-					<input type="button" id="search" value="查询" style="cursor:pointer;"/>
+				<div>
+					<div class="con__main--search">
+						冷藏箱编号：<input type="text" id="containerId2" autocomplete="off" name="containerId" />
+						<input type="button" id="search" value="查询" style="cursor:pointer;"/>
+					</div>
+					<div class="con__main__table" style="overflow:hidden;">
+						<table class="j-tableTitle" style="border: none;">
+							<thead>
+								<tr>
+									<td><div style="width:27px;">序号</div></td>
+									<td><div style="width:33px;" class="main__caozuo">操作</div></td>
+									<td><div class="j-sort1" data-status="up" style="width:110px;">冷藏箱编号<span class="xsj xsjUp"></span></div></td>
+									<td><div class="" style="width:55px;">所属部门</div></td>
+									<td><div class="j-sort7" data-status="up" style="width:115px;">GPS接收时间<span class="xsj xsjUp"></span></div></td>
+									<td><div class="j-sort10" data-status="up" style="width:150px;">地理位置<span class="xsj xsjUp"></span></div></td>
+									<td><div class="j-sort9" data-status="up" style="width:70px;">冷机告警<span class="xsj xsjUp"></span></div></td>
+									<td><div class="j-sort8" data-status="up" style="width:100px;">备注<span class="xsj xsjUp"></span></div></td>
+									<td><div style="width:100px;">货物类型</div></td>
+									<td><div style="width:50px;">油位</div></td>
+									<td><div class="j-sort3" data-status="up" style="width:70px;">设定温度<span class="xsj xsjUp"></span></div></td>
+									<td><div class="j-sort4" data-status="up" style="width:70px;">回风温度<span class="xsj xsjUp"></span></div></td>
+									<td><div class="j-sort5" data-status="up" style="width:95px;">冷机电瓶电压<span class="xsj xsjUp"></span></div></td>
+									<td><div class="j-sort6" data-status="up" style="width:70px;">GPS电量<span class="xsj xsjUp"></span></div></td>
+									<td><div style="width:64px;">开关机状态</div></td>
+									<td><div class="j-sort11" data-status="up"  style="width:70px;">通讯状态<span class="xsj xsjUp"></span></div></td>
+									<td><div style="width:125px;">设备编号</div></td>
+									<td><div class="j-sort2" data-status="up" style="width:115px;">系统时间<span class="xsj xsjUp"></span></div></td>
+									<td><div style="width:83px;">冷机类型</div></td>
+									<!-- <td><div style="width:115px;">班列ID</div></td> -->
+									<td><div style="width:100px;">下货站</div></td>
+									<td><div style="width:100px;">场站名称</div></td>
+									<!-- <td><select id = "order" onchange="changeOrder();">
+										<option value="CIdASC">冷藏箱正序</option>
+										<option value="CIdDESC">冷藏箱倒序</option>
+									</select></td> -->
+									<!-- <td><div style="width:52px;">路线类型</div></td> -->
+								</tr>
+							</thead>
+						</table>	
+						<table id="ccdatas_table" class="j-scrollTop" style="display:block; height: -moz-calc(100% - 20px); height: -webkit-calc(100% - 20px); height: calc(100% - 20px); border: none; overflow-y:auto;">	
+							<tbody></tbody>
+						</table>
+					</div>
 				</div>
-				<div class="con__main__table" style="overflow:hidden;">
-					<table class="j-tableTitle" style="border: none;">
-						<thead>
-							<tr>
-								<td><div style="width:27px;">序号</div></td>
-								<td><div style="width:33px;" class="main__caozuo">操作</div></td>
-								<td><div class="j-sort1" data-status="up" style="width:110px;">冷藏箱编号<span class="xsj xsjUp"></span></div></td>
-								<td><div class="" style="width:55px;">所属部门</div></td>
-								<td><div class="j-sort7" data-status="up" style="width:115px;">GPS接收时间<span class="xsj xsjUp"></span></div></td>
-								<td><div class="j-sort10" data-status="up" style="width:150px;">地理位置<span class="xsj xsjUp"></span></div></td>
-								<td><div class="j-sort9" data-status="up" style="width:70px;">冷机告警<span class="xsj xsjUp"></span></div></td>
-								<td><div class="j-sort8" data-status="up" style="width:100px;">备注<span class="xsj xsjUp"></span></div></td>
-								<td><div style="width:100px;">货物类型</div></td>
-								<td><div style="width:50px;">油位</div></td>
-								<td><div class="j-sort3" data-status="up" style="width:70px;">设定温度<span class="xsj xsjUp"></span></div></td>
-								<td><div class="j-sort4" data-status="up" style="width:70px;">回风温度<span class="xsj xsjUp"></span></div></td>
-								<td><div class="j-sort5" data-status="up" style="width:95px;">冷机电瓶电压<span class="xsj xsjUp"></span></div></td>
-								<td><div class="j-sort6" data-status="up" style="width:70px;">GPS电量<span class="xsj xsjUp"></span></div></td>
-								<td><div style="width:64px;">开关机状态</div></td>
-								<td><div class="j-sort11" data-status="up"  style="width:70px;">通讯状态<span class="xsj xsjUp"></span></div></td>
-								<td><div style="width:125px;">设备编号</div></td>
-								<td><div class="j-sort2" data-status="up" style="width:115px;">系统时间<span class="xsj xsjUp"></span></div></td>
-								<td><div style="width:83px;">冷机类型</div></td>
-								<!-- <td><div style="width:115px;">班列ID</div></td> -->
-								<td><div style="width:100px;">下货站</div></td>
-								<td><div style="width:100px;">场站名称</div></td>
-								<!-- <td><select id = "order" onchange="changeOrder();">
-									<option value="CIdASC">冷藏箱正序</option>
-									<option value="CIdDESC">冷藏箱倒序</option>
-								</select></td> -->
-								<!-- <td><div style="width:52px;">路线类型</div></td> -->
-							</tr>
-						</thead>
-					</table>	
-					<table id="ccdatas_table" class="j-scrollTop" style="display:block; height: -moz-calc(100% - 20px); height: -webkit-calc(100% - 20px); height: calc(100% - 20px); border: none; overflow-y:auto;">	
-						<tbody>
-
-						</tbody>
-					</table>
+				<div class="con__modal">
+					<div class="con__modal--wrap">
+						<span> 
+							<b style="display:inline-block; width:110px; font-weight:500;">集装箱编号：</b>
+							<input type="text" id="containerId" name="containerId" readonly unselectable="on" />
+						</span>
+						<span>
+							<b style="display:inline-block; width:110px; font-weight:500;">冷机型号：</b>
+							<input type="text" id="lcxModel" name="lcxModel" value="${item.ccdata.lcxModel }"/>
+						</span>
+						<span>
+							<b style="display:inline-block; width:110px; font-weight:500;">货物类型：</b>
+							<input type="text" id="carGoType" name="carGoType" />
+						</span>
+						<span>
+							<b style="display:inline-block; width:110px; font-weight:500;">下货站：</b>
+							<select id="theNextStation"></select>
+						</span> 
+						<span>
+							<b style="display:inline-block; width:110px; font-weight:500;">场站名称：</b>
+							<select id="yard"></select>
+						</span>
+						<span>
+							<b style="display:inline-block; width:110px; font-weight:500;">备注信息：</b>
+							<input type="text" id="remark" name="remark" />
+						</span>
+						<span>
+							<b style="display:inline-block; width:110px; font-weight:500;">所属部门：</b>
+							<input type="text" id="buMenM" name="buMenM" />
+						</span>
+						<span class="con__modal--btn">
+							<button onclick="bindtableUpdate()">保 存</button>
+							<button class="con__modal--cancel rt">取 消</button>
+						</span>
+					</div>
 				</div>
-			</div>
-			<div class="con__modal">
-				<div class="con__modal--wrap">
-					<span> 
-						<b style="display:inline-block; width:110px; font-weight:500;">集装箱编号：</b>
-						<input type="text" id="containerId" name="containerId" readonly unselectable="on" />
-					</span>
-					<!-- <span>
-						<b style="display:inline-block; width:110px; font-weight:500;">班列ID：</b>
-						<input class="laydate-icon" id="trainId" /> 
-					</span>  -->
-					<span>
-						<b style="display:inline-block; width:110px; font-weight:500;">冷机型号：</b>
-						<input type="text" id="lcxModel" name="lcxModel" value="${item.ccdata.lcxModel }"/>
-					</span>
-					<span>
-						<b style="display:inline-block; width:110px; font-weight:500;">货物类型：</b>
-						<input type="text" id="carGoType" name="carGoType" />
-					</span>
-					<span>
-						<b style="display:inline-block; width:110px; font-weight:500;">下货站：</b>
-						<select id="theNextStation">
-
-						</select>
-					</span> 
-					<span>
-						<b style="display:inline-block; width:110px; font-weight:500;">场站名称：</b>
-						<select id="yard">
-
-						</select>
-					</span>
-					<span>
-						<b style="display:inline-block; width:110px; font-weight:500;">备注信息：</b>
-						<input type="text" id="remark" name="remark" />
-					</span>
-					<span>
-						<b style="display:inline-block; width:110px; font-weight:500;">所属部门：</b>
-						<input type="text" id="buMenM" name="buMenM" />
-					</span>
-					<span class="con__modal--btn">
-						<button onclick="bindtableUpdate()">保 存</button>
-						<button class="con__modal--cancel rt">取 消</button>
-					</span>
-				</div>
-			</div>
-			
-
-
-
 			</main>
 		</div>
 	</div>
-	<!--<div class="con__sensor bindEvent clearfix"> 加bindEvent可以切换导航且可以异步加载功能-->
 	
 	<!-- 传感器模块 -->
 	<div class="con__sensor clearfix">
@@ -204,22 +173,15 @@
 					<li class="con__header--active" tab_id="2"><a href="#" id="j-setting">设置</a></li>
 					<li class="con__header--active" tab_id="3"><a href="#" id="">告警信息</a></li>
 					<li class="con__header--active" tab_id="4"><a href="#" id="">定位</a></li>
-					
-					<%--  <a href="${PATH}/pc/seting.jsp?containerId="><li class="con__header--active">设置</li></a> --%>
 				</ul>
 			</header>
 			<!-- 传感器 -->
 			<main class="con__main tab_main"> 
 			<div style="position:relative;">
-				<!--  <div class="con__main--search">
-			    发射器：<input type="text"/>
-			  </div> -->
-				<!-- <div class="rotate90" style="height:100%;"> -->
 				<div class="con__main__table" style="height:100%;">
 					<div class="con__sensor__title">
-				<!-- 	冷藏箱编号&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" id = "showContainerID"/><br/> -->
-					冷藏箱编号&nbsp;&nbsp;<span id = "showContainerID"/></span>
-					系统时间&nbsp;&nbsp;<span id = "showOurccdataTime"></span>
+						冷藏箱编号&nbsp;&nbsp;<span id = "showContainerID"/></span>
+						系统时间&nbsp;&nbsp;<span id = "showOurccdataTime"></span>
 						<table>
 							<thead>
 								<tr>
@@ -235,337 +197,135 @@
 					<!-- 存放正序还是倒序的标志 -->
 					<input type="hidden" id="order5555" value="${order}">
 					<table id="sensor_table" style="display:block; height: -moz-calc(100% - 36px); height: -webkit-calc(100% - 36px); height: calc(100% - 36px); border: none; overflow-y:auto;">	
-						<tbody>
-			
-						</tbody>
+						<tbody></tbody>
 					</table>
 				</div>
 				<div class="con__main__setmenu">
 					<div id="setMenu1">
 						<header>冷机电瓶电压设置</header>
 						<main>
-
-						<p>
-							<span>发送警告上线：</span><input type="text" id="maxRefBatVol"
+							<p>
+								<span>发送警告上线：</span><input type="text" id="maxRefBatVol"
 								maxlength="6" value="" />&nbsp;V(一位小数)
-						</p>
-						<p>
-							<span>发送警告底线：</span><input type="text" id="minRefBatVol"
+							</p>
+							<p>
+								<span>发送警告底线：</span><input type="text" id="minRefBatVol"
 								maxlength="6" value="" />&nbsp;V(一位小数)
-						</p>
-						<!--  <p>
-			          <span>相同警告时间间隔：</span><input type="text"/>&nbsp;分钟
-			        </p>
-			        <p>
-			          <input type="checkbox"/>&nbsp;永不发送警告
-			        </p> --> </main>
+							</p>
+						</main>
 						<footer class="footer__btn">
-						<button class="btn--save">删除发射器</button>
-						<button class="btn--save" onclick="battery();">保存</button>
+							<button class="btn--save">删除发射器</button>
+							<button class="btn--save" onclick="battery();">保存</button>
 						</footer>
 					</div>
 					<div id="setMenu2">
 						<header>回风温度设置</header>
-						<main> <!--     <p>
-			          <span>传感器开关：</span><select name="">
-			            <option value="">停用</option>
-			            <option value="">启用</option>
-			          </select>
-			        </p> -->
-						<p>
-							<span>最低温度范围：</span><input type="text" id="minBackWindTemp" />&nbsp;°C
-						</p>
-						<p>
-							<span>最高温度范围：</span><input type="text" id="maxBackWindTemp" />&nbsp;°C
-						</p>
-						<!--  <p>
-			          <span>相同警告时间间隔：</span><input type="text"/>&nbsp;分钟
-			        </p>
-			        <p>
-			          <input type="checkbox"/>&nbsp;永不发送警告
-			        </p> --> </main>
+						<main>
+							<p>
+								<span>最低温度范围：</span><input type="text" id="minBackWindTemp"/>&nbsp;°C
+							</p>
+							<p>
+								<span>最高温度范围：</span><input type="text" id="maxBackWindTemp"/>&nbsp;°C
+							</p>
+						</main>
 						<footer class="footer__btn">
-						<button class="btn--save">删除发射器</button>
-						<button class="btn--save" onclick="backWindTemp();">保存</button>
+							<button class="btn--save">删除发射器</button>
+							<button class="btn--save" onclick="backWindTemp();">保存</button>
 						</footer>
 					</div>
-					<!--  <div id="setMenu3">
-			      <header>后门开关设置</header>
-			      <main>
-			        <p>
-			          <span>传感器开关：</span><select name="" id="">
-			          <option value="">停用</option>
-			          <option value="">启用</option>
-			        </select>
-			        </p>
-			        <p>
-			          <input type="checkbox"/>&nbsp;永不发送警告
-			        </p>
-			      </main>
-			      <footer class="footer__btn">
-			        <button class="btn--save">删除发射器</button>
-			        <button class="btn--save">保存</button>
-			      </footer>
-			    </div>
-			    <div id="setMenu4">
-			      <header>箱内湿度设置</header>
-			      <main>
-			        <p>
-			          <span>传感器开关：</span><select name="" id="">
-			          <option value="">停用</option>
-			          <option value="">启用</option>
-			        </select>
-			        </p>
-			        <p>
-			          <span>最低湿度范围：</span><input type="text" id="minTankHum" />&nbsp;%
-			        </p>
-			        <p>
-			          <span>最高湿度范围：</span><input type="text" id="maxTankHum" />&nbsp;%
-			        </p>
-			        <p>
-			          <span>相同警告时间间隔：</span><input type="text"/>&nbsp;分钟
-			        </p>
-			        <p>
-			          <input type="checkbox"/>&nbsp;永不发送警告
-			        </p>
-			      </main>
-			      <footer class="footer__btn">
-			        <button class="btn--save">删除发射器</button>
-			        <button class="btn--save" onclick="tankHum();">保存</button>
-			      </footer>
-			    </div> -->
-					<!--  <div id="setMenu3">
-			      <header>油箱油位设置</header>
-			      <main>
-			        <p>
-			          <span>油量波动：</span><input type="text" id="maxOilLevel" />&nbsp;%
-			        </p>
-			        <p>
-			          <span>油量底线：</span><input type="text" id="minOilLevel" />&nbsp;%
-			        </p> -->
-					<!-- <p>
-			          <span>相同警告时间间隔：</span><input type="text"/>&nbsp;分钟
-			        </p>
-			        <p>
-			          <input type="checkbox"/>&nbsp;永不发送警告
-			        </p> -->
-					<!--      </main>
-			      <footer class="footer__btn">
-			        <button class="btn--save">删除发射器</button>
-			        <button class="btn--save" onclick="oilLevel();">保存</button>
-			      </footer>
-			    </div>
-			    <div id="setMenu6">
-			      <header>gps电压设置</header>
-			      <main>
-			        <p>
-			          <span>发送警告底线：</span><input type="text" maxlength="6" id="minGpsBatVol"/>&nbsp;V(一位小数)
-			        </p>
-			        <p>
-			          <span>相同警告时间间隔：</span><input type="text"/>&nbsp;分钟
-			        </p>
-			        <p>
-			          <input type="checkbox"/>&nbsp;永不发送警告
-			        </p>
-			      </main>
-			      <footer class="footer__btn">
-			        <button class="btn--save">删除发射器</button>
-			        <button class="btn--save" onclick="gpsBatVol();">保存</button>
-			      </footer>
-			    </div> -->
-
 					<div id="setMenu3">
 						<header>环境温度设置</header>
 						<main>
-						
-						<p>
-							<span>最低环境温度：</span><input type="text" id="minEnviTemp">&nbsp;°C
-						</p>
-						<p>
-							<span>最高环境温度：</span><input type="text" id="maxEnviTemp" />&nbsp;°C
-						</p>
-						<!--  <p>
-			          <span>相同警告时间间隔：</span><input type="text"/>&nbsp;分钟
-			        </p>
-			        <p>
-			          <input type="checkbox"/>&nbsp;永不发送警告
-			        </p> --> </main>
+							<p>
+								<span>最低环境温度：</span><input type="text" id="minEnviTemp">&nbsp;°C
+							</p>
+							<p>
+								<span>最高环境温度：</span><input type="text" id="maxEnviTemp" />&nbsp;°C
+							</p>
+						</main>
 						<footer class="footer__btn">
-						<button class="btn--save">删除发射器</button>
-						<button class="btn--save" onclick="enviTemp();">保存</button>
+							<button class="btn--save">删除发射器</button>
+							<button class="btn--save" onclick="enviTemp();">保存</button>
 						</footer>
 					</div>
 
 					<div id="setMenu4">
 						<header>出风温度设置</header>
 						<main>
-						<p>
-							<span>最低出风温度：</span><input type="text" id="minChuWindTemp" />&nbsp;°C
-						</p>
-						<p>
-							<span>最高出风温度：</span><input type="text" id="maxChuWindTemp" />&nbsp;°C
-						</p>
-						<!--  <p>
-			          <span>相同警告时间间隔：</span><input type="text"/>&nbsp;分钟
-			        </p>
-			        <p>
-			          <input type="checkbox"/>&nbsp;永不发送警告
-			        </p> --> </main>
+							<p>
+								<span>最低出风温度：</span><input type="text" id="minChuWindTemp" />&nbsp;°C
+							</p>
+							<p>
+								<span>最高出风温度：</span><input type="text" id="maxChuWindTemp" />&nbsp;°C
+							</p>
+						</main>
 						<footer class="footer__btn">
-						<button class="btn--save">删除发射器</button>
-						<button class="btn--save" onclick="chuWindTemp();">保存</button>
+							<button class="btn--save">删除发射器</button>
+							<button class="btn--save" onclick="chuWindTemp();">保存</button>
 						</footer>
 					</div>
-
-					<!--  <div id="setMenu5">
-			      <header>中部温度设置</header>
-			      <main>
-			        <p>
-			          <span>最低中部温度：</span><input type="text" id="minCenBoxTemp" />&nbsp;°C
-			        </p>
-			        <p>
-			          <span>最大中部温度：</span><input type="text" id="maxCenBoxTemp" />&nbsp;°C
-			        </p>
-			        <p>
-			          <span>相同警告时间间隔：</span><input type="text"/>&nbsp;分钟
-			        </p>
-			        <p>
-			          <input type="checkbox"/>&nbsp;永不发送警告
-			        </p>
-			      </main>
-			      <footer class="footer__btn">
-			        <button class="btn--save">删除发射器</button>
-			        <button class="btn--save" onclick="cenBoxTemp();">保存</button>
-			      </footer>
-			    </div> -->
-
-					<!-- <div id="setMenu7">
-			      <header>尾部箱温设置</header>
-			      <main>
-			        <p>
-			          <span>最低尾部箱温：</span><input type="text" id="minTailBoxTemp" />&nbsp;°C
-			        </p>
-			        <p>
-			          <span>最大尾部箱温：</span><input type="text" id="maxTailBoxTemp" />&nbsp;°C
-			        </p>  -->
-					<!--  <p>
-			          <span>相同警告时间间隔：</span><input type="text"/>&nbsp;分钟
-			        </p>
-			        <p>
-			          <input type="checkbox"/>&nbsp;永不发送警告
-			        </p> -->
-					<!--      </main>
-			      <footer class="footer__btn">
-			        <button class="btn--save">删除发射器</button>
-			        <button class="btn--save" onclick="tailBoxTemp();">保存</button>
-			      </footer>
-			    </div> -->
-
-
-					<!-- <div id="setMenu6">
-						<header>油箱温度</header>
-						<main>
-						<p>
-							<span>最低油箱温度：</span><input type="text" id="minoilTemp" />&nbsp;°C
-						</p>
-						<p>
-							<span>最高油箱温度：</span><input type="text" id="maxoilTemp" />&nbsp;°C
-						</p> -->
-					<!-- <p>
-			          <span>相同警告时间间隔：</span><input type="text"/>&nbsp;分钟
-			        </p> -->
-					<!--    <p>
-			          <input type="checkbox"/>&nbsp;永不发送警告
-			     <!--    </p> -->
-			<!-- </main> -->
-			<!-- 			<footer class="footer__btn">
-						<button class="btn--save">删除发射器</button>
-						<button class="btn--save" onclick="oilTemp();">保存</button>
-						</footer>
-					</div> -->
 
 					<div id="setMenu7">
 						<header>箱内湿度</header>
 						<main>
-						<p>
-							<span>最低箱内湿度：</span><input type="text" id="minboxHum" />&nbsp;%
-						</p>
-						<p>
-							<span>最高箱内湿度：</span><input type="text" id="maxboxHum" />&nbsp;%
-						</p>
-						<!--  <p>
-					          <span>相同警告时间间隔：</span><input type="text"/>&nbsp;分钟
-					        </p>
-					        <p>
-					          <input type="checkbox"/>&nbsp;永不发送警告
-					        </p> --> </main>
+							<p>
+								<span>最低箱内湿度：</span><input type="text" id="minboxHum" />&nbsp;%
+							</p>
+							<p>
+								<span>最高箱内湿度：</span><input type="text" id="maxboxHum" />&nbsp;%
+							</p>
+						</main>
 						<footer class="footer__btn">
-						<button class="btn--save">删除发射器</button>
-						<button class="btn--save" onclick="boxHum();">保存</button>
+							<button class="btn--save">删除发射器</button>
+							<button class="btn--save" onclick="boxHum();">保存</button>
 						</footer>
 					</div>
 		
 					<div id="setMenu8">
 						<header>箱尾温度</header>
 						<main>
-						<p>
-							<span>最低箱尾温度：</span><input type="text" id="mintailBoxTemp" />&nbsp;°C
-						</p>
-						<p>
-							<span>最高箱尾温度：</span><input type="text" id="maxtailBoxTemp" />&nbsp;°C
-						</p>
-						<!--  <p>
-					          <span>相同警告时间间隔：</span><input type="text"/>&nbsp;分钟
-					        </p>
-					        <p>
-					          <input type="checkbox"/>&nbsp;永不发送警告
-					        </p> --> </main>
+							<p>
+								<span>最低箱尾温度：</span><input type="text" id="mintailBoxTemp" />&nbsp;°C
+							</p>
+							<p>
+								<span>最高箱尾温度：</span><input type="text" id="maxtailBoxTemp" />&nbsp;°C
+							</p>
+						</main>
 						<footer class="footer__btn">
-						<button class="btn--save">删除发射器</button>
-						<button class="btn--save" onclick="tailBoxTemp();">保存</button>
+							<button class="btn--save">删除发射器</button>
+							<button class="btn--save" onclick="tailBoxTemp();">保存</button>
 						</footer>
 					</div>
 		
 					<div id="setMenu9">
 						<header>gps电量</header>
 						<main>
-						<p>
-							<span>最低gps电量：</span><input type="text" id="mingpsPower" />&nbsp;V
-						</p>
-						<p>
-							<span>最高gps电量：</span><input type="text" id="maxgpsPower" />&nbsp;V
-						</p>
-						<!--  <p>
-					          <span>相同警告时间间隔：</span><input type="text"/>&nbsp;分钟
-					        </p>
-					        <p>
-					          <input type="checkbox"/>&nbsp;永不发送警告
-					        </p> --> </main>
+							<p>
+								<span>最低gps电量：</span><input type="text" id="mingpsPower" />&nbsp;V
+							</p>
+							<p>
+								<span>最高gps电量：</span><input type="text" id="maxgpsPower" />&nbsp;V
+							</p>
+						</main>
 						<footer class="footer__btn">
-						<button class="btn--save">删除发射器</button>
-						<button class="btn--save" onclick="gpsPower();">保存</button>
+							<button class="btn--save">删除发射器</button>
+							<button class="btn--save" onclick="gpsPower();">保存</button>
 						</footer>
 					</div>
-		
 		
 					<div id="setMenu10">
 						<header>油箱油位</header>
 						<main>
-						<p>
-							<span>最低油箱油位：</span><input type="text" id="minoilLevel" />&nbsp;%
-						</p>
-						<p>
-							<span>最高油箱油位：</span><input type="text" id="maxoilLevel" />&nbsp;%
-						</p>
-						<!--  <p>
-					          <span>相同警告时间间隔：</span><input type="text"/>&nbsp;分钟
-					        </p>
-					        <p>
-					          <input type="checkbox"/>&nbsp;永不发送警告
-					        </p> --> </main>
+							<p>
+								<span>最低油箱油位：</span><input type="text" id="minoilLevel" />&nbsp;%
+							</p>
+							<p>
+								<span>最高油箱油位：</span><input type="text" id="maxoilLevel" />&nbsp;%
+							</p>
+						</main>
 						<footer class="footer__btn">
-						<button class="btn--save">删除发射器</button>
-						<button class="btn--save" onclick="oilLevel();">保存</button>
+							<button class="btn--save">删除发射器</button>
+							<button class="btn--save" onclick="oilLevel();">保存</button>
 						</footer>
 					</div>
 		
@@ -573,51 +333,33 @@
 						<header>后门开关设置</header>
 						<main>
 						<p>
-							<span>传感器开关：</span> <select name="" id="door">
+							<span>传感器开关：</span> 
+							<select name="" id="door">
 								<option value="off">停用</option>
 								<option value="on">启用</option>
 							</select>
 						</p>
 						</main>
 						<footer class="footer__btn">
-						<button class="btn--save">删除发射器</button>
-						<!-- <button class="btn--save" onclick="backDoorStateFun();">保存</button> -->
-						<button class="btn--save">保存</button>
+							<button class="btn--save">删除发射器</button>
+							<button class="btn--save">保存</button>
 						</footer>
-					</div><%--
-					<div id="setMenu12">
-						<header>周期设置</header>
-						<main>
-						<p>							<span>请输入周期：</span><input type="text" id="cycleMinute" />&nbsp;（分钟1-10）
-						</p>
-						<!--  <p>
-			          <span>相同警告时间间隔：</span><input type="text"/>&nbsp;分钟
-			        </p>
-			        <p>
-			          <input type="checkbox"/>&nbsp;永不发送警告
-			        </p> --> </main>
-						<footer class="footer__btn">
-						<button class="btn--save" onclick="setCycleMinute();">保存</button>
-						</footer>
-					</div>--%>
+					</div>
 				</div>
 			</main>
 			<!-- 传感器结束 -->
-			<%-- <main class="con__main></main> --%>
 			<main class="con__main set__menu tab_main" style="display:none;">
 			<div class="set__menu1">
 				<div class="set__menu--wrap">
 					<div class="con__main--search">
 						设备编号：
-						<!-- <span>CICU9913310</span> -->
 						<span> <%
- 	String path = request.getContextPath();
- 	String basePath = request.getScheme() + "://"
- 			+ request.getServerName() + ":" + request.getServerPort()
- 			+ path + "/";
- 	String containerId = request.getParameter("containerId");//用request得到
- %> <span class="setting_sbbh"></span>
-
+						 	String path = request.getContextPath();
+						 	String basePath = request.getScheme() + "://"
+						 			+ request.getServerName() + ":" + request.getServerPort()
+						 			+ path + "/";
+						 	String containerId = request.getParameter("containerId");//用request得到
+						    %> <span class="setting_sbbh"></span>
 						</span>
 					</div>
 
@@ -636,14 +378,6 @@
 										<div class="">冷藏箱控制设置</div>
 									</td>
 								</tr>
-								<!--<tr>-->
-								<!--<td><div class="">3</div></td>-->
-								<!--<td>-->
-								<!--<div class="">-->
-								<!--车辆日志-->
-								<!--</div>-->
-								<!--</td>-->
-								<!--</tr>-->
 							</tbody>
 						</table>
 					</div>
@@ -733,16 +467,13 @@
 							<p>
 								冷藏箱编号：<span id="showcontainerId" class="setting_sbbh"></span>
 							</p>
-							<!-- <p>
-								PIC固件版本：<span>1071</span>
-							</p> -->
 							<p>
 								冷机类型：<span id="chiller"></span>
 							</p>
 						</div>
 						<div class="set__menu3--input">
-							设置隔箱温度：&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" id="temp"
-								maxlength="6" onfocus="{this.value=''};" />&nbsp;°C
+							设置隔箱温度：&nbsp;&nbsp;&nbsp;&nbsp;
+							<input type="text" id="temp" maxlength="6" onfocus="{this.value=''};"/>&nbsp;°C
 						</div>
 					</div>
 					<input class="set__menu3--send" type="button" value="发送" id="btn1" />
@@ -755,16 +486,13 @@
 							<p>
 								冷藏箱编号：<span id="showcontainerId" class="setting_sbbh"></span>
 							</p>
-							<!-- <p>
-								PIC固件版本：<span>1071</span>
-							</p> -->
 							<p>
 								冷机类型：<span id="chiller1"></span>
 							</p>
 						</div>
 						<div class="set__menu3--input">
-							<label id="setBootDef"> <input type="checkbox"
-								id="bootDef" />启动除霜
+							<label id="setBootDef"> 
+								<input type="checkbox" id="bootDef" />启动除霜
 							</label>
 						</div>
 					</div>
@@ -778,15 +506,13 @@
 							<p>
 								冷藏箱编号：<span class="setting_sbbh"></span>
 							</p>
-							<!-- <p>
-								PIC固件版本：<span>1071</span>
-							</p> -->
 							<p>
 								冷机类型：<span id="chiller2"></span>
 							</p>
 						</div>
 						<div class="set__menu3--input">
-							<label> <input type="checkbox" id="selfCheck" />启动自检
+							<label> 
+								<input type="checkbox" id="selfCheck" />启动自检
 							</label>
 						</div>
 					</div>
@@ -800,15 +526,13 @@
 							<p>
 								冷藏箱编号：<span class="setting_sbbh"></span>
 							</p>
-							<!-- <p>
-								PIC固件版本：<span>1071</span>
-							</p> -->
 							<p>
 								冷机类型：<span id="chiller3"></span>
 							</p>
 						</div>
 						<div class="set__menu3--input">
-							<label> <input type="checkbox" id="clearAlert" />清除告警
+							<label> 
+								<input type="checkbox" id="clearAlert" />清除告警
 							</label>
 						</div>
 					</div>
@@ -822,23 +546,14 @@
 							<p>
 								冷藏箱编号：<span class="setting_sbbh"></span>
 							</p>
-							<!-- <p>
-								PIC固件版本：<span>1071</span>
-							</p> -->
 							<p>
 								冷机类型：<span id="chiller4"></span>
 							</p>
 						</div>
 						<div class="set__menu3--input">
 							配置启停模式：
-							<!--  <select name="">
-                  <option value="">请选择启停模式</option>
-                  <option value="">连续运转模式</option>
-                  <option value="">自动启停模式</option>
-                </select> -->
-							<input id="refRunMode_01" type="radio" name="refRunMode"
-								value="continuous">连续运转模式 <input id="refRunMode_02"
-								type="radio" name="refRunMode" value="auto">启停运转模式
+							<input id="refRunMode_01" type="radio" name="refRunMode" value="continuous">连续运转模式 
+							<input id="refRunMode_02" type="radio" name="refRunMode" value="auto">启停运转模式
 						</div>
 					</div>
 					<input class="set__menu3--send" type="button" value="发送" id="btn5" />
@@ -851,25 +566,14 @@
 							<p>
 								冷藏箱编号：<span class="setting_sbbh"></span>
 							</p>
-							<!-- <p>
-								PIC固件版本：<span>1071</span>
-							</p> -->
 							<p>
 								冷机类型：<span id="chiller5"></span>
 							</p>
-							<!-- <p>
-								当前电源状态：<span>Carrier</span>
-							</p> -->
 						</div>
 						<div class="set__menu3--input">
 							开关机选择：
-							<!-- <select name="">
-                  <option value="">关机</option>
-                  <option value="">开机</option>
-                </select> -->
-							<input id="remoteSwiMac_01" type="radio" name="remoteSwiMac"
-								value="on">开机 <input id="remoteSwiMac_02" type="radio"
-								name="remoteSwiMac" value="off">关机
+							<input id="remoteSwiMac_01" type="radio" name="remoteSwiMac" value="on">开机 
+							<input id="remoteSwiMac_02" type="radio" name="remoteSwiMac" value="off">关机
 						</div>
 					</div>
 					<input class="set__menu3--send" type="button" value="发送" id="btn6" />
@@ -882,24 +586,16 @@
 							<p>
 								冷藏箱编号：<span class="setting_sbbh"></span>
 							</p>
-							<!-- <p>
-								PIC固件版本：<span>1071</span>
-							</p> -->
 							<p>
 								冷机类型：<span id="chiller6"></span>
 							</p>
-							<!-- <p>
-								当前电源状态：<span>Carrier</span>
-							</p> -->
 						</div>
 						<div class="set__menu3--input">
 							开关机选择：
-							<input id="remoteXFSwiMac_01" type="radio" name="remoteXFSwiMac"
-								value="on">开机 <input id="remoteXFSwiMac_02"
-								type="radio" name="remoteXFSwiMac" value="off">关机<br>
-							<input id="remoteXFSwiMac_03" type="radio" name="remoteXFSwiMac"
-								value="cfmOn">开启CFM控制量<input type="text" id="CFM"
-								maxlength="2" onblur="checkNum()" onfocus="{this.value=''}"/>
+							<input id="remoteXFSwiMac_01" type="radio" name="remoteXFSwiMac" value="on">开机 
+							<input id="remoteXFSwiMac_02" type="radio" name="remoteXFSwiMac" value="off">关机<br>
+							<input id="remoteXFSwiMac_03" type="radio" name="remoteXFSwiMac" value="cfmOn">开启CFM控制量
+							<input type="text" id="CFM" maxlength="2" onblur="checkNum()" onfocus="{this.value=''}"/>
 							(仅允许输入0~50且能被5整除的数字)
 						</div>
 					</div>
@@ -967,15 +663,7 @@
 	<script src="${PATH}/js/index.js"></script>
 	<script src="${PATH}/js/layer_3.1.0/layer.js"></script>
 	<script src="${PATH}/js/laydate.js"></script>
-	<%-- <script src="${PATH}/js/layer/extend/layer.ext.js"></script> --%>
 	<script type="text/javascript">
-	<%-- $(document).ready(function(){
-		var role1 =<%=role1%>;
-		if(role1 == 1){
-			$(".setMenu__btn").hide();
-		}
-});
-	 --%>
 			var init;//刷新冷藏箱列表定时器的容器
 			var order;
 			var containerId_setting;
@@ -985,8 +673,6 @@
 				setInterval(function() {
 					var now = new Date();
 					var selectTime = now.getFullYear()+"-"+((now.getMonth()+1)<10?"0":"")+(now.getMonth()+1)+"-"+(now.getDate()<10?"0":"")+now.getDate()+" "+now.getHours()+":"+(now.getMinutes()<10?"0":"")+now.getMinutes()+":"+now.getSeconds();
-					/* var selectTime = nowTime.toString(); */
-					//alert(selectTime);
 					var username = '<%=username%>';
 					$.ajax({
 						url : "${PATH}/pc/alert/showAlertsInTwoTime.do",
@@ -1017,7 +703,7 @@
 								  },
 							      //弹窗点击×的回调函数
 							      /* cancel: function(index, layero){
-							       layer.close(index);
+							       	layer.close(index);
 							       },*/
 							      content: htmlStr
 							    });
@@ -1083,7 +769,6 @@
 			function ccdatasAjax(pn,ranking,order) {
 				//var now = new Date();
 				//var nowTimeshow = now.getFullYear()+"-"+((now.getMonth()+1)<10?"0":"")+(now.getMonth()+1)+"-"+(now.getDate()<10?"0":"")+now.getDate()+" "+now.getHours()+":"+(now.getMinutes()<10?"0":"")+now.getMinutes()+":"+now.getSeconds();
-				//alert("time-----"+nowTimeshow);
 				if(pn == undefined){
 					pn = 1;
 				}
@@ -1103,7 +788,6 @@
 					data : null,
 					type : "get",
 					success : function(result) {
-					//console.log(result);
 						//解析显示冷藏箱数据,显示列表
 						build_ccdatas_table(result,pn,result.extend.totalSize,ranking,orderStr);
 					}
@@ -1111,10 +795,6 @@
 			}
 			ccdatasAjax(1,"first");/* 页面加载调用 , 后面这个1标记是告诉函数这是第一次加载需调用定时器*/
 			
-			
-
-			//console.log(containerTd);
-
 			$.ajax({
 				url : "${PATH}/pc/bindtable/findAllDc.do",
 				data : "",
@@ -1139,222 +819,204 @@
 		        if (event.keyCode == "13") {
 		            //回车执行查询
 		            $("#search").click();
-		            //alert(111);
 		        }
 		    });
 		    
-		    
 			$("#search").click(function() {
-								var containerId = $("#containerId2").val();
-								containerId = containerId.replace(/\s*/g, "");
-								$.ajax({
-									url : "${PATH}/pc/bindtable/findBindtableBycompanyIdAndcontainerIdLikely.do",
-									data : {
-										"containerId" : containerId
-									},
-									type : "get",
-									dataType : "json",
-									success : function(result) {
-										var addHtml = $("#ccdatas_table tbody").empty();
-										var ccdatas = result.extend.maps;
-										var htmlStr = "";
-											$.each(ccdatas,function(index,item) {
-													htmlStr +="<tr>"
-													htmlStr += "<td><div style='width:27px;'>"
-															+ (index+1)
-															+ "</div></td> ";
-															
-													htmlStr += "<td><div style='width:33px;'><button class='main__amend'>修改</button> </div></td>";
-													htmlStr += "<td><div style='width:110px;' class='containerId '>"
-															+ item.ccdata.containerId
-															+ "</div></td>";
-													htmlStr += "<td><div style='width:55px;'>"
-																+ item.buMenM
-																+ "</div></td>";
-													if(item.ourccdata.nowTime != null){
-														htmlStr += "<td><div style='width:115px;'>"
-																+ item.ourccdata.nowTime
-																+ "</div></td>";
-													}else{
-														htmlStr += "<td><div style='width:115px;'>"
-																+ ""
-																+ "</div></td>";
-													}
-													if(item.ourccdata.gpsPosition != null){
-														htmlStr += "<td><div style='width:150px;'>"
-																+ item.ourccdata.gpsPosition
-																+ "</div></td>";
-													}else{
-														htmlStr += "<td><div style='width:150px;'>"
-																+ ""
-																+ "</div></td>";
-													}
-													if(item.ifAlert == "have"){
-														htmlStr += "<td><div style='width:70px;'><font style='color: red;'>"
-																+ "是"
-																+ "</font></div></td>";
-													}else if(item.ifAlert == "no"){
-														htmlStr += "<td><div style='width:70px;'>"
-																+ "不"
-																+ "</div></td>";
-													}else{
-														htmlStr += "<td><div style='width:70px;'>"
-																+ ""
-																+ "</div></td>";
-													}
-													//备注
-													if(item.remark != null){
-														htmlStr += "<td><div style='width:100px;'>"
-																+ item.remark + "</div></td>";
-													}else{
-														htmlStr += "<td><div style='width:100px;'>"
-																+ "" + "</div></td>";
-													}
-													htmlStr += "<td><div style='width:100px;'>"
-															+ item.carGoType + "</div></td>";
-													
-													if(item.oilLevel != null){
-															htmlStr += "<td><div style='width:50px;'>"
-															+ item.oilLevel
-															+ "</div></td>";
-													}else{
-															htmlStr += "<td><div style='width:50px;'>"
-															+ ""
-															+ "</div></td>";
-													}
-													/* if(item.refSwiState == "off"){
-														htmlStr += "<tr class='c-off'>";
-													}else{
-														htmlStr +="<tr>";
-													} */
-													if(item.setTemp != null){
-														if(item.refSwiState == "off"){
-															htmlStr += "<td><div style='width:70px; color:#ccc;'>"
-															+ item.setTemp
-															+ "</div></td>";
-														}else{
-															htmlStr += "<td><div style='width:70px;'>"
-															+ item.setTemp
-															+ "</div></td>";
-														}	
-													}else{
-															htmlStr += "<td><div style='width:70px;'>"
-															+ ""
-															+ "</div></td>";
-													}
-													if(item.backWindTemp != null){
-														if(item.refSwiState == "off"){
-															htmlStr += "<td><div style='width:70px; color:#ccc;'>"
-															+ item.backWindTemp
-															+ "</div></td>";
-														}else{
-															htmlStr += "<td><div style='width:70px;'>"
-															+ item.backWindTemp
-															+ "</div></td>";
-														}	
-													}else{
-															htmlStr += "<td><div style='width:70px;'>"
-															+ ""
-															+ "</div></td>";
-													}
-													
-													if(item.ccdata.refBatVol != null && item.ccdata.refBatVol > 15){
-														if(item.refSwiState == "off"){
-															htmlStr += "<td><div style='width:95px; color:#ccc;'>"
-																	+ 15
-																	+ "</div></td>";
-														}else{
-															htmlStr += "<td><div style='width:95px;'>"
-																	+ 15
-																	+ "</div></td>";
-														}		
-													}else if(item.ccdata.refBatVol != null && item.ccdata.refBatVol < 0){
-														if(item.refSwiState == "off"){
-															htmlStr += "<td><div style='width:95px; color:#ccc;'>"
-																	+ 0
-																	+ "</div></td>";
-														}else{
-															htmlStr += "<td><div style='width:95px;'>"
-																	+ 0
-																	+ "</div></td>";
-														}		
-													}else if(item.ccdata.refBatVol != null){
-														if(item.refSwiState == "off"){
-															htmlStr += "<td><div style='width:95px; color:#ccc;'>"
-																+ item.ccdata.refBatVol
-																+ "</div></td>";
-														}else{
-															htmlStr += "<td><div style='width:95px;'>"
-																+ item.ccdata.refBatVol
-																+ "</div></td>";
-														}
-													}
-													else{
-														htmlStr += "<td><div style='width:95px;'>"
-																+ ""
-																+ "</div></td>";
-													}
-													if(item.ourccdata.gpsPower != null && item.ourccdata.gpsPower > 15){
-														htmlStr += "<td><div style='width:70px;'>"
-																+ 15
-																+ "</div></td>";
-													}else if(item.ourccdata.gpsPower != null && item.ourccdata.gpsPower < 0){
-														htmlStr += "<td><div style='width:70px;'>"
-																+ 0
-																+ "</div></td>";
-													}else if(item.ourccdata.gpsPower != null){
-														htmlStr += "<td><div style='width:70px;'>"
-																+ item.ourccdata.gpsPower
-																+ "</div></td>";
-													}
-													else{
-														htmlStr += "<td><div style='width:70px;'>"
-																+ ""
-																+ "</div></td>";
-													}
-													if(item.refSwiState != null){
-														htmlStr += "<td><div style='width:64px;'>"
-																+ item.refSwiState
-																+ "</div></td>";
-													}else{
-														htmlStr += "<td><div style='width:64px;'>"
-																+ ""
-																+ "</div></td>";
-													}
-													htmlStr += "<td><div style='width:70px;'>"
-															+ item.communicationState
-															+ "</div></td>";
-													htmlStr += "<td><div style='width:125px;' class='deviceId'>"
-															+ item.ccdata.deviceId
-															+ "</div></td>";
-													htmlStr += "<td><div style='width:115px;'>"
-															+ item.ccdata.nowTime
-															+ "</div></td>";
-													htmlStr += "<td><div style='width:83px;'>"
-															+ item.ccdata.lcxModel
-															+ "</div></td>";
-												/* 	htmlStr += "<td><div style='width:115px;'>"
-															+ item.trainId + "</div></td>"; */
-													
-													htmlStr += "<td><div style='width:100px;'>"
-															+ item.stationName + "</div></td>";
-													htmlStr += "<td><div style='width:100px;'>"
-															+ item.yardName + "</div></td>";
-												/* 	htmlStr += "<td><div style='width:52px;'>"
-															+ item.routeType + "</div></td>"; */
-													htmlStr += "</tr>";
-
-												});
-												addHtml.append(htmlStr);
+					var containerId = $("#containerId2").val();
+					containerId = containerId.replace(/\s*/g, "");
+					$.ajax({
+						url : "${PATH}/pc/bindtable/findBindtableBycompanyIdAndcontainerIdLikely.do",
+						data : {
+							"containerId": containerId
+						},
+						type : "get",
+						dataType : "json",
+						success : function(result) {
+							var addHtml = $("#ccdatas_table tbody").empty();
+							var ccdatas = result.extend.maps;
+							var htmlStr = "";
+								$.each(ccdatas,function(index,item) {
+										htmlStr +="<tr>"
+										htmlStr += "<td><div style='width:27px;'>"
+												+ (index+1)
+												+ "</div></td> ";
+												
+										htmlStr += "<td><div style='width:33px;'><button class='main__amend'>修改</button> </div></td>";
+										htmlStr += "<td><div style='width:110px;' class='containerId '>"
+												+ item.ccdata.containerId
+												+ "</div></td>";
+										htmlStr += "<td><div style='width:55px;'>"
+													+ item.buMenM
+													+ "</div></td>";
+										if(item.ourccdata.nowTime != null){
+											htmlStr += "<td><div style='width:115px;'>"
+													+ item.ourccdata.nowTime
+													+ "</div></td>";
+										}else{
+											htmlStr += "<td><div style='width:115px;'>"
+													+ ""
+													+ "</div></td>";
+										}
+										if(item.ourccdata.gpsPosition != null){
+											htmlStr += "<td><div style='width:150px;'>"
+													+ item.ourccdata.gpsPosition
+													+ "</div></td>";
+										}else{
+											htmlStr += "<td><div style='width:150px;'>"
+													+ ""
+													+ "</div></td>";
+										}
+										if(item.ifAlert == "have"){
+											htmlStr += "<td><div style='width:70px;'><font style='color: red;'>"
+													+ "是"
+													+ "</font></div></td>";
+										}else if(item.ifAlert == "no"){
+											htmlStr += "<td><div style='width:70px;'>"
+													+ "不"
+													+ "</div></td>";
+										}else{
+											htmlStr += "<td><div style='width:70px;'>"
+													+ ""
+													+ "</div></td>";
+										}
+										//备注
+										if(item.remark != null){
+											htmlStr += "<td><div style='width:100px;'>"
+													+ item.remark + "</div></td>";
+										}else{
+											htmlStr += "<td><div style='width:100px;'>"
+													+ "" + "</div></td>";
+										}
+										htmlStr += "<td><div style='width:100px;'>"
+												+ item.carGoType + "</div></td>";
+										
+										if(item.oilLevel != null){
+												htmlStr += "<td><div style='width:50px;'>"
+												+ item.oilLevel
+												+ "</div></td>";
+										}else{
+												htmlStr += "<td><div style='width:50px;'>"
+												+ ""
+												+ "</div></td>";
+										}
+										if(item.setTemp != null){
+											if(item.refSwiState == "off"){
+												htmlStr += "<td><div style='width:70px; color:#ccc;'>"
+												+ item.setTemp
+												+ "</div></td>";
+											}else{
+												htmlStr += "<td><div style='width:70px;'>"
+												+ item.setTemp
+												+ "</div></td>";
+											}	
+										}else{
+												htmlStr += "<td><div style='width:70px;'>"
+												+ ""
+												+ "</div></td>";
+										}
+										if(item.backWindTemp != null){
+											if(item.refSwiState == "off"){
+												htmlStr += "<td><div style='width:70px; color:#ccc;'>"
+												+ item.backWindTemp
+												+ "</div></td>";
+											}else{
+												htmlStr += "<td><div style='width:70px;'>"
+												+ item.backWindTemp
+												+ "</div></td>";
+											}	
+										}else{
+												htmlStr += "<td><div style='width:70px;'>"
+												+ ""
+												+ "</div></td>";
+										}
+										
+										if(item.ccdata.refBatVol != null && item.ccdata.refBatVol > 15){
+											if(item.refSwiState == "off"){
+												htmlStr += "<td><div style='width:95px; color:#ccc;'>"
+														+ 15
+														+ "</div></td>";
+											}else{
+												htmlStr += "<td><div style='width:95px;'>"
+														+ 15
+														+ "</div></td>";
+											}		
+										}else if(item.ccdata.refBatVol != null && item.ccdata.refBatVol < 0){
+											if(item.refSwiState == "off"){
+												htmlStr += "<td><div style='width:95px; color:#ccc;'>"
+														+ 0
+														+ "</div></td>";
+											}else{
+												htmlStr += "<td><div style='width:95px;'>"
+														+ 0
+														+ "</div></td>";
+											}		
+										}else if(item.ccdata.refBatVol != null){
+											if(item.refSwiState == "off"){
+												htmlStr += "<td><div style='width:95px; color:#ccc;'>"
+													+ item.ccdata.refBatVol
+													+ "</div></td>";
+											}else{
+												htmlStr += "<td><div style='width:95px;'>"
+													+ item.ccdata.refBatVol
+													+ "</div></td>";
 											}
-										});
+										}
+										else{
+											htmlStr += "<td><div style='width:95px;'>"
+													+ ""
+													+ "</div></td>";
+										}
+										if(item.ourccdata.gpsPower != null && item.ourccdata.gpsPower > 15){
+											htmlStr += "<td><div style='width:70px;'>"
+													+ 15
+													+ "</div></td>";
+										}else if(item.ourccdata.gpsPower != null && item.ourccdata.gpsPower < 0){
+											htmlStr += "<td><div style='width:70px;'>"
+													+ 0
+													+ "</div></td>";
+										}else if(item.ourccdata.gpsPower != null){
+											htmlStr += "<td><div style='width:70px;'>"
+													+ item.ourccdata.gpsPower
+													+ "</div></td>";
+										}
+										else{
+											htmlStr += "<td><div style='width:70px;'>"
+													+ ""
+													+ "</div></td>";
+										}
+										if(item.refSwiState != null){
+											htmlStr += "<td><div style='width:64px;'>"
+													+ item.refSwiState
+													+ "</div></td>";
+										}else{
+											htmlStr += "<td><div style='width:64px;'>"
+													+ ""
+													+ "</div></td>";
+										}
+										htmlStr += "<td><div style='width:70px;'>"
+												+ item.communicationState
+												+ "</div></td>";
+										htmlStr += "<td><div style='width:125px;' class='deviceId'>"
+												+ item.ccdata.deviceId
+												+ "</div></td>";
+										htmlStr += "<td><div style='width:115px;'>"
+												+ item.ccdata.nowTime
+												+ "</div></td>";
+										htmlStr += "<td><div style='width:83px;'>"
+												+ item.ccdata.lcxModel
+												+ "</div></td>";
+										htmlStr += "<td><div style='width:100px;'>"
+												+ item.stationName + "</div></td>";
+										htmlStr += "<td><div style='width:100px;'>"
+												+ item.yardName + "</div></td>";
+										htmlStr += "</tr>";
+
+									});
+									addHtml.append(htmlStr);
+								}
 							});
-			/* }); */
-			//点击设置按钮跳转设置页面并传值
-			/* $("#j-setting").click(function() {
-				
-			}); */
-			
+				});
 					
 			//未查看围栏告警数目
 			function getCountOfNoReadedGeomessageBeforeDays() {
@@ -1367,7 +1029,6 @@
 					dataType : "json",
 					success : function(result) {
 						countOfNoReaded = result;
-
 					}
 				});
 				return countOfNoReaded;
@@ -1397,7 +1058,6 @@
 				$.each(allYars, function(index, item) {
 					htmlStr += "<option value=''>" + item.yardName
 							+ "</option>";
-
 				});
 				addHtml.append(htmlStr);
 			}
@@ -1415,7 +1075,6 @@
 			}
 
 			//解析显示冷藏箱数据
-			
 			var timerInit;//冷藏箱定时器储存  新增
 			
 			function build_ccdatas_table(result,pn,totalSize,ranking,order) {
@@ -1427,11 +1086,6 @@
 				var ccdatas = result.extend.maps;
 				var htmlStr = "";
 				$.each(ccdatas,function(index, item) {
-					/* if(item.refSwiState == "off"){
-						htmlStr += "<tr class='c-off'>";
-					}else{
-						htmlStr +="<tr>";
-					} */
 					htmlStr += "<tr>"
 					htmlStr += "<td><div style='width:27px;'>"
 							+ (index + 1 + (pn-1) * 12) + "</div></td> ";
@@ -1592,14 +1246,10 @@
 					htmlStr += "<td><div style='width:83px;'>"
 							+ item.ccdata.lcxModel
 							+ "</div></td>";
-				/* 	htmlStr += "<td><div style='width:115px;'>"
-							+ item.trainId + "</div></td>"; */
 					htmlStr += "<td><div style='width:100px;'>"
 							+ item.stationName + "</div></td>";
 					htmlStr += "<td><div style='width:100px;'>"
 							+ item.yardName + "</div></td>";
-				/* 	htmlStr += "<td><div style='width:52px;'>"
-							+ item.routeType + "</div></td>"; */
 					htmlStr += "</tr>";
 	
 				});
@@ -2437,191 +2087,169 @@
 			
 			/* 冷藏箱列表左右滚动标题滚动 */
 			$("#ccdatas_table").on("scroll",function(){
-				//console.log($(this).scrollLeft());
 				var marginLeft = "-" + $(this).scrollLeft() + "px";
-				//console.log($(".j-tableTitle"));
 				$(".j-tableTitle").css("marginLeft",marginLeft);
 				sessionStorage.lastScrollTop = $(this).scrollTop();
 			});
 			
 			/* 排序小三角点击变化    start */
-				/* 冷藏箱编号 */
+			/* 冷藏箱编号 */
 			$(".j-sort1").click(function(){
 				if($(this).attr("data-status") == "up"){
 					$(this).attr("data-status","down");
 					window.order = "CIdDESC";
-					//changeOrder(order);
 					clearTimerInit();
 					ccdatasAjax(1,"first",window.order);
 					$(this).find(".xsj").addClass("xsjDown").removeClass("xsjUp");
 				}else{
 					$(this).attr("data-status","up");
 					window.order = "CIdASC";
-					//changeOrder(order);
 					clearTimerInit();
 					ccdatasAjax(1,"first",window.order);
 					$(this).find(".xsj").addClass("xsjUp").removeClass("xsjDown");
 				}
 			});
-				/* 系统时间 */
+			/* 系统时间 */
 			$(".j-sort2").click(function(){
 				if($(this).attr("data-status") == "up"){
 					$(this).attr("data-status","down");
 					window.order = "NowTimeDESC";
-					//changeOrder(order);
 					clearTimerInit();
 					ccdatasAjax(1,"first",window.order);
 					$(this).find(".xsj").addClass("xsjDown").removeClass("xsjUp");
 				}else{
 					$(this).attr("data-status","up");
 					window.order = "NowTimeASC";
-					//changeOrder(order);
 					clearTimerInit();
 					ccdatasAjax(1,"first",window.order);
 					$(this).find(".xsj").addClass("xsjUp").removeClass("xsjDown");
 				}
 			});
-				/* 设定温度 */
+			/* 设定温度 */
 			$(".j-sort3").click(function(){
 				if($(this).attr("data-status") == "up"){
 					$(this).attr("data-status","down");
 					window.order = "TempSetDESC";
-					//changeOrder(order);
 					clearTimerInit();
 					ccdatasAjax(1,"first",window.order);
 					$(this).find(".xsj").addClass("xsjDown").removeClass("xsjUp");
 				}else{
 					$(this).attr("data-status","up");
 					window.order = "TempSetASC";
-					//changeOrder(order);
 					clearTimerInit();
 					ccdatasAjax(1,"first",window.order);
 					$(this).find(".xsj").addClass("xsjUp").removeClass("xsjDown");
 				}
 			});
-				/* 回风温度 */
+			/* 回风温度 */
 			$(".j-sort4").click(function(){
 				if($(this).attr("data-status") == "up"){
 					$(this).attr("data-status","down");
 					window.order = "BackWindTempDESC";
-					//changeOrder(order);
 					clearTimerInit();
 					ccdatasAjax(1,"first",window.order);
 					$(this).find(".xsj").addClass("xsjDown").removeClass("xsjUp");
 				}else{
 					$(this).attr("data-status","up");
 					window.order = "BackWindTempASC";
-					//changeOrder(order);
 					clearTimerInit();
 					ccdatasAjax(1,"first",window.order);
 					$(this).find(".xsj").addClass("xsjUp").removeClass("xsjDown");
 				}
 			});
-				/* 冷机电瓶电压 */
+			/* 冷机电瓶电压 */
 			$(".j-sort5").click(function(){
 				if($(this).attr("data-status") == "up"){
 					$(this).attr("data-status","down");
 					window.order = "RefBatVolDESC";
-					//changeOrder(order);
 					clearTimerInit();
 					ccdatasAjax(1,"first",window.order);
 					$(this).find(".xsj").addClass("xsjDown").removeClass("xsjUp");
 				}else{
 					$(this).attr("data-status","up");
 					window.order = "RefBatVolASC";
-					//changeOrder(order);
 					clearTimerInit();
 					ccdatasAjax(1,"first",window.order);
 					$(this).find(".xsj").addClass("xsjUp").removeClass("xsjDown");
 				}
 			});
-				/* GPS电量 */
+			/* GPS电量 */
 			$(".j-sort6").click(function(){
 				if($(this).attr("data-status") == "up"){
 					$(this).attr("data-status","down");
 					window.order = "GPSPowerDESC";
-					//changeOrder(order);
 					clearTimerInit();
 					ccdatasAjax(1,"first",window.order);
 					$(this).find(".xsj").addClass("xsjDown").removeClass("xsjUp");
 				}else{
 					$(this).attr("data-status","up");
 					window.order = "GPSPowerASC";
-					//changeOrder(order);
 					clearTimerInit();
 					ccdatasAjax(1,"first",window.order);
 					$(this).find(".xsj").addClass("xsjUp").removeClass("xsjDown");
 				}
 			});
 			
-				/* GPS接收时间 */
+			/* GPS接收时间 */
 			$(".j-sort7").click(function(){
 				if($(this).attr("data-status") == "up"){
 					$(this).attr("data-status","down");
 					window.order = "OurCCNowTimeDESC";
-					//changeOrder(order);
 					clearTimerInit();
 					ccdatasAjax(1,"first",window.order);
 					$(this).find(".xsj").addClass("xsjDown").removeClass("xsjUp");
 				}else{
 					$(this).attr("data-status","up");
 					window.order = "OurCCNowTimeASC";
-					//changeOrder(order);
 					clearTimerInit();
 					ccdatasAjax(1,"first",window.order);
 					$(this).find(".xsj").addClass("xsjUp").removeClass("xsjDown");
 				}
 			});
 			
-				/* 备注 */
+			/* 备注 */
 			$(".j-sort8").click(function(){
 				if($(this).attr("data-status") == "up"){
 					$(this).attr("data-status","down");
 					window.order = "RemarkDESC";
-					//changeOrder(order);
 					clearTimerInit();
 					ccdatasAjax(1,"first",window.order);
 					$(this).find(".xsj").addClass("xsjDown").removeClass("xsjUp");
 				}else{
 					$(this).attr("data-status","up");
 					window.order = "RemarkASC";
-					//changeOrder(order);
 					clearTimerInit();
 					ccdatasAjax(1,"first",window.order);
 					$(this).find(".xsj").addClass("xsjUp").removeClass("xsjDown");
 				}
 			});
-				/* 冷机告警 */
+			/* 冷机告警 */
 			$(".j-sort9").click(function(){
 				if($(this).attr("data-status") == "up"){
 					$(this).attr("data-status","down");
 					window.order = "coldAlertDESC";
-					//changeOrder(order);
 					clearTimerInit();
 					ccdatasAjax(1,"first",window.order);
 					$(this).find(".xsj").addClass("xsjDown").removeClass("xsjUp");
 				}else{
 					$(this).attr("data-status","up");
 					window.order = "coldAlertDESC";
-					//changeOrder(order);
 					clearTimerInit();
 					ccdatasAjax(1,"first",window.order);
 					$(this).find(".xsj").addClass("xsjUp").removeClass("xsjDown");
 				}
 			});
-				/*地理位置排序*/
+			/*地理位置排序*/
 			$(".j-sort10").click(function(){
 				if($(this).attr("data-status") == "up"){
 					$(this).attr("data-status","down");
 					window.order = "positionDESC";
-					//changeOrder(order);
 					clearTimerInit();
 					ccdatasAjax(1,"first",window.order);
 					$(this).find(".xsj").addClass("xsjDown").removeClass("xsjUp");
 				}else{
 					$(this).attr("data-status","up");
 					window.order = "positionASC";
-					//changeOrder(order);
 					clearTimerInit();
 					ccdatasAjax(1,"first",window.order);
 					$(this).find(".xsj").addClass("xsjUp").removeClass("xsjDown");
@@ -2632,14 +2260,12 @@
 				if($(this).attr("data-status") == "up"){
 					$(this).attr("data-status","down");
 					window.order = "lcxModelDESC";
-					//changeOrder(order);
 					clearTimerInit();
 					ccdatasAjax(1,"first",window.order);
 					$(this).find(".xsj").addClass("xsjDown").removeClass("xsjUp");
 				}else{
 					$(this).attr("data-status","up");
 					window.order = "lcxModelASC";
-					//changeOrder(order);
 					clearTimerInit();
 					ccdatasAjax(1,"first",window.order);
 					$(this).find(".xsj").addClass("xsjUp").removeClass("xsjDown");
@@ -2669,7 +2295,6 @@
 					}, 0);
 				}
 			}
-			
 			
 			//未发生点击冷藏箱的时候地图默认加载的地图
 			var uluru = {lat: 34.735892, lng: 113.815918};
@@ -2804,9 +2429,6 @@
 				},
 				type : "get",
 				success : function(result) {
-					/* 				data = eval("(" + result + ")"); */
-					/* alert(result.chillerType); */
-					/* alert(result.chillerType); */
 					$('#chiller').html(result.chillerType);
 				}
 			});
@@ -2821,7 +2443,6 @@
 					$('#temp').val(result);
 				}
 			});
-			
 		}
 		//显示冷机类型
 		function showchiller1() {
@@ -2848,8 +2469,6 @@
 					$('#chiller2').html(result.chillerType);
 				}
 			});
-			
-			
 		}
 		//显示冷机类型
 		function showchiller3() {
@@ -3050,7 +2669,6 @@
 					layer.msg(result.message);
 				}
 			});
-
 		}
 		//启动除霜
 		id2.onclick = function() {
@@ -3164,7 +2782,6 @@
 				},
 				type : "get",
 				success : function(result) {
-
 					var field = result.state;
 					if (field == '0') {
 						var num = Math.random();
@@ -3193,7 +2810,6 @@
 				},
 				type : "get",
 				success : function(result) {
-
 					var field = result.state;
 					if (field == '0') {
 						var num = Math.random();
@@ -3223,7 +2839,6 @@
 				},
 				type : "get",
 				success : function(result) {
-
 					var field = result.state;
 					if (field == '0') {
 						var num = Math.random();
@@ -3244,7 +2859,6 @@
 					//已选中的操作，获取选中的值	
 					hasValue_02 = true;
 					checkedVal_02 = oRadio_02[i].value;
-					//return checkedVal;
 				} else {
 					hasValue = false;
 				}
@@ -3261,7 +2875,6 @@
 					//已选中的操作，获取选中的值
 					hasValue_01 = true;
 					checkedVal_01 = oRadio_01[i].value;
-					//return checkedVal;
 				} else {
 					hasValue = false;
 				}
@@ -3277,7 +2890,6 @@
 					//已选中的操作，获取选中的值
 					hasValue = true;
 					checkedVal = oRadio[i].value;
-					//return checkedVal;
 				} else {
 					hasValue = false;
 				}

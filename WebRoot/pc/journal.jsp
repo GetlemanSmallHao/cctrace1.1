@@ -102,7 +102,7 @@
       <div class="warnDetails__wrap">
         <header class="con__header">
           <ul>
-            <li data-con="${PATH }/data/warnDetails.html" class="con__header--active con__header_none">告警信息</li>
+            <li data-con="${PATH }/data/warnDetails.html" class="con__header--active con__header_none">操作日志</li>
             <li><a href = "" id = "a1" onclick="excel();" class="red_print">导出报表</a></li>
           </ul>
          
@@ -110,103 +110,41 @@
         <main class="con__main amendBind">
           <div>
             <div class="con__main--search">
-              选择时间：<input id="startTime" class="laydate-icon">
-              <input id="endTime" class="laydate-icon">
-                 冷藏箱编号：<input type="text" name = "containerId111" id = "containerId111"/>
-              <button class="j-timeSearch">查询</button>
-               操作内容：<input type="text" name="commandType" id="commandType"/>
-               <button class="commandTypeSearch">查询</button>
+              	选择时间：<input id="startTime" class="laydate-icon">
+                <input id="endTime" class="laydate-icon">
+               	 冷藏箱编号：<input type="text" name = "containerId111" id = "containerId111"/>
+                <button class="j-timeSearch">查询</button>
+            	 操作内容：<input type="text" name="commandType" id="commandType"/>
+                <button class="commandTypeSearch">查询</button>
             </div>
             <div class="con__main__table" style="height: -webkit-calc(100% - 110px); height: calc(100% - 110px); overflow:hidden;">
               <table id="logs_table">
                 <thead>
-                <tr>
-                  <td><div class="">序号</div></td>
-                  <td><div class="">操作者</div></td>
-                  <td><div class="">操作的冷藏箱</div></td>
-                  <td><div class="">所属部门</div></td>
-                  <td><div class="">操作时间</div></td>
-                  <td><div class="">操作内容</div></td>
-                  <td><div class="">设定值</div></td>
-                  <td><div class="">执行结果</div></td>
-                </tr>
+	                <tr>
+	                  <td><div class="">序号</div></td>
+	                  <td><div class="">操作者</div></td>
+	                  <td><div class="">操作的冷藏箱</div></td>
+	                  <td><div class="">所属部门</div></td>
+	                  <td><div class="">操作时间</div></td>
+	                  <td><div class="">操作内容</div></td>
+	                  <td><div class="">设定值</div></td>
+	                  <td><div class="">执行结果</div></td>
+	                </tr>
                 </thead>
-                <tbody>
-               
-                </tbody>
+                <tbody></tbody>
               </table>
             </div>
-            <div id="hxpage" style="width:800px; margin:20px auto 0;">
-            	<!-- <span class="pageBtnWrap">
-	            	<span class="disabled">首页</span>
-	            	<span class="disabled">上一页</span>
-	            	<span class="curr">1</span>
-	            	<a href="javascript:;" title="第2页">2</a>
-	            	<a href="javascript:;" title="第3页">3</a>
-	            	<a href="javascript:;" title="下一页">下一页</a>
-	            	<a href="javascript:;" title="尾页">尾页</a>
-            	</span>
-            	<span class="pageText">
-	            	<span class="totalText">当前第
-		            	<span class="currPageNum">1</span>页
-		            	<span class="totalInfoSplitStr">/</span>共
-		            	<span class="totalPageNum">8</span>页
-	            	</span>
-	            	<span class="goPageBox">&nbsp;转到
-	            		<span id="hxpage_gopage_wrap">
-		            		<input type="text" id="kkpager_btn_go_input" onfocus="kkpager.focus_gopage()" onkeypress="return kkpager.keypress_gopage(event);" onblur="kkpager.blur_gopage()" value="2">
-		            		页<input type="button" id="kkpager_btn_go" onclick="kkpager.gopage()" value="确定">
-		            	</span>
-	            	</span>
-            	</span>  -->
-            </div>
+            <div id="hxpage" style="width:800px; margin:20px auto 0;"></div>
           </div>
         </main>
       </div>
     </div>
   </main>
 
-
   <script src="${PATH }/js/jquery-3.2.1.js"></script>
   <script src="${PATH }/js/index.js"></script>
   <script src="${PATH }/js/laydate.js"></script>
- 
-  <%-- <script src="${PATH }/js/kkpager.js"></script> --%>
-  <!-- <script type="text/javascript">
-	  $(function(){
-		  $.ajax({
-			  url:"${PATH}/getLogs.do",
-				data:"",
-				type:"get",
-				success:function(result){
-					console.log(result);
-					//解析显示日志数据
-					build_logs_table(result);
-					
-				}
-			  
-		  });
-		  
-		  
-	  });
-	  function build_logs_table(result){
-				var addHtml = $("#logs_table tbody").empty();
-				var logs = result.extend.logs;
-				var htmlStr = "";
-				$.each(logs,function(index,item){
-					htmlStr +="<tr>";
-					htmlStr += "<td><div class='leftDown--div1'>"+index+"</div></td> ";	
-					htmlStr += "<td><div class='containerId '>"+item.operator+"</div></td>";
-					htmlStr += "<td><div class='leftDown--div2'>"+item.operatorTime+"</div></td>";
-					htmlStr += "<td><div class='leftDown--div2'>"+item.content+"</div></td>";
-
-					htmlStr +="</tr>";
-		        
-				});
-				addHtml.append(htmlStr);
-		} 
-	
-  </script> -->
+  
   <!-- 时间插件js部分 -->
   <script>
   	//第一次给后台一个时间，后来每次查询更改这个时间
@@ -222,11 +160,6 @@
       istime: true,
       istoday: true,
       choose: function(datas){
-//        console.log(datas);
-        //console.log(new Date(datas));//Thu Jul 13 2017 15:03:53 GMT+0800 (中国标准时间)
-        //console.log(new Date(datas).getTime());//1499929433000
-        //console.log((new Date(datas)).valueOf());//1499929433000
-//        console.log(Date.parse(new Date(datas)));//1499929433000
         var nowDate = Date.parse(new Date(laydate.now()));
         var maxDate = Date.parse(new Date(datas)) + 31*24*60*60*1000;
         end.min = datas; //开始日选好后，重置结束日的最小日期
@@ -258,19 +191,19 @@
   <!-- 数据解析js部分 -->
   <script type="text/javascript">
   var formatDateTime = function (date) {  
-                var y = date.getFullYear();  
-                var m = date.getMonth() + 1;  
-                m = m < 10 ? ('0' + m) : m;  
-                var d = date.getDate();  
-                d = d < 10 ? ('0' + d) : d;  
-                var h = date.getHours();  
-                h=h < 10 ? ('0' + h) : h;  
-                var minute = date.getMinutes();  
-                minute = minute < 10 ? ('0' + minute) : minute;  
-                var second=date.getSeconds();  
-                second=second < 10 ? ('0' + second) : second;  
-                return y + '-' + m + '-' + d+' '+h+':'+minute+':'+second;  
-            };  
+      var y = date.getFullYear();  
+      var m = date.getMonth() + 1;  
+      m = m < 10 ? ('0' + m) : m;  
+      var d = date.getDate();  
+      d = d < 10 ? ('0' + d) : d;  
+      var h = date.getHours();  
+      h=h < 10 ? ('0' + h) : h;  
+      var minute = date.getMinutes();  
+      minute = minute < 10 ? ('0' + minute) : minute;  
+      var second=date.getSeconds();  
+      second=second < 10 ? ('0' + second) : second;  
+      return y + '-' + m + '-' + d+' '+h+':'+minute+':'+second;  
+  };  
   function excel(){
   	var startTime = $("#startTime").val();
   	var endTime = $("#endTime").val();
@@ -283,27 +216,17 @@
   		startTime.setTime(startTime.getTime()-24*60*60*1000);
   		startTime = formatDateTime(startTime);
   	}
-  	
-  	
-  
-  	
-	  	var objA=document.getElementById("a1");
-	  	objA.href="${PATH}/pc/ExportExcel/findExcelLog.do?containerId="
-										+ containerId + "&startTime=" + startTime
-										+ "&endTime=" + endTime;
-  	
-  	
+ 	var objA=document.getElementById("a1");
+ 	objA.href="${PATH}/pc/ExportExcel/findExcelLog.do?containerId="
+				+ containerId + "&startTime=" + startTime
+				+ "&endTime=" + endTime;
   }
-  	//页面加载显示部分数据
-  	/* $(function(){
-  		ajaxSearch(1);
-  	}); */
   	function ajax123(pn){
   		var sTime = startTime;
   		var eTime = endTime;
   		var cID = $("#containerId111").val();
-  		 $.ajax({
-		  url:"${PATH}/getLogsForCommand.do",
+ 		$.ajax({
+		    url:"${PATH}/getLogsForCommand.do",
 			data:{"startTime":sTime,"endTime":eTime,"containerId":cID,"pn":pn},
 			type:"POST",
 			success:function(result){
@@ -321,8 +244,8 @@
   	}
 	$('.commandTypeSearch').on('click',function(){
   		var commandType = $('#commandType').val();
-  		 $.ajax({
-		  url:"${PATH}/getLogsForCommandType.do",
+  		$.ajax({
+			url:"${PATH}/getLogsForCommandType.do",
 			data:{commandType:commandType,"pn":1},
 			type:"POST",
 			success:function(result){
@@ -393,59 +316,16 @@
 		});
 		addHtml.append(htmlStr);
 	} 
-/*   	function ajax123(pn){
-  		var sTime = startTime;
-  		var eTime = endTime;
-  		 $.ajax({
-		  url:"${PATH}/getLogs.do",
-			data:{"startTime":sTime,"endTime":eTime,"pn":pn},
-			type:"POST",
-			success:function(result){
-				var page = result.extend.page.pageNum;
-  				var totalPage = result.extend.page.pages;
-				if(totalPage < 1){
-					alert("数据查询为零条，请重新选择时间");
-					return false;
-				}
-				//解析显示日志数据
-				build_logs_table(result);
-  				hxpage(page,totalPage);// 重新解析分页条 
-			}
-	  });
-  	}
-	$(function(){
-	 	ajax123(1);
-	});
-	  //解析数据 并显示
-	function build_logs_table(result){
-		var addHtml = $("#logs_table tbody").empty();
-		var logs = result.extend.page.list;
-		var page =result.extend.page;
-		var htmlStr = "";
-		$.each(logs,function(index,item){
-			htmlStr += "<tr>";
-			htmlStr += "<td><div class='leftDown--div1'>"+item.id+"</div></td> ";	
-			htmlStr += "<td><div class='containerId '>"+item.operator+"</div></td>";
-			htmlStr += "<td><div class='leftDown--div2'>"+item.operatorParams+"</div></td>";
-			htmlStr += "<td><div class='leftDown--div2'>"+item.operatorTime+"</div></td>";
-			htmlStr += "<td><div class='leftDown--div2'>"+item.content+"</div></td>";
-			htmlStr += "<td><div class='leftDown--div2'>"+item.oinfo.oinfoAlias+"</div></td>";
-			htmlStr += "</tr>";
-		});
-		addHtml.append(htmlStr);
-	}  */
 </script>
 <!-- 分页部分 -->
 <script type="text/javascript">
-				  //当前页数，总页数
+	//当前页数，总页数
 	function hxpage(page,totalPage){
-		//console.log(page + "aaaaa"+totalPage);
 		var htmlStr = "<span class='pageBtnWrap'>";
 		if(page < 1 || page > totalPage){
 			alert("将要跳转的页码不正确，页码不能小于“1”或大于总页码数");
 			return false;
 		}
-	            	
 		/* 首页和上一页    前面部分 */
 		if(page > 1){
 			htmlStr += "<a href='javascript:;' onclick='ajax123(1)' title='首页'>首页</a><a href='javascript:;' onclick='ajax123("+(page-1)+")' title='上一页'>上一页</a>";
@@ -523,12 +403,11 @@
 	    //当前页小于总页input框内为当前页加1，等于总页数时input框内为总页数（即当前页数）
 	    page < totalPage ? iVal = (page+1) : iVal = page;
 	    
-		htmlStr +=			"<input type='number' id='hxpager_btn_go_input' value='"+iVal+"'/>";
-		htmlStr +=			"页<input type='button' id='hxpager_btn_go' value='确定'/>";
-		htmlStr +=		"</span>";
-	    htmlStr +=	"</span>";
-        htmlStr +="</span>";
-		//console.log($("#hxpage"));
+		htmlStr += "<input type='number' id='hxpager_btn_go_input' value='"+iVal+"'/>";
+		htmlStr += "页<input type='button' id='hxpager_btn_go' value='确定'/>";
+		htmlStr += "</span>";
+	    htmlStr += "</span>";
+        htmlStr += "</span>";
 		$("#hxpage").html(htmlStr);
 	}
 	
@@ -549,10 +428,6 @@
 </script>
 <!-- 选择时间后解析数据部分 -->
 <script>	    
-	/*  var startTime;
-	 var endTime; */
-  //点击搜索按钮 拿到时间，解析显示日志数据
-  
   //回车事件绑定
     $("#containerId111").on('keyup', function(event) {
         if (event.keyCode == "13") {
@@ -565,7 +440,6 @@
 		  startTime = $("#startTime").val();
 	      endTime = $("#endTime").val();
 	      containerId = $("#containerId111").val();
-	      //console.log(startTime +" :time: "+endTime);
 	      if(startTime == ""||endTime == ""){
 		  		//初始化时间操作
 		  		endTime = formatDateTime(new Date());
@@ -576,9 +450,6 @@
 	      if(startTime == "" || endTime == ""){
 	        alert("查询条件不能为空");
 	      }else{
-//	        console.log(startTime.replace(/(^\s*)|(\s*$)/g,""));
-//	        console.log(endTime.replace(/(^\s*)|(\s*$)/g,""));
-
 	        startTime = startTime.replace(/(^\s*)|(\s*$)/g,"");
 	        endTime = endTime.replace(/(^\s*)|(\s*$)/g,"");
 	        containerId = containerId.replace(/(^\s*)|(\s*$)/g,"");
@@ -586,25 +457,6 @@
 	          alert("查询条件不能为空");
 	        }else{
 	        	ajax123(1);
-	          /* $.ajax({  
-	        	url:"${PATH}/getLogs.do",
-	  			data:{"startTime":startTime,"endTime":endTime,"pn":pn},
-	  			type:"get",
-	  			success:function(result){
-	  			//解析显示日志数据
-	  			//console.log(result);
-	  				/* result = JSON.parse(result);
-	  				console.log(result); *
-	  				var page = result.extend.page.pageNum;
-	  				var totalPage = result.extend.page.pages;
-	  				if(totalPage < 1){
-						alert("数据查询为零条，请重新选择时间");
-						return false;
-					}	
-					build_logs_table(result);//解析显示日志数据
-	  				hxpage(page,totalPage);/* 重新解析分页条 *
-	  			}
-	          }); */
 	        }
 	      }
 	});
