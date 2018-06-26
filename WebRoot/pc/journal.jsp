@@ -243,12 +243,16 @@
 	  });
   	}
 	$('.commandTypeSearch').on('click',function(){
+  		search_commanType(1);
+  	});
+  	function search_commanType(pn) {
   		var commandType = $('#commandType').val();
   		$.ajax({
 			url:"${PATH}/getLogsForCommandType.do",
-			data:{commandType:commandType,"pn":1},
+			data:{commandType:commandType,"pn":pn},
 			type:"POST",
 			success:function(result){
+			console.log(result)
 				var page = result.extend.page.pageNum;
   				var totalPage = result.extend.page.pages;
 				if(totalPage < 1){
@@ -257,10 +261,10 @@
 				}
 				//解析显示日志数据
 				build_logs_table(result);
-  				hxpage(page,totalPage);// 重新解析分页条 
+  				hxpage_copy(page,totalPage);// 重新解析分页条 
 			}
 	  });
-  	});
+  	}
 	$(function(){
 	 	ajax123(1);
 	});
@@ -422,6 +426,113 @@
 	          	alert("跳转页码不能为空！！！");
 	        }else{
 				ajax123(inputVal);
+			} 
+		}  	
+	});
+	
+	//当前页数，总页数
+	function hxpage_copy(page,totalPage){
+		var htmlStr = "<span class='pageBtnWrap'>";
+		if(page < 1 || page > totalPage){
+			alert("将要跳转的页码不正确，页码不能小于“1”或大于总页码数");
+			return false;
+		}
+		/* 首页和上一页    前面部分 */
+		if(page > 1){
+			htmlStr += "<a href='javascript:;' onclick='search_commanType(1)' title='首页'>首页</a><a href='javascript:;' onclick='search_commanType("+(page-1)+")' title='上一页'>上一页</a>";
+		}
+		if(page == 1){//当前页小于1时
+			htmlStr += "<span class='disabled'>首页</span><span class='disabled'>上一页</span>";
+		}
+		/* 中间  页码  部分 */
+		if(totalPage < 8){//1到7时
+			for(var i = 1;i <= totalPage;i++){
+				if(i != page){
+					htmlStr += "<a href='javascript:;' onclick='search_commanType("+i+")' title='第"+i+"页'>"+i+"</a>";
+				}else{
+					htmlStr += "<span class='curr'>"+i+"</span>";
+				}
+			}
+		}else if(totalPage > 7){//大于7时
+			if((page-3) <= 1){//当前页减3小于或等于1时，当前页左边区域全部显示
+				for(var i = 1;i < page;i++){//1到当前的
+					htmlStr += "<a href='javascript:;' onclick='search_commanType("+i+")' title='第"+i+"页'>"+i+"</a>";
+				}
+				htmlStr += "<span class='curr'>"+page+"</span>";//当前的
+				for(var i = 1;i<(7-page);i++){//当前的  到  第6个  //如：123（4） 56...7
+					htmlStr += "<a href='javascript:;' onclick='search_commanType("+(i+page)+")' title='第"+(i+page)+"页'>"+(i+page)+"</a>";
+				}
+				//显示大于7页   显示...
+				htmlStr += "<b style='float:left;'>...</b>";
+				//显示大于7页   显示...后最后一个
+				htmlStr += "<a href='javascript:;' onclick='search_commanType("+totalPage+")' title='第"+totalPage+"页'>"+totalPage+"</a>";
+			}else if((page+3) >= totalPage){//当前页加3大于totalPage时，当前页右边区域全部显示
+				//显示第一页内容
+				htmlStr += "<a href='javascript:;' onclick='search_commanType(1)' title='第1页'>1</a>";
+				htmlStr += "<b style='float:left;'>...</b>";
+				for(var i = 5;i >= 0;i--){//显示从最大页数向前显示六个
+					if((totalPage-i) == page){//当等于page时，显示为不可点击的span
+						htmlStr += "<span class='curr'>"+page+"</span>";//当前的
+						continue;
+					}
+					htmlStr += "<a href='javascript:;' onclick='search_commanType("+(totalPage-i)+")' title='第"+(totalPage-i)+"页'>"+(totalPage-i)+"</a>";
+				}	
+			}else{//前不着村后不着店时，即前面减3不小于1，后面加3不大于最大页码  （前面显示第1页和... ， 后面显示...和最后一页）
+				htmlStr += "<a href='javascript:;' onclick='search_commanType(1)' title='第1页'>1</a>";
+				htmlStr += "<b style='float:left;'>...</b>";
+				for(var i = 2;i > 0;i--){//显示当前页码的上两个
+					htmlStr += "<a href='javascript:;' onclick='search_commanType("+(page-i)+")' title='第"+(page-i)+"页'>"+(page-i)+"</a>";
+				}
+				htmlStr += "<span class='curr'>"+page+"</span>";//当前的页码
+				for(var i = 1;i < 3;i++){//显示当前页码的下两个
+					htmlStr += "<a href='javascript:;' onclick='search_commanType("+(page+i)+")' title='第"+(page+i)+"页'>"+(page+i)+"</a>";
+				}
+				htmlStr += "<b style='float:left;'>...</b>";
+				htmlStr += "<a href='javascript:;' onclick='search_commanType("+totalPage+")' title='第"+totalPage+"页'>"+totalPage+"</a>";
+			}	
+		}
+		/* 尾页和下一页   后面部分 */
+		if(page < totalPage){
+			htmlStr += "<a href='javascript:;' onclick='search_commanType("+(page+1)+")' title='下一页'>下一页</a><a href='javascript:;' onclick='search_commanType("+totalPage+")' title='尾页'>尾页</a>";
+		}
+		if(page == totalPage){//当前页等于尾页时，按钮停用
+			htmlStr += "<span class='disabled'>下一页</span><span class='disabled'>尾页</span>";
+		}
+		htmlStr += "</span>";//第一部分页码的结尾
+		
+		/*当前页   总页  和   跳转部分 */
+		htmlStr +="<span class='pageText'>";
+	    htmlStr +=	"<span class='totalText'>当前第";
+		htmlStr +=		"<span class='currPageNum'>"+page+"</span>页";
+		htmlStr +=		"<span class='totalInfoSplitStr'>/</span>共";
+		htmlStr +=		"<span class='totalPageNum'>"+totalPage+"</span>页";
+	    htmlStr +=	"</span>";
+	    htmlStr +=	"<span class='goPageBox'>&nbsp;转到";
+	    htmlStr +=		"<span id='hxpage_gopage_wrap'>";
+	    
+	    var iVal;//声明input框内的值为iVal;
+	    //当前页小于总页input框内为当前页加1，等于总页数时input框内为总页数（即当前页数）
+	    page < totalPage ? iVal = (page+1) : iVal = page;
+	    
+		htmlStr += "<input type='number' id='hxpager_btn_go_input' value='"+iVal+"'/>";
+		htmlStr += "页<input type='button' id='hxpager_btn_go_go' value='确定'/>";
+		htmlStr += "</span>";
+	    htmlStr += "</span>";
+        htmlStr += "</span>";
+		$("#hxpage").html(htmlStr);
+	}
+	
+	/* 点击确定跳转页面 */
+	$("#hxpage").on("click","#hxpager_btn_go_go",function(){
+		var inputVal = $("#hxpager_btn_go_input").val();
+		if(inputVal == ""){
+	       alert("跳转页码不能为空！！！");
+	    }else{
+	       inputVal = inputVal.replace(/\s/g,"");
+	        if(inputVal == ""){
+	          	alert("跳转页码不能为空！！！");
+	        }else{
+				search_commanType(inputVal);
 			} 
 		}  	
 	});
