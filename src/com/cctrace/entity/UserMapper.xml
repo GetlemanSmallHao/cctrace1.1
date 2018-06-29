@@ -191,5 +191,5 @@
 	</select>
 
 	<!-- 配置缓存 -->
-	<cache eviction="FIFO" flushInterval="10000" size="128" readOnly="true" />
+	<!-- <cache eviction="FIFO" flushInterval="10000" size="128" readOnly="true" /> -->
 </mapper>
