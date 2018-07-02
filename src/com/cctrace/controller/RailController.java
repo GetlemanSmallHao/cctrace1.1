@@ -41,59 +41,71 @@ public class RailController {
 	 */
 	@RequestMapping("/insertRail")
 	public  String  insertRail(HttpServletRequest request,Rail rail,ModelMap map){
-		User user = (User) request.getSession().getAttribute("user");
-		
-		rail.setCompanyId(user.getCompanyId());
-		
-		int n=0;
-		int x=0;
-		
-		String railName=rail.getRailName();
-		List<Rail> railList=daoService.getRailsByCompanyId(user.getCompanyId());
-		if(railList.size()>0){
-			for(int i=0;i<railList.size();i++){
-				if(railList.get(i).getRailName().equals(railName)){
-					System.out.println("have same railname");
-					break;
-				}else{
-					x++;
-				}
-				
-			}
-			if(x>0){
-				if(rail.getRailLat()!=null){
-					 n=daoService.addNewRail(rail);
-				}
-				if(n>0){
-					System.out.println("insert rail success");
+		try {
+			User user = (User) request.getSession().getAttribute("user");
+			
+			rail.setCompanyId(user.getCompanyId());
+			
+			int n=0;
+			int x=0;
+			
+			String railName=rail.getRailName();
+			List<Rail> railList=daoService.getRailsByCompanyId(user.getCompanyId());
+			if(railList.size()>0){
+				for(int i=0;i<railList.size();i++){
+					if(railList.get(i).getRailName().equals(railName)){
+						System.out.println("have same railname");
+						break;
+					}else{
+						x++;
+					}
 					
 				}
-				map.addAttribute("rail", rail);
-				return "inbox.jsp";
-			}
-		}else{
-			 n=daoService.addNewRail(rail);
-			 if(n>0){
-					System.out.println("insert rail success");
-					
+				if(x>0){
+					if(rail.getRailLat()!=null){
+						 n=daoService.addNewRail(rail);
+					}
+					if(n>0){
+						System.out.println("insert rail success");
+						
+					}
+					map.addAttribute("rail", rail);
+					return "inbox.jsp";
 				}
-			 map.addAttribute("rail", rail);
-				return "inbox.jsp";
+			}else{
+				 n=daoService.addNewRail(rail);
+				 if(n>0){
+						System.out.println("insert rail success");
+						
+					}
+				 map.addAttribute("rail", rail);
+					return "inbox.jsp";
+			}
+			
+			return "rail/findHadRailName.do";
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			System.out.println("插入围栏异常");
 		}
-		
-		return "rail/findHadRailName.do";
+		return null;
 
 	}
 	
 	@RequestMapping("/findHadRailName")
 	public  String  findHadRailName(HttpServletRequest request,ModelMap map){
-		User user = (User) request.getSession().getAttribute("user");
-		//Rail rail=new Rail();
-		
-		//rail.setCompanyId(user.getCompanyId());
-		List<Rail> railList=daoService.getRailsByCompanyId(user.getCompanyId());
-		map.addAttribute("railList", railList);
-		return "rail.jsp";
+		try {
+			User user = (User) request.getSession().getAttribute("user");
+			//Rail rail=new Rail();
+			
+			//rail.setCompanyId(user.getCompanyId());
+			List<Rail> railList=daoService.getRailsByCompanyId(user.getCompanyId());
+			map.addAttribute("railList", railList);
+			return "rail.jsp";
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			System.out.println("异常");
+		}
+		return null;
 
 	}
 	@RequestMapping()
@@ -110,22 +122,28 @@ public class RailController {
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@RequestMapping("/findRail")
 	public  String  findRail(HttpServletRequest request,ModelMap map){
-		User user = (User) request.getSession().getAttribute("user");
-		Rail rail=new Rail();
-		rail.setCompanyId(user.getCompanyId());
-		List lats=new ArrayList();
-		List lons=new ArrayList();
-		List rs=new ArrayList();
-		List<Rail> railList=daoService.getRailsByCompanyId(user.getCompanyId());
-		for(int i=0;i<railList.size();i++){
-			lats.add(i, railList.get(i).getRailLat());
-			lons.add(i,railList.get(i).getRailLon());
-			rs.add(i,railList.get(i).getRadius());
+		try {
+			User user = (User) request.getSession().getAttribute("user");
+			Rail rail=new Rail();
+			rail.setCompanyId(user.getCompanyId());
+			List lats=new ArrayList();
+			List lons=new ArrayList();
+			List rs=new ArrayList();
+			List<Rail> railList=daoService.getRailsByCompanyId(user.getCompanyId());
+			for(int i=0;i<railList.size();i++){
+				lats.add(i, railList.get(i).getRailLat());
+				lons.add(i,railList.get(i).getRailLon());
+				rs.add(i,railList.get(i).getRadius());
+			}
+			map.addAttribute("lats", lats);
+			map.addAttribute("lons", lons);
+			map.addAttribute("rs", rs);
+			return "showInbox.jsp";
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			System.out.println("查看围栏异常");
 		}
-		map.addAttribute("lats", lats);
-		map.addAttribute("lons", lons);
-		map.addAttribute("rs", rs);
-		return "showInbox.jsp";
+		return null;
 	}
 	/**
 	 *查看围栏 
@@ -134,26 +152,32 @@ public class RailController {
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@RequestMapping("/findRailOne")
 	public  String  findRailOne(HttpServletRequest request,ModelMap map,String railName){
-		//railName="上海";
-		User user = (User) request.getSession().getAttribute("user");
-		System.out.println("###"+railName);
-		Map<String,Object> map1 = new HashMap<String,Object>();
-		map1.put("railName", railName);
-		map1.put("companyId", user.getCompanyId());
-		
-		Rail rail = daoService.getRailByRailNameAndCompanyId(map1);
-		
-		List lats=new ArrayList();
-		List lons=new ArrayList();
-		List rs=new ArrayList();
-		lats.add(0,rail.getRailLat());
-		lons.add(0,rail.getRailLon());
-		rs.add(0, rail.getRadius());
-	
-		map.addAttribute("lats", lats);
-		map.addAttribute("lons", lons);
-		map.addAttribute("rs", rs);
-		return "showInbox.jsp";
+		try {
+			//railName="上海";
+			User user = (User) request.getSession().getAttribute("user");
+			System.out.println("###"+railName);
+			Map<String,Object> map1 = new HashMap<String,Object>();
+			map1.put("railName", railName);
+			map1.put("companyId", user.getCompanyId());
+			
+			Rail rail = daoService.getRailByRailNameAndCompanyId(map1);
+			
+			List lats=new ArrayList();
+			List lons=new ArrayList();
+			List rs=new ArrayList();
+			lats.add(0,rail.getRailLat());
+			lons.add(0,rail.getRailLon());
+			rs.add(0, rail.getRadius());
+
+			map.addAttribute("lats", lats);
+			map.addAttribute("lons", lons);
+			map.addAttribute("rs", rs);
+			return "showInbox.jsp";
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			System.out.println("查看围栏异常");
+		}
+		return null;
 	}
 	/**
 	 * 删除围栏
@@ -162,16 +186,22 @@ public class RailController {
 	 */
 	@RequestMapping("/deleteRail")
 	public  String  deleteRail(HttpServletRequest request,ModelMap map,@RequestParam(value="railName") String railName){
-		User user = (User) request.getSession().getAttribute("user");
-		Rail rail=new Rail();
-		rail.setCompanyId(user.getCompanyId());
-		System.out.println(railName);
-		rail.setRailName(railName);
-		int n=daoService.removeRailByRailName(rail.getRailName());
-		if(n>0){
-			System.out.println("delete rail success");
+		try {
+			User user = (User) request.getSession().getAttribute("user");
+			Rail rail=new Rail();
+			rail.setCompanyId(user.getCompanyId());
+			System.out.println(railName);
+			rail.setRailName(railName);
+			int n=daoService.removeRailByRailName(rail.getRailName());
+			if(n>0){
+				System.out.println("delete rail success");
+			}
+			return "rail/findHadRailName.do";
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			System.out.println("删除围栏异常");
 		}
-		return "rail/findHadRailName.do";
+		return null;
 
 	}
 	

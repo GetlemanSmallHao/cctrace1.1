@@ -25,17 +25,23 @@ public class CcdataController {
 	@RequestMapping(value = "/addCcdata")
 	public String addCcdata(HttpServletRequest request,
 			HttpServletResponse response, Ccdata ccdata) {
-		// User user=(User)request.getSession().getAttribute("user");
-		// ccdata.setCompanyId(user.getCompanyId());
-		long receiveLongTime = DateUtil.getLongFromStr(ccdata.getReceiveTime(),
-				"yyyy-MM-dd HH:mm:ss");
-		long nowLongTime = DateUtil.getLongFromDate(DateUtil.getNowDate());
-		ccdata.setNowLongTime(nowLongTime);
-		ccdata.setReceiveLongTime(receiveLongTime);
+		try {
+			// User user=(User)request.getSession().getAttribute("user");
+			// ccdata.setCompanyId(user.getCompanyId());
+			long receiveLongTime = DateUtil.getLongFromStr(ccdata.getReceiveTime(),
+					"yyyy-MM-dd HH:mm:ss");
+			long nowLongTime = DateUtil.getLongFromDate(DateUtil.getNowDate());
+			ccdata.setNowLongTime(nowLongTime);
+			ccdata.setReceiveLongTime(receiveLongTime);
 
-		daoService.addOneNewCcdata(ccdata);
+			daoService.addOneNewCcdata(ccdata);
 
-		return "addCcdata.jsp";
+			return "addCcdata.jsp";
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			System.out.println("新增冷藏箱数据异常");
+		}
+		return null;
 	}
 
 }

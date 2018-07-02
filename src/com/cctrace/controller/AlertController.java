@@ -37,12 +37,18 @@ public class AlertController {
 	@RequestMapping("/query")
 	public String registNewUser(HttpServletRequest req,
 			HttpServletResponse res, ModelMap mmp) {
-		List<Alert> listA = daoService.selectAllAlerts();
-		mmp.addAttribute("listA", listA);
-		for (Alert alert : listA) {
-			System.out.println(alert);
+		try {
+			List<Alert> listA = daoService.selectAllAlerts();
+			mmp.addAttribute("listA", listA);
+			for (Alert alert : listA) {
+				System.out.println(alert);
+			}
+			return "warning.jsp";
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			System.out.println("异常");
 		}
-		return "warning.jsp";
+		return null;
 
 	}
 
@@ -149,116 +155,158 @@ public class AlertController {
 	@RequestMapping(value = "/getRecentFourDaysAlerts")
 	public String getRecentFourDaysAlerts(HttpServletRequest request,
 			ModelMap mm) {
-		Integer companyId = getCompanyIdOfCurrentUser(request);
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("companyId", companyId);
-		Date now = new Date();
-		long longNow = DateUtil.getLongFromDate(now);
-		long beginTime = longNow - (1 * 24 * 60 * 60 * 1000);
-		map.put("beginTime", beginTime);
-		List<Alert> alerts = daoService.getAlertsByCompanyIdInFourDays(map);
-		mm.addAttribute("alerts", alerts);
-		System.out.println(mm);
-		return "warning.jsp";
+		try {
+			Integer companyId = getCompanyIdOfCurrentUser(request);
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("companyId", companyId);
+			Date now = new Date();
+			long longNow = DateUtil.getLongFromDate(now);
+			long beginTime = longNow - (1 * 24 * 60 * 60 * 1000);
+			map.put("beginTime", beginTime);
+			List<Alert> alerts = daoService.getAlertsByCompanyIdInFourDays(map);
+			mm.addAttribute("alerts", alerts);
+			System.out.println(mm);
+			return "warning.jsp";
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			System.out.println("查询异常");
+		}
+		return null;
 	}
 
 	@RequestMapping(value = "/getLastAlerts")
 	public String getLastAlerts(HttpServletRequest request, ModelMap mm) {
-		Integer companyId = getCompanyIdOfCurrentUser(request);
-		List<Alert> alerts = null;
-		if (daoService.selectLastAlertsTimeByCompanyId(companyId) != null) {
-			alerts = daoService.selectLastAlertsTimeByCompanyId(companyId);
+		try {
+			Integer companyId = getCompanyIdOfCurrentUser(request);
+			List<Alert> alerts = null;
+			if (daoService.selectLastAlertsTimeByCompanyId(companyId) != null) {
+				alerts = daoService.selectLastAlertsTimeByCompanyId(companyId);
+			}
+			mm.addAttribute("alerts", alerts);
+			return "warning.jsp";
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			System.out.println("异常");
 		}
-		mm.addAttribute("alerts", alerts);
-		return "warning.jsp";
+		return null;
 	}
 
 	@RequestMapping(value = "/getAlertsByCompanyIdAndContainerIdLikely")
 	public String getAlertsLikely(HttpServletRequest request, ModelMap mm) {
-		Integer companyId = getCompanyIdOfCurrentUser(request);
-		String containerId = request.getParameter("containerId");
-		System.out.println(containerId);
-		Date now = new Date();
-		long longNow = DateUtil.getLongFromDate(now);
-		long beginTime = longNow - (4 * 24 * 60 * 60 * 1000);
-		Map<String, Object> map = new HashedMap();
-		map.put("containerId", containerId);
-		map.put("companyId", companyId);
-		map.put("beginTime", beginTime);
-		List<Alert> alerts = daoService
-				.getAlertsByCompanyIdAndContainerIdLikely(map);
-		mm.addAttribute("alerts", alerts);
-		return "warning.jsp";
+		try {
+			Integer companyId = getCompanyIdOfCurrentUser(request);
+			String containerId = request.getParameter("containerId");
+			System.out.println(containerId);
+			Date now = new Date();
+			long longNow = DateUtil.getLongFromDate(now);
+			long beginTime = longNow - (4 * 24 * 60 * 60 * 1000);
+			Map<String, Object> map = new HashedMap();
+			map.put("containerId", containerId);
+			map.put("companyId", companyId);
+			map.put("beginTime", beginTime);
+			List<Alert> alerts = daoService
+					.getAlertsByCompanyIdAndContainerIdLikely(map);
+			mm.addAttribute("alerts", alerts);
+			return "warning.jsp";
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			System.out.println("异常");
+		}
+		return null;
 	}
 
 	@RequestMapping(value = "/getAlertsByContainerIdAndAlertTypeLikely")
 	public String getAlertsByCompanyIdAndContainerIdAndAlertTypeLikely(
 			HttpServletRequest request, ModelMap mm) {
-		Integer companyId = getCompanyIdOfCurrentUser(request);
-		String containerId = request.getParameter("containerId");
-		String alertType = request.getParameter("alertType");
-		Date now = new Date();
-		long longNow = DateUtil.getLongFromDate(now);
-		long beginTime = longNow - (4 * 24 * 60 * 60 * 1000);
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("companyId", companyId);
-		map.put("alertType", alertType);
-		map.put("containerId", containerId);
-		map.put("beginTime", beginTime);
-		List<Alert> alerts = daoService
-				.getAlertsByCompanyIdAndContainerIdAndAlertTypeLikely(map);
-		mm.addAttribute("alerts", alerts);
-		return "warning.jsp";
+		try {
+			Integer companyId = getCompanyIdOfCurrentUser(request);
+			String containerId = request.getParameter("containerId");
+			String alertType = request.getParameter("alertType");
+			Date now = new Date();
+			long longNow = DateUtil.getLongFromDate(now);
+			long beginTime = longNow - (4 * 24 * 60 * 60 * 1000);
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("companyId", companyId);
+			map.put("alertType", alertType);
+			map.put("containerId", containerId);
+			map.put("beginTime", beginTime);
+			List<Alert> alerts = daoService
+					.getAlertsByCompanyIdAndContainerIdAndAlertTypeLikely(map);
+			mm.addAttribute("alerts", alerts);
+			return "warning.jsp";
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			System.out.println("异常");
+		}
+		return null;
 	}
 
 	// 根据告警类型，公司id，查询四天内的所有告警信息
 	@RequestMapping(value = "/getAlertsByAlertTypeLikely")
 	public String getAlertsByAlertTypeLikely(HttpServletRequest request,
 			ModelMap mm) {
-		Date now = new Date();
-		long longNow = DateUtil.getLongFromDate(now);
-		long beginTime = longNow - (4 * 24 * 60 * 60 * 1000);
+		try {
+			Date now = new Date();
+			long longNow = DateUtil.getLongFromDate(now);
+			long beginTime = longNow - (4 * 24 * 60 * 60 * 1000);
 
-		String alertType = request.getParameter("alertType");
-		Integer companyId = getCompanyIdOfCurrentUser(request);
+			String alertType = request.getParameter("alertType");
+			Integer companyId = getCompanyIdOfCurrentUser(request);
 
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("companyId", companyId);
-		map.put("beginTime", beginTime);
-		map.put("alertType", alertType);
-		List<Alert> alerts = daoService
-				.getAlertsByCompanyIdAndAlertTypeLikely(map);
-		mm.addAttribute("alerts", alerts);
-		return "warning.jsp";
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("companyId", companyId);
+			map.put("beginTime", beginTime);
+			map.put("alertType", alertType);
+			List<Alert> alerts = daoService
+					.getAlertsByCompanyIdAndAlertTypeLikely(map);
+			mm.addAttribute("alerts", alerts);
+			return "warning.jsp";
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			System.out.println("异常");
+		}
+		return null;
 	}
 
 	@RequestMapping(value = "/getMaxAlertIdByCompanyId")
 	@ResponseBody
 	public Integer getMaxAlertIdByCompanyId(HttpServletRequest request) {
 		// 这是本类的私有方法
-		Integer companyId = getCompanyIdOfCurrentUser(request);
-		Integer maxAlertId = daoService.getMaxAlertIdByCompanyId(companyId);
-		return maxAlertId;
+		try {
+			Integer companyId = getCompanyIdOfCurrentUser(request);
+			Integer maxAlertId = daoService.getMaxAlertIdByCompanyId(companyId);
+			return maxAlertId;
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	@RequestMapping(value = "/getCountOfNoReadedALertsByCompanyId")
 	@ResponseBody
 	public Integer getCountOfNoReadedAlertsByCompanyId(
 			HttpServletRequest request) {
-		Integer companyId = getCompanyIdOfCurrentUser(request);
+		try {
+			Integer companyId = getCompanyIdOfCurrentUser(request);
 
-		Date now = new Date();
-		long longNow = DateUtil.getLongFromDate(now);
-		long beginTime = longNow - (4 * 24 * 60 * 60 * 1000);
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("companyId", companyId);
-		map.put("beginTime", beginTime);
+			Date now = new Date();
+			long longNow = DateUtil.getLongFromDate(now);
+			long beginTime = longNow - (4 * 24 * 60 * 60 * 1000);
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("companyId", companyId);
+			map.put("beginTime", beginTime);
 
-		Integer count = daoService
-				.getCountOfNoReadedAlertsByCompanyIdAndbeginTime(map);
-		// Integer count =
-		// daoService.getCountOfNoReadedAlertsByCompanyId(companyId);
-		return count;
+			Integer count = daoService
+					.getCountOfNoReadedAlertsByCompanyIdAndbeginTime(map);
+			// Integer count =
+			// daoService.getCountOfNoReadedAlertsByCompanyId(companyId);
+			return count;
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			System.out.println("异常");
+		}
+		return null;
 	}
 
 	/**
@@ -270,18 +318,24 @@ public class AlertController {
 	@RequestMapping(value = "/getCountOfNoReadedALertsBeforeDays")
 	@ResponseBody
 	public Integer getCountOfNoReadedALertsBeforeDays(HttpServletRequest request) {
-		Integer companyId = getCompanyIdOfCurrentUser(request);
-		Date now = new Date();
-		long longNow = DateUtil.getLongFromDate(now);
-		long beginTime = longNow - (1 * 24 * 60 * 60 * 1000);
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("companyId", companyId);
-		map.put("beginTime", beginTime);
-		Integer count = null;
-		if (daoService.selectCountNoReadedBeforeSomeDays(map) != null) {
-			count = daoService.selectCountNoReadedBeforeSomeDays(map);
+		try {
+			Integer companyId = getCompanyIdOfCurrentUser(request);
+			Date now = new Date();
+			long longNow = DateUtil.getLongFromDate(now);
+			long beginTime = longNow - (1 * 24 * 60 * 60 * 1000);
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("companyId", companyId);
+			map.put("beginTime", beginTime);
+			Integer count = null;
+			if (daoService.selectCountNoReadedBeforeSomeDays(map) != null) {
+				count = daoService.selectCountNoReadedBeforeSomeDays(map);
+			}
+			return count;
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			System.out.println("异常");
 		}
-		return count;
+		return null;
 	}
 
 	/**
@@ -293,16 +347,22 @@ public class AlertController {
 	@RequestMapping(value = "/modifyAlertReadStateByAlertId")
 	@ResponseBody
 	public Alert modifyAlertReadStateByAlertId(HttpServletRequest request) {
-		String alertIdStr = request.getParameter("alertId");
-		int alertId = Integer.parseInt(alertIdStr);
-		Integer modify = daoService.modifyAlertReadStateToYesByAlertId(alertId);
-		Alert alert = daoService.getAlertById(alertId);
-		if (modify == 1) {
-			System.out.println("更新成功。。。");
-		} else {
-			System.out.println("更新失败。。。");
+		try {
+			String alertIdStr = request.getParameter("alertId");
+			int alertId = Integer.parseInt(alertIdStr.trim());
+			Integer modify = daoService.modifyAlertReadStateToYesByAlertId(alertId);
+			Alert alert = daoService.getAlertById(alertId);
+			if (modify == 1) {
+				System.out.println("更新成功。。。");
+			} else {
+				System.out.println("更新失败。。。");
+			}
+			return alert;
+		} catch (NumberFormatException e) {
+			// TODO Auto-generated catch block
+			System.out.println("异常");
 		}
-		return alert;
+		return null;
 	}
 
 	/**
@@ -319,35 +379,41 @@ public class AlertController {
 	public ListJsonUtils showAlertsInTwoTime(HttpServletRequest request,
 			@RequestParam String username, @RequestParam String selectTime)
 			throws ParseException {
-		Map<String, Object> map = new HashedMap();
-		String mess = "没有警告信息";
-		int flag = ConstantCode.ERROR;
-		User user = daoService.getUserByUsername(username);
-		List<Alert> alerts = null;
-		// 前台传入的查询时间
-		Date selectTime1 = DateUtil.getDateFromStr(selectTime,
-				"yyyy-MM-dd HH:mm:ss");
-		Date nowDate = DateUtil.getNowDate();
-		long start = DateUtil.getLongFromDate(nowDate);
-		long end = start - 24 * 60 * 60 * 1000;
+		try {
+			Map<String, Object> map = new HashedMap();
+			String mess = "没有警告信息";
+			int flag = ConstantCode.ERROR;
+			User user = daoService.getUserByUsername(username);
+			List<Alert> alerts = null;
+			// 前台传入的查询时间
+			Date selectTime1 = DateUtil.getDateFromStr(selectTime,
+					"yyyy-MM-dd HH:mm:ss");
+			Date nowDate = DateUtil.getNowDate();
+			long start = DateUtil.getLongFromDate(nowDate);
+			long end = start - 24 * 60 * 60 * 1000;
 
-		/*
-		 * Calendar calendar = new GregorianCalendar();
-		 * calendar.setTime(selectTime1); calendar.add(calendar.DATE, -1);
-		 * selectTime1 = calendar.getTime(); // 开始时间，---- 查询时间往前24小时 String
-		 * timeBefore24hour = DateUtil.getDateStr(selectTime1,
-		 * "yyyy-MM-dd HH:mm:ss");
-		 */
-		map.put("companyId", user.getCompanyId());
-		map.put("startTime", start);
-		map.put("endTime", end);
-		alerts = daoService.selectNewAlertInTwoTime(map);
-		if (alerts.size() > 0) {
-			mess = "警告！出现警告信息！";
-			flag = ConstantCode.SUCCESS;
+			/*
+			 * Calendar calendar = new GregorianCalendar();
+			 * calendar.setTime(selectTime1); calendar.add(calendar.DATE, -1);
+			 * selectTime1 = calendar.getTime(); // 开始时间，---- 查询时间往前24小时 String
+			 * timeBefore24hour = DateUtil.getDateStr(selectTime1,
+			 * "yyyy-MM-dd HH:mm:ss");
+			 */
+			map.put("companyId", user.getCompanyId());
+			map.put("startTime", start);
+			map.put("endTime", end);
+			alerts = daoService.selectNewAlertInTwoTime(map);
+			if (alerts.size() > 0) {
+				mess = "警告！出现警告信息！";
+				flag = ConstantCode.SUCCESS;
+			}
+
+			return new ListJsonUtils(flag, mess, alerts);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			System.out.println("异常");
 		}
-
-		return new ListJsonUtils(flag, mess, alerts);
+		return null;
 	}
 
 	/*
@@ -375,23 +441,29 @@ public class AlertController {
 	public String showAlertsInTwoTimeAndContainerId(HttpServletRequest request,
 			@RequestParam String startTime, @RequestParam String endTime,
 			@RequestParam String containerId, ModelMap mm) {
-		String mess = "";
-		Integer flag = ConstantCode.ERROR;
-		List<Alert> alerts = null;
-		Map<String, Object> map = new HashMap<String, Object>();
-		long longStart = DateUtil.getLongFromStr(startTime,
-				"yyyy-MM-dd HH:mm:ss");
-		long longEnd = DateUtil.getLongFromStr(endTime, "yyyy-MM-dd HH:mm:ss");
-		map.put("containerId", containerId);
-		map.put("startTime", longStart);
-		map.put("endTime", longEnd);
-		if (daoService.selectShowAlertInTwoTime(map).size() > 0) {
-			alerts = daoService.selectShowAlertInTwoTime(map);
-			mess = "查询到警告信息";
-			flag = ConstantCode.SUCCESS;
+		try {
+			String mess = "";
+			Integer flag = ConstantCode.ERROR;
+			List<Alert> alerts = null;
+			Map<String, Object> map = new HashMap<String, Object>();
+			long longStart = DateUtil.getLongFromStr(startTime,
+					"yyyy-MM-dd HH:mm:ss");
+			long longEnd = DateUtil.getLongFromStr(endTime, "yyyy-MM-dd HH:mm:ss");
+			map.put("containerId", containerId);
+			map.put("startTime", longStart);
+			map.put("endTime", longEnd);
+			if (daoService.selectShowAlertInTwoTime(map).size() > 0) {
+				alerts = daoService.selectShowAlertInTwoTime(map);
+				mess = "查询到警告信息";
+				flag = ConstantCode.SUCCESS;
+			}
+			mm.addAttribute("alerts", alerts);
+			return "showSelectWarning.jsp";
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			System.out.println("异常");
 		}
-		mm.addAttribute("alerts", alerts);
-		return "showSelectWarning.jsp";
+		return null;
 	}
 	
 	/**
@@ -402,92 +474,77 @@ public class AlertController {
 	@RequestMapping(value = "/showThreeKindOfWarning")
 	public String showThreeKindOfWarning(HttpServletRequest request,
 			@RequestParam String searchAlert, ModelMap mm) throws UnsupportedEncodingException {
-		searchAlert = new String(searchAlert.getBytes("ISO-8859-1"),"UTF-8");
-		String readed;
-		String buMenM;
-		Integer alarm_num;
-		String mess = "";
-		Integer flag = ConstantCode.ERROR;
-		List<Alert> alerts = null;
-		Map<String, Object> map = new HashMap<String, Object>();
-		if(searchAlert.equals("已读") || searchAlert.equals("未读")){
-			if(searchAlert.equals("已读")){
-				searchAlert="yes";
+		try {
+			searchAlert = new String(searchAlert.getBytes("ISO-8859-1"),"UTF-8");
+			String readed;
+			String buMenM;
+			Integer alarm_num;
+			String mess = "";
+			Integer flag = ConstantCode.ERROR;
+			List<Alert> alerts = null;
+			Map<String, Object> map = new HashMap<String, Object>();
+			if(searchAlert.equals("已读") || searchAlert.equals("未读")){
+				if(searchAlert.equals("已读")){
+					searchAlert="yes";
+				}else{
+					searchAlert="no";
+				}
+				readed=searchAlert;
+				map.put("readed", readed);
+				if (daoService.selectShowReaded(map).size() > 0) {
+					alerts = daoService.selectShowReaded(map);
+					mess = "查询到警告信息";
+					flag = ConstantCode.SUCCESS;
+				}
+			}else if(searchAlert.equals("班列") || searchAlert.equals("冷链")){
+				buMenM=searchAlert;
+				map.put("buMenM", buMenM);
+				if (daoService.selectShowBuMenM(map).size() > 0) {
+					alerts = daoService.selectShowBuMenM(map);
+					mess = "查询到警告信息";
+					flag = ConstantCode.SUCCESS;
+				}
 			}else{
-				searchAlert="no";
+				alarm_num=Integer.valueOf(searchAlert);
+				map.put("alarm_num", alarm_num);
+				if (daoService.selectShowAlarmNum(map).size() > 0) {
+					alerts = daoService.selectShowAlarmNum(map);
+					mess = "查询到警告信息";
+					flag = ConstantCode.SUCCESS;
+				}
 			}
-			readed=searchAlert;
-			map.put("readed", readed);
-			if (daoService.selectShowReaded(map).size() > 0) {
-				alerts = daoService.selectShowReaded(map);
-				mess = "查询到警告信息";
-				flag = ConstantCode.SUCCESS;
-			}
-		}else if(searchAlert.equals("班列") || searchAlert.equals("冷链")){
-			buMenM=searchAlert;
-			map.put("buMenM", buMenM);
-			if (daoService.selectShowBuMenM(map).size() > 0) {
-				alerts = daoService.selectShowBuMenM(map);
-				mess = "查询到警告信息";
-				flag = ConstantCode.SUCCESS;
-			}
-		}else{
-			alarm_num=Integer.valueOf(searchAlert);
-			map.put("alarm_num", alarm_num);
-			if (daoService.selectShowAlarmNum(map).size() > 0) {
-				alerts = daoService.selectShowAlarmNum(map);
-				mess = "查询到警告信息";
-				flag = ConstantCode.SUCCESS;
-			}
+			mm.addAttribute("alerts", alerts);
+			return "showSelectWarning.jsp";
+		} catch (NumberFormatException e) {
+			// TODO Auto-generated catch block
+			System.out.println("异常");
 		}
-		mm.addAttribute("alerts", alerts);
-		return "showSelectWarning.jsp";
+		return null;
 	}
 	
-	/*@RequestMapping(value = "/showBuMenM")
-	public String showBuMenM(HttpServletRequest request,
-			@RequestParam String buMenM, ModelMap mm) {
-		String mess = "";
-		Integer flag = ConstantCode.ERROR;
-		List<Alert> alerts = null;
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("buMenM", buMenM);
-		if (daoService.selectShowBuMenM(map).size() > 0) {
-			alerts = daoService.selectShowBuMenM(map);
-			mess = "查询到警告信息";
-			flag = ConstantCode.SUCCESS;
-		}
-		mm.addAttribute("alerts", alerts);
-		return "showSelectWarning.jsp";
-	}
-	
-	@RequestMapping(value = "/showAlarmNum")
-	public String showAlarmNum(HttpServletRequest request,
-			@RequestParam Integer alarm_num, ModelMap mm) {
-		String mess = "";
-		Integer flag = ConstantCode.ERROR;
-		List<Alert> alerts = null;
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("alarm_num", alarm_num);
-		if (daoService.selectShowAlarmNum(map).size() > 0) {
-			alerts = daoService.selectShowAlarmNum(map);
-			mess = "查询到警告信息";
-			flag = ConstantCode.SUCCESS;
-		}
-		mm.addAttribute("alerts", alerts);
-		return "showSelectWarning.jsp";
-	}*/
 
 	private User getCurrentUser(HttpServletRequest request) {
-		HttpSession session = request.getSession();
-		User user = (User) session.getAttribute("user");
-		return user;
+		try {
+			HttpSession session = request.getSession();
+			User user = (User) session.getAttribute("user");
+			return user;
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			System.out.println("异常");
+		}
+		return null;
 	}
 
 	private Integer getCompanyIdOfCurrentUser(HttpServletRequest request) {
-		User user = getCurrentUser(request);
-		Integer companyId = user.getCompanyId();
-		return companyId;
+		try {
+			User user = getCurrentUser(request);
+			Integer companyId = user.getCompanyId();
+			return companyId;
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			System.out.println("异常");
+		}
+		return null;
 	}
 
 }

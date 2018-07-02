@@ -43,23 +43,29 @@ public class TrackController {
 	
 	@ResponseBody
 	public List<OurCcdata> getTrackDatasByContainerIdJson(HttpServletRequest request){
-		String containerId = request.getParameter("containerId");
-		String startTime = request.getParameter("startTime");
-		String endTime = request.getParameter("endTime");
-		long start = DateUtil.getLongFromStr(startTime,"yyyy-MM-dd HH:mm:ss");
-		System.out.println("longStart----------------"+start);
-		long end = DateUtil.getLongFromStr(endTime,"yyyy-MM-dd HH:mm:ss");
-		System.out.println("longEnd------------------"+end);
-		Map<String,Object>map = new HashMap<String,Object>();
-		map.put("containerId",containerId);
-		map.put("start",start);
-		map.put("end",end);
-		List<OurCcdata> ourCcdatas = daoService.selectOurCcdatasByContainerIdBetweenTowTimeASC(map);
-		
-		if(ourCcdatas==null||ourCcdatas.size()==0){
-			return null;
+		try {
+			String containerId = request.getParameter("containerId");
+			String startTime = request.getParameter("startTime");
+			String endTime = request.getParameter("endTime");
+			long start = DateUtil.getLongFromStr(startTime,"yyyy-MM-dd HH:mm:ss");
+			System.out.println("longStart----------------"+start);
+			long end = DateUtil.getLongFromStr(endTime,"yyyy-MM-dd HH:mm:ss");
+			System.out.println("longEnd------------------"+end);
+			Map<String,Object>map = new HashMap<String,Object>();
+			map.put("containerId",containerId);
+			map.put("start",start);
+			map.put("end",end);
+			List<OurCcdata> ourCcdatas = daoService.selectOurCcdatasByContainerIdBetweenTowTimeASC(map);
+			
+			if(ourCcdatas==null||ourCcdatas.size()==0){
+				return null;
+			}
+			return ourCcdatas;
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			System.out.println("异常");
 		}
-		return ourCcdatas;
+		return null;
 	}
 	
 	
@@ -70,61 +76,73 @@ public class TrackController {
 	 */
 	@RequestMapping(value="/getTrackDatasByContainerIdPage")
 	public String getTrackDatasByContainerIdPage(HttpServletRequest request,ModelMap mmp){
-		String containerId = request.getParameter("containerId");
-		String startTime = request.getParameter("startTime");
-		String endTime = request.getParameter("endTime");
-		long start = DateUtil.getLongFromStr(startTime,"yyyy-MM-dd HH:mm:ss");
-		System.out.println("longStart----------------"+start);
-		long end = DateUtil.getLongFromStr(endTime,"yyyy-MM-dd HH:mm:ss");
-		System.out.println("longEnd------------------"+end);
-		Map<String,Object>map = new HashMap<String,Object>();
-		map.put("containerId",containerId);
-		map.put("start",start);
-		map.put("end",end);
-		List<OurCcdata> ourCcdatas = daoService.selectOurCcdatasByContainerIdBetweenTowTimeASC(map);
-		mmp.put("ourCcdatas", ourCcdatas);
-		return "showContainsLocationByIdAndPartTime.jsp";
+		try {
+			String containerId = request.getParameter("containerId");
+			String startTime = request.getParameter("startTime");
+			String endTime = request.getParameter("endTime");
+			long start = DateUtil.getLongFromStr(startTime,"yyyy-MM-dd HH:mm:ss");
+			System.out.println("longStart----------------"+start);
+			long end = DateUtil.getLongFromStr(endTime,"yyyy-MM-dd HH:mm:ss");
+			System.out.println("longEnd------------------"+end);
+			Map<String,Object>map = new HashMap<String,Object>();
+			map.put("containerId",containerId);
+			map.put("start",start);
+			map.put("end",end);
+			List<OurCcdata> ourCcdatas = daoService.selectOurCcdatasByContainerIdBetweenTowTimeASC(map);
+			mmp.put("ourCcdatas", ourCcdatas);
+			return "showContainsLocationByIdAndPartTime.jsp";
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			System.out.println("异常");
+		}
+		return null;
 	}
 	
 	
 	@RequestMapping(value="/getTrackDatasByContainerId")
 	@ResponseBody
 	public List<TrackData> getTrackDatasByContainerId(HttpServletRequest request){
-		String containerId = request.getParameter("containerId");
-		String startTime = request.getParameter("startTime");
-		String endTime = request.getParameter("endTime");
-		long start = DateUtil.getLongFromStr(startTime,"yyyy-MM-dd HH:mm:ss");
-		System.out.println("longStart----------------"+start);
-		long end = DateUtil.getLongFromStr(endTime,"yyyy-MM-dd HH:mm:ss");
-		System.out.println("longEnd------------------"+end);
-		Map<String,Object>map = new HashMap<String,Object>();
-		map.put("containerId",containerId);
-		map.put("start",start);
-		map.put("end",end);
-		List<OurCcdata> ourCcdatas = daoService.selectOurCcdatasByContainerIdBetweenTowTimeASC(map);
-		if(ourCcdatas==null||ourCcdatas.size()==0){
-			return new ArrayList<TrackData>();
-		}
-		System.out.println(ourCcdatas);
-		List<TrackData> trackDatas = new ArrayList<TrackData>();
-		OurCcdata temp = ourCcdatas.get(0);
-//		Ccdata temp = ccdatas.get(0);
-		BindTable bindTable = daoService.getBindTableByContainerId(temp.getContainerId());
-		String trainId = bindTable.getTrainId();
-		for (int i = 0; i < ourCcdatas.size(); i++) {
-			if(ourCcdatas.get(i).getLat() != null && ourCcdatas.get(i).getLon() != null){
-				TrackData trackData = new TrackData();
-				trackData.setLat(ourCcdatas.get(i).getLat());
-				trackData.setLon(ourCcdatas.get(i).getLon());
-				trackData.setGpsTime(ourCcdatas.get(i).getNowTime());
-				trackData.setContainerId(ourCcdatas.get(i).getContainerId());
-				trackData.setTrainId(trainId);
-				trackDatas.add(trackData);
-			}else{
-				i++;
+		try {
+			String containerId = request.getParameter("containerId");
+			String startTime = request.getParameter("startTime");
+			String endTime = request.getParameter("endTime");
+			long start = DateUtil.getLongFromStr(startTime,"yyyy-MM-dd HH:mm:ss");
+			System.out.println("longStart----------------"+start);
+			long end = DateUtil.getLongFromStr(endTime,"yyyy-MM-dd HH:mm:ss");
+			System.out.println("longEnd------------------"+end);
+			Map<String,Object>map = new HashMap<String,Object>();
+			map.put("containerId",containerId);
+			map.put("start",start);
+			map.put("end",end);
+			List<OurCcdata> ourCcdatas = daoService.selectOurCcdatasByContainerIdBetweenTowTimeASC(map);
+			if(ourCcdatas==null||ourCcdatas.size()==0){
+				return new ArrayList<TrackData>();
 			}
+			System.out.println(ourCcdatas);
+			List<TrackData> trackDatas = new ArrayList<TrackData>();
+			OurCcdata temp = ourCcdatas.get(0);
+//		Ccdata temp = ccdatas.get(0);
+			BindTable bindTable = daoService.getBindTableByContainerId(temp.getContainerId());
+			String trainId = bindTable.getTrainId();
+			for (int i = 0; i < ourCcdatas.size(); i++) {
+				if(ourCcdatas.get(i).getLat() != null && ourCcdatas.get(i).getLon() != null){
+					TrackData trackData = new TrackData();
+					trackData.setLat(ourCcdatas.get(i).getLat());
+					trackData.setLon(ourCcdatas.get(i).getLon());
+					trackData.setGpsTime(ourCcdatas.get(i).getNowTime());
+					trackData.setContainerId(ourCcdatas.get(i).getContainerId());
+					trackData.setTrainId(trainId);
+					trackDatas.add(trackData);
+				}else{
+					i++;
+				}
+			}
+			return trackDatas;
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			System.out.println("异常");
 		}
-		return trackDatas;
+		return null;
 	}
 	
 	

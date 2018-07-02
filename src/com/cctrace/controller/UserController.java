@@ -35,15 +35,21 @@ public class UserController {
 	@RequestMapping(value = "/registNewUser")
 	@ResponseBody
 	public String registNewUser(User user) {
-		System.out.println(user);
-		String message = "";
-		int regist = daoService.registNewUser(user);
-		if (1 == regist) {
-			message += "{\"code\":\"200\"}";
-		} else {
-			message += "{\"code\":\"400\"}";
+		try {
+			System.out.println(user);
+			String message = "";
+			int regist = daoService.registNewUser(user);
+			if (1 == regist) {
+				message += "{\"code\":\"200\"}";
+			} else {
+				message += "{\"code\":\"400\"}";
+			}
+			return message;
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			System.out.println("异常");
 		}
-		return message;
+		return null;
 	}
 
 	/**
@@ -56,49 +62,55 @@ public class UserController {
 	public JsonResult<User> userLogin(HttpServletRequest request,
 			HttpServletResponse response, @RequestParam String username,
 			@RequestParam String password, @RequestParam String ifCheck) {
-		String mess = "";
-		int flag = ConstantCode.ERROR;
-		Map<String, String> map = new HashMap<String, String>();
-		map.put("username", username);
-		map.put("password", DataUtil.md5(password));
-		String lastLoginTime = DateUtil.getDateStr(new Date(),
-				"yyyy-MM-dd HH:mm:ss");
-		User user = daoService.getUserByUsernameAndPassword(map);
+		try {
+			String mess = "";
+			int flag = ConstantCode.ERROR;
+			Map<String, String> map = new HashMap<String, String>();
+			map.put("username", username);
+			map.put("password", DataUtil.md5(password));
+			String lastLoginTime = DateUtil.getDateStr(new Date(),
+					"yyyy-MM-dd HH:mm:ss");
+			User user = daoService.getUserByUsernameAndPassword(map);
 
-		if (user == null) {
-			mess = "输入信息有误，请重新登录";
-		} else {
-			user.setLastLoginTime(lastLoginTime);
-			user.setPassword(DataUtil.md5(password));
-			int modify = daoService.modifyUserInfoById(user);
-			System.out.println(modify);
-			mess = "登录成功";
-			System.out.println(ifCheck);
-			Cookie nameCookie = new Cookie("username", username);
-			Cookie pswCookie = new Cookie("password", password);
-			// 设置Cookie的父路径
-			nameCookie.setPath(request.getContextPath() + "/");
-			pswCookie.setPath(request.getContextPath() + "/");
-			// 获取是否保存Cookie
-			if (ifCheck.equals("no") || ifCheck == null) {// 不保存Cookie
-				// Cookies
-				nameCookie.setMaxAge(0);
-				pswCookie.setMaxAge(0);
-			} else {// 保存Cookie的时间长度，单位为秒
-				nameCookie.setMaxAge(7 * 24 * 60 * 60);
-				pswCookie.setMaxAge(7 * 24 * 60 * 60);
+			if (user == null) {
+				mess = "输入信息有误，请重新登录";
+			} else {
+				user.setLastLoginTime(lastLoginTime);
+				user.setPassword(DataUtil.md5(password));
+				int modify = daoService.modifyUserInfoById(user);
+				System.out.println(modify);
+				mess = "登录成功";
+				System.out.println(ifCheck);
+				Cookie nameCookie = new Cookie("username", username);
+				Cookie pswCookie = new Cookie("password", password);
+				// 设置Cookie的父路径
+				nameCookie.setPath(request.getContextPath() + "/");
+				pswCookie.setPath(request.getContextPath() + "/");
+				// 获取是否保存Cookie
+				if (ifCheck.equals("no") || ifCheck == null) {// 不保存Cookie
+					// Cookies
+					nameCookie.setMaxAge(0);
+					pswCookie.setMaxAge(0);
+				} else {// 保存Cookie的时间长度，单位为秒
+					nameCookie.setMaxAge(7 * 24 * 60 * 60);
+					pswCookie.setMaxAge(7 * 24 * 60 * 60);
+				}
+				// 加入Cookie到响应头
+				response.addCookie(nameCookie);
+				response.addCookie(pswCookie);
+
+				// 建立会话
+				request.getSession().setAttribute("user", user);
+				flag = ConstantCode.SUCCESS;
 			}
-			// 加入Cookie到响应头
-			response.addCookie(nameCookie);
-			response.addCookie(pswCookie);
+			// 验证码验证
 
-			// 建立会话
-			request.getSession().setAttribute("user", user);
-			flag = ConstantCode.SUCCESS;
+			return new JsonResult<User>(flag, mess, user);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			System.out.println("用户登录异常");
 		}
-		// 验证码验证
-
-		return new JsonResult<User>(flag, mess, user);
+		return null;
 	}
 
 	/*	*//**
@@ -156,64 +168,70 @@ public class UserController {
 	public JsonResult<User> userRegist(HttpServletRequest request,
 			HttpServletResponse response, User user,
 			@RequestParam(value = "passwordc") String passwordc) {
-		String mess = "";
-		int flag = ConstantCode.ERROR;
-		Map<String, String> map = new HashMap<String, String>();
-		map.put("username", user.getUsername());
-		map.put("password", DataUtil.md5(user.getPassword()));
-		String lastLoginTime = DateUtil.getDateStr(new Date(),
-				"yyyy-MM-dd HH:mm:ss");
-		System.out.println(map);
-		// 1.非空
-		if (!ValidateUtil.isValid(user.getUsername())) {
-			mess = "用户名不能为空！";
-			return new JsonResult<User>(flag, mess, user);
-		}
-		if (!ValidateUtil.isValid(user.getPassword())) {
-			mess = "密码不能为空！";
-			return new JsonResult<User>(flag, mess, user);
-		}
-		if (!ValidateUtil.isValid(passwordc)) {
-			mess = "确认密码不能为空！";
-			return new JsonResult<User>(flag, mess, user);
-		}
-		if (!ValidateUtil.isValid(user.getPhone())) {
-			mess = "电话不能为空！";
-			return new JsonResult<User>(flag, mess, user);
-		}
+		try {
+			String mess = "";
+			int flag = ConstantCode.ERROR;
+			Map<String, String> map = new HashMap<String, String>();
+			map.put("username", user.getUsername());
+			map.put("password", DataUtil.md5(user.getPassword()));
+			String lastLoginTime = DateUtil.getDateStr(new Date(),
+					"yyyy-MM-dd HH:mm:ss");
+			System.out.println(map);
+			// 1.非空
+			if (!ValidateUtil.isValid(user.getUsername())) {
+				mess = "用户名不能为空！";
+				return new JsonResult<User>(flag, mess, user);
+			}
+			if (!ValidateUtil.isValid(user.getPassword())) {
+				mess = "密码不能为空！";
+				return new JsonResult<User>(flag, mess, user);
+			}
+			if (!ValidateUtil.isValid(passwordc)) {
+				mess = "确认密码不能为空！";
+				return new JsonResult<User>(flag, mess, user);
+			}
+			if (!ValidateUtil.isValid(user.getPhone())) {
+				mess = "电话不能为空！";
+				return new JsonResult<User>(flag, mess, user);
+			}
 
-		// 2.密码一致性
-		if (!user.getPassword().equals(passwordc)) {
-			mess = "密码不一致！";
-			return new JsonResult<User>(flag, mess, user);
+			// 2.密码一致性
+			if (!user.getPassword().equals(passwordc)) {
+				mess = "密码不一致！";
+				return new JsonResult<User>(flag, mess, user);
 
-		}
+			}
 
-		// 3.用户名占用
+			// 3.用户名占用
 
-		if (daoService.getUserByUsername(user.getUsername()) != null) {
-			mess = "用户名已占用,请重新输入!";
-			return new JsonResult<User>(flag, mess, user);
-		} else {
-			// 电话已被占用
-			if (daoService.getUserByPhone(user.getPhone()) != null) {
-				mess = "电话已被占用!";
+			if (daoService.getUserByUsername(user.getUsername()) != null) {
+				mess = "用户名已占用,请重新输入!";
 				return new JsonResult<User>(flag, mess, user);
 			} else {
-				User getUser = (User) request.getSession().getAttribute("user");
-				user.setAddPerson(getUser.getUsername());
-				user.setCompanyId(getUser.getCompanyId());
-				user.setCompanyName(getUser.getCompanyName());
-				user.setLastLoginTime(lastLoginTime);
-				// MD5加密
-				user.setPassword(DataUtil.md5(user.getPassword()));
-				mess = "注册成功";
-				flag = ConstantCode.SUCCESS;
-				daoService.registNewUser(user);
+				// 电话已被占用
+				if (daoService.getUserByPhone(user.getPhone()) != null) {
+					mess = "电话已被占用!";
+					return new JsonResult<User>(flag, mess, user);
+				} else {
+					User getUser = (User) request.getSession().getAttribute("user");
+					user.setAddPerson(getUser.getUsername());
+					user.setCompanyId(getUser.getCompanyId());
+					user.setCompanyName(getUser.getCompanyName());
+					user.setLastLoginTime(lastLoginTime);
+					// MD5加密
+					user.setPassword(DataUtil.md5(user.getPassword()));
+					mess = "注册成功";
+					flag = ConstantCode.SUCCESS;
+					daoService.registNewUser(user);
+				}
 			}
-		}
 
-		return new JsonResult<User>(flag, mess, user);
+			return new JsonResult<User>(flag, mess, user);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			System.out.println("用户注册异常");
+		}
+		return null;
 	}
 
 	/**
@@ -224,11 +242,17 @@ public class UserController {
 	@RequestMapping("/findUser")
 	public String findUser(HttpServletRequest request, ModelMap map) {
 
-		List<User> userList = daoService.getUsersByCompanyId(((User) request
-				.getSession().getAttribute("user")).getCompanyId());
-		map.addAttribute("userList", userList);
+		try {
+			List<User> userList = daoService.getUsersByCompanyId(((User) request
+					.getSession().getAttribute("user")).getCompanyId());
+			map.addAttribute("userList", userList);
 
-		return "user.jsp";
+			return "user.jsp";
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			System.out.println("用户查询异常");
+		}
+		return null;
 
 	}
 
@@ -239,9 +263,15 @@ public class UserController {
 	@RequestMapping("/selectUserLikey")
 	public String selectUserLikey(HttpServletRequest request, String username,
 			ModelMap mapp) {
-		List<User> userListLikey = daoService.selectUsersLikey(username);
-		mapp.addAttribute("userListLikey", userListLikey);
-		return "showSelectUseLikey.jsp";
+		try {
+			List<User> userListLikey = daoService.selectUsersLikey(username);
+			mapp.addAttribute("userListLikey", userListLikey);
+			return "showSelectUseLikey.jsp";
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			System.out.println("用户模糊查询异常");
+		}
+		return null;
 	}
 
 	/**
@@ -252,35 +282,41 @@ public class UserController {
 	public JsonResult<User> userUpdatewithPhone(HttpServletRequest request,
 			HttpServletResponse response, User user, String username, String id) {
 
-		user.setId(Integer.parseInt(id));
-		user.setUsername(username);
+		try {
+			user.setId(Integer.parseInt(id));
+			user.setUsername(username);
 
-		String mess = "";
-		int flag = ConstantCode.ERROR;
-		String lastLoginTime = DateUtil.getDateStr(new Date(),
-				"yyyy-MM-dd HH:mm:ss");
+			String mess = "";
+			int flag = ConstantCode.ERROR;
+			String lastLoginTime = DateUtil.getDateStr(new Date(),
+					"yyyy-MM-dd HH:mm:ss");
 
-		// 1.非空
-		if (!ValidateUtil.isValid(user.getPhone())) {
-			mess = "电话不能为空！";
+			// 1.非空
+			if (!ValidateUtil.isValid(user.getPhone())) {
+				mess = "电话不能为空！";
+				return new JsonResult<User>(flag, mess, user);
+			}
+			// 2.电话占用
+			if (daoService.getUserByPhone(user.getPhone()) != null) {
+				mess = "已经存在";
+				return new JsonResult<User>(flag, mess, user);
+			} else {
+
+				daoService.getUserByUsername(username).setLastLoginTime(
+						lastLoginTime);
+				daoService.getUserByUsername(username).setPhone(user.getPhone());
+				daoService.modifyUserInfoById(daoService
+						.getUserByUsername(username));
+				mess = "修改成功";
+				System.out.println(user);
+				flag = ConstantCode.SUCCESS;
+			}
 			return new JsonResult<User>(flag, mess, user);
+		} catch (NumberFormatException e) {
+			// TODO Auto-generated catch block
+			System.out.println("用户电话更新异常");
 		}
-		// 2.电话占用
-		if (daoService.getUserByPhone(user.getPhone()) != null) {
-			mess = "已经存在";
-			return new JsonResult<User>(flag, mess, user);
-		} else {
-
-			daoService.getUserByUsername(username).setLastLoginTime(
-					lastLoginTime);
-			daoService.getUserByUsername(username).setPhone(user.getPhone());
-			daoService.modifyUserInfoById(daoService
-					.getUserByUsername(username));
-			mess = "修改成功";
-			System.out.println(user);
-			flag = ConstantCode.SUCCESS;
-		}
-		return new JsonResult<User>(flag, mess, user);
+		return null;
 	}
 
 	/**
@@ -291,37 +327,43 @@ public class UserController {
 	public JsonResult<User> userUpdatewithPassword(HttpServletRequest request,
 			HttpServletResponse response, User user, String username,
 			String password, String passwordc) {
-		String mess = "";
-		int flag = ConstantCode.ERROR;
-		String lastLoginTime = DateUtil.getDateStr(new Date(),
-				"yyyy-MM-dd HH:mm:ss");
-		// 1.非空
-		if (!ValidateUtil.isValid(password)) {
-			mess = "密码不能为空！";
-			return new JsonResult<User>(flag, mess, user);
-		}
-		if (!ValidateUtil.isValid(passwordc)) {
-			mess = "确认密码不能为空！";
-			return new JsonResult<User>(flag, mess, user);
-		}
-		// 2.密码一致性
-		if (!password.equals(passwordc)) {
-			mess = "密码不一致！";
-			return new JsonResult<User>(flag, mess, user);
+		try {
+			String mess = "";
+			int flag = ConstantCode.ERROR;
+			String lastLoginTime = DateUtil.getDateStr(new Date(),
+					"yyyy-MM-dd HH:mm:ss");
+			// 1.非空
+			if (!ValidateUtil.isValid(password)) {
+				mess = "密码不能为空！";
+				return new JsonResult<User>(flag, mess, user);
+			}
+			if (!ValidateUtil.isValid(passwordc)) {
+				mess = "确认密码不能为空！";
+				return new JsonResult<User>(flag, mess, user);
+			}
+			// 2.密码一致性
+			if (!password.equals(passwordc)) {
+				mess = "密码不一致！";
+				return new JsonResult<User>(flag, mess, user);
 
-		} else {
+			} else {
 
-			daoService.getUserByUsername(username).setLastLoginTime(
-					lastLoginTime);
-			daoService.getUserByUsername(username).setPassword(
-					DataUtil.md5(password));
-			daoService.modifyUserInfoById(daoService
-					.getUserByUsername(username));
-			mess = "修改成功";
-			System.out.println(user);
-			flag = ConstantCode.SUCCESS;
+				daoService.getUserByUsername(username).setLastLoginTime(
+						lastLoginTime);
+				daoService.getUserByUsername(username).setPassword(
+						DataUtil.md5(password));
+				daoService.modifyUserInfoById(daoService
+						.getUserByUsername(username));
+				mess = "修改成功";
+				System.out.println(user);
+				flag = ConstantCode.SUCCESS;
+			}
+			return new JsonResult<User>(flag, mess, user);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			System.out.println("用户密码更新异常");
 		}
-		return new JsonResult<User>(flag, mess, user);
+		return null;
 	}
 
 	/**
@@ -333,31 +375,37 @@ public class UserController {
 			HttpServletResponse response, User user, String username,
 			String role) {
 
-		System.out.println("+++++" + role);
-		String mess = "";
-		int flag = ConstantCode.ERROR;
-		String lastLoginTime = DateUtil.getDateStr(new Date(),
-				"yyyy-MM-dd HH:mm:ss");
-		// 1.非空
-		if (!ValidateUtil.isValid(role)) {
-			mess = "角色不能为空！";
-			return new JsonResult<User>(flag, mess, user);
-		} else {
-			if ("1".equals(role)) {
-				role = "admin";
+		try {
+			System.out.println("+++++" + role);
+			String mess = "";
+			int flag = ConstantCode.ERROR;
+			String lastLoginTime = DateUtil.getDateStr(new Date(),
+					"yyyy-MM-dd HH:mm:ss");
+			// 1.非空
+			if (!ValidateUtil.isValid(role)) {
+				mess = "角色不能为空！";
+				return new JsonResult<User>(flag, mess, user);
 			} else {
-				role = "common";
+				if ("1".equals(role)) {
+					role = "admin";
+				} else {
+					role = "common";
+				}
+				daoService.getUserByUsername(username).setLastLoginTime(
+						lastLoginTime);
+				daoService.getUserByUsername(username).setRole(role);
+				daoService.modifyUserInfoById(daoService
+						.getUserByUsername(username));
+				mess = "修改成功";
+				System.out.println(user);
+				flag = ConstantCode.SUCCESS;
 			}
-			daoService.getUserByUsername(username).setLastLoginTime(
-					lastLoginTime);
-			daoService.getUserByUsername(username).setRole(role);
-			daoService.modifyUserInfoById(daoService
-					.getUserByUsername(username));
-			mess = "修改成功";
-			System.out.println(user);
-			flag = ConstantCode.SUCCESS;
+			return new JsonResult<User>(flag, mess, user);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			System.out.println("用户角色更新异常");
 		}
-		return new JsonResult<User>(flag, mess, user);
+		return null;
 	}
 
 	/**
@@ -368,13 +416,19 @@ public class UserController {
 	public JsonResult<User> xhzDelete(HttpServletRequest request, User user,
 			String id) {
 
-		String mess = "删除成功";
-		int flag = ConstantCode.SUCCESS;
-		user = (User) request.getSession().getAttribute("user");
-		user.setCompanyId(user.getCompanyId());
-		// 删除user
-		daoService.removeUserById(Integer.parseInt(id));
-		return new JsonResult<User>(flag, mess, user);
+		try {
+			String mess = "删除成功";
+			int flag = ConstantCode.SUCCESS;
+			user = (User) request.getSession().getAttribute("user");
+			user.setCompanyId(user.getCompanyId());
+			// 删除user
+			daoService.removeUserById(Integer.parseInt(id));
+			return new JsonResult<User>(flag, mess, user);
+		} catch (NumberFormatException e) {
+			// TODO Auto-generated catch block
+			System.out.println("删除用户异常");
+		}
+		return null;
 	}
 
 	/**

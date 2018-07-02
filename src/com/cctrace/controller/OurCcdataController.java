@@ -31,15 +31,21 @@ public class OurCcdataController {
 	@RequestMapping(value="/addOurCcdata")
 	public  String  addOurCcdata(HttpServletRequest request,HttpServletResponse response,
 			OurCcdata ourccdata){
-		//User user=(User)request.getSession().getAttribute("user");
-		//ccdata.setCompanyId(user.getCompanyId());
+		try {
+			//User user=(User)request.getSession().getAttribute("user");
+			//ccdata.setCompanyId(user.getCompanyId());
 //		long gpsLongTime = DateUtil.getLongFromStr(ourccdata.getGpsTime(), "yyyy-MM-dd HH:mm:ss");
-		long receiveLongTime = DateUtil.getLongFromStr(ourccdata.getReceiveTime(), "yyyy-MM-dd HH:mm:ss");
+			long receiveLongTime = DateUtil.getLongFromStr(ourccdata.getReceiveTime(), "yyyy-MM-dd HH:mm:ss");
 //		ourccdata.setGpsLongTime(gpsLongTime);
-		ourccdata.setReceiveLongTime(receiveLongTime);
-		daoService.addOurOneNewCcdata(ourccdata);
-		
-		return  "addOurCcdata.jsp";
+			ourccdata.setReceiveLongTime(receiveLongTime);
+			daoService.addOurOneNewCcdata(ourccdata);
+			
+			return  "addOurCcdata.jsp";
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			System.out.println("新增冷藏箱数据异常");
+		}
+		return null;
 	}
 	/**
 	 * 测试地图解析的数据是否能传入

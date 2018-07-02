@@ -41,7 +41,13 @@ public class DateUtil {
 	 * @return
 	 */
 	public static long getLongFromDate(Date date){
-		long time = date.getTime();
+		long time = 0;
+		try {
+			time = date.getTime();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return time;
 	}
 	

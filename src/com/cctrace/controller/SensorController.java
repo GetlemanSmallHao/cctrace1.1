@@ -51,65 +51,71 @@ public class SensorController {
 	@ResponseBody
 	public Msg findIndexSensorWithJson(HttpServletRequest request,
 			String containerId) {
-		System.out.println(containerId);
-		User user = (User) request.getSession().getAttribute("user");
-		if (user.getRole().equalsIgnoreCase("common")) {
+		try {
+			System.out.println(containerId);
+			User user = (User) request.getSession().getAttribute("user");
+			if (user.getRole().equalsIgnoreCase("common")) {
 
-		}
-		Ccdata1 lastCcdata = daoService.selectCcdataByContainerId1(containerId);
-		List<Ccdata1> ccdatas = new ArrayList<Ccdata1>();
-		ccdatas.add(lastCcdata);
+			}
+			Ccdata1 lastCcdata = daoService.selectCcdataByContainerId1(containerId);
+			List<Ccdata1> ccdatas = new ArrayList<Ccdata1>();
+			ccdatas.add(lastCcdata);
 /*		Ccdata lastCcdata = daoService.getLastCcdataByContainerId(containerId);
-		List<Ccdata> ccdatas = new ArrayList<Ccdata>();
-		ccdatas.add(lastCcdata);
+			List<Ccdata> ccdatas = new ArrayList<Ccdata>();
+			ccdatas.add(lastCcdata);
 */
-		BindTable bindTable = null;
-		Container container = null;
-		bindTable = daoService.getBindTableByContainerId(containerId);
-		container = daoService.getContainerBycontarinId(containerId);
-		List<Map<String, Object>> maps = new ArrayList<Map<String, Object>>();
-		Map<String, Object> map = new HashMap<String, Object>();
-		for (int i = 0; i < ccdatas.size(); i++) {
-			System.out.println(ccdatas.size());
+			BindTable bindTable = null;
+			Container container = null;
+			bindTable = daoService.getBindTableByContainerId(containerId);
+			container = daoService.getContainerBycontarinId(containerId);
+			List<Map<String, Object>> maps = new ArrayList<Map<String, Object>>();
+			Map<String, Object> map = new HashMap<String, Object>();
+			for (int i = 0; i < ccdatas.size(); i++) {
+				System.out.println(ccdatas.size());
 
-			String routeType;
-			String trainId;
-			String carGoType;
-			int theNextStationId;
-			int yardId;
-			Double backWindTemp;
-			Double setTemp;
+				String routeType;
+				String trainId;
+				String carGoType;
+				int theNextStationId;
+				int yardId;
+				Double backWindTemp;
+				Double setTemp;
 
-			if (null != bindTable.getRouteType()) {
-				routeType = bindTable.getRouteType();
-			} else {
-				routeType = "";
+				if (null != bindTable.getRouteType()) {
+					routeType = bindTable.getRouteType();
+				} else {
+					routeType = "";
+				}
+				if (null != bindTable.getTrainId()) {
+					trainId = bindTable.getTrainId();
+				} else {
+					trainId = "";
+				}
+				if (null != bindTable.getCarGoType()) {
+					carGoType = bindTable.getCarGoType();
+				} else {
+					carGoType = "";
+				}
+				OurCcdata1 ourccdata = null;
+				ourccdata = daoService.selectOurCcdataBycontainerId1(ccdatas.get(i).getContainerId());
+				map.put("ccdata", ccdatas.get(i));
+				map.put("ourccdata", ourccdata);
+				map.put("trainId", trainId);
+				map.put("theNextStationId", bindTable.getTheNextStationId());
+				map.put("carGoType", carGoType);
+				map.put("routeType", routeType);
+				map.put("backWindTemp", ccdatas.get(i).getBackWindTemp());
+				map.put("setTemp", ccdatas.get(i).getTempSet());
+				map.put("refSwiState", ccdatas.get(i).getRefSwiState());
+				maps.add(map);
 			}
-			if (null != bindTable.getTrainId()) {
-				trainId = bindTable.getTrainId();
-			} else {
-				trainId = "";
-			}
-			if (null != bindTable.getCarGoType()) {
-				carGoType = bindTable.getCarGoType();
-			} else {
-				carGoType = "";
-			}
-			OurCcdata1 ourccdata = null;
-			ourccdata = daoService.selectOurCcdataBycontainerId1(ccdatas.get(i).getContainerId());
-			map.put("ccdata", ccdatas.get(i));
-			map.put("ourccdata", ourccdata);
-			map.put("trainId", trainId);
-			map.put("theNextStationId", bindTable.getTheNextStationId());
-			map.put("carGoType", carGoType);
-			map.put("routeType", routeType);
-			map.put("backWindTemp", ccdatas.get(i).getBackWindTemp());
-			map.put("setTemp", ccdatas.get(i).getTempSet());
-			map.put("refSwiState", ccdatas.get(i).getRefSwiState());
-			maps.add(map);
+
+			return Msg.success().add("maps", maps);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			System.out.println("异常");
 		}
-
-		return Msg.success().add("maps", maps);
+		return null;
 
 	}
 
@@ -395,86 +401,92 @@ public class SensorController {
 			String containerId, String startTime, String endTime,
 			@RequestParam(value = "pn", defaultValue = "1") Integer pn) {
 
-		long startLongTime = DateUtil.getLongFromStr(startTime,
-				"yyyy-MM-dd HH:mm:ss");
-		long endLongTime = DateUtil.getLongFromStr(endTime,
-				"yyyy-MM-dd HH:mm:ss");
+		try {
+			long startLongTime = DateUtil.getLongFromStr(startTime,
+					"yyyy-MM-dd HH:mm:ss");
+			long endLongTime = DateUtil.getLongFromStr(endTime,
+					"yyyy-MM-dd HH:mm:ss");
 
-		Map<String, Object> mapp = new HashMap<String, Object>();
-		mapp.put("containerId", containerId);
-		mapp.put("start", startLongTime);
-		mapp.put("end", endLongTime);
-		/*List<Ccdata> ccdatas1 = daoService
-				.getCcdatasByContainerIdBetweenTowTime(mapp);*/
+			Map<String, Object> mapp = new HashMap<String, Object>();
+			mapp.put("containerId", containerId);
+			mapp.put("start", startLongTime);
+			mapp.put("end", endLongTime);
+			/*List<Ccdata> ccdatas1 = daoService
+					.getCcdatasByContainerIdBetweenTowTime(mapp);*/
 //		System.out.println(ccdatas1.size());
 //		System.out.println(ccdatas1.size() % 25);
-	/*	Integer totalPage = null;
-		if(ccdatas1.size() > 0){
-			totalPage = ccdatas1.size() % 25 == 0 ? ccdatas1.size() / 25
-						: ccdatas1.size() / 25 + 1;
-		}else{
-			totalPage = 1;
-		}
-			*/	
+/*	Integer totalPage = null;
+			if(ccdatas1.size() > 0){
+				totalPage = ccdatas1.size() % 25 == 0 ? ccdatas1.size() / 25
+							: ccdatas1.size() / 25 + 1;
+			}else{
+				totalPage = 1;
+			}
+				*/	
 
-		// 在查询之前只需要调用，传入页码，以及每页的大小
-		PageHelper.startPage(pn, 39);
+			// 在查询之前只需要调用，传入页码，以及每页的大小
+			PageHelper.startPage(pn, 39);
 //		List<Ccdata> ccdatas = ccdatas1;
 
-		List<Ccdata> ccdatas = daoService
-				.getCcdatasByContainerIdBetweenTowTime(mapp);
-		// 封装了详细的分页信息,包括有我们查询出来的数据，传入连续显示的页数
-		PageInfo pageCcdata = new PageInfo(ccdatas, 5);
+			List<Ccdata> ccdatas = daoService
+					.getCcdatasByContainerIdBetweenTowTime(mapp);
+			// 封装了详细的分页信息,包括有我们查询出来的数据，传入连续显示的页数
+			PageInfo pageCcdata = new PageInfo(ccdatas, 5);
 //		BindTable bindTable = null;
 //		Container container = null;
 //		bindTable = daoService.getBindTableByContainerId(containerId);
 //		container = daoService.getContainerBycontarinId(containerId);
-		//List<Map<String, Object>> maps = new ArrayList<Map<String, Object>>();
-		/*Map<String, Object> page = new HashMap<>();
-		page.put("pageNow", pn);
-		page.put("totalPage", totalPage);
+			//List<Map<String, Object>> maps = new ArrayList<Map<String, Object>>();
+			/*Map<String, Object> page = new HashMap<>();
+			page.put("pageNow", pn);
+			page.put("totalPage", totalPage);
 */
-		/*Map<String, Object> map = new HashMap<String, Object>();
-		for (int i = 0; i < ccdatas.size(); i++) {
-			System.out.println("1111" + ccdatas.get(i).getTailBoxTemp());
-			String routeType;
-			String trainId;
-			String carGoType;
-			int theNextStationId;
-			int yardId;
-			Double backWindTemp;
-			Double oilLevel;
-			Double setTemp;
+			/*Map<String, Object> map = new HashMap<String, Object>();
+			for (int i = 0; i < ccdatas.size(); i++) {
+				System.out.println("1111" + ccdatas.get(i).getTailBoxTemp());
+				String routeType;
+				String trainId;
+				String carGoType;
+				int theNextStationId;
+				int yardId;
+				Double backWindTemp;
+				Double oilLevel;
+				Double setTemp;
 
-			if (null != bindTable.getRouteType()) {
-				routeType = bindTable.getRouteType();
-			} else {
-				routeType = "";
-			}
-			if (null != bindTable.getTrainId()) {
-				trainId = bindTable.getTrainId();
-			} else {
-				trainId = "";
-			}
-			if (null != bindTable.getCarGoType()) {
-				carGoType = bindTable.getCarGoType();
-			} else {
-				carGoType = "";
-			}
-			map = new HashMap<String, Object>();
-			map.clear();
-			map.put("ccdata", pageCcdata.getList().get(i));
+				if (null != bindTable.getRouteType()) {
+					routeType = bindTable.getRouteType();
+				} else {
+					routeType = "";
+				}
+				if (null != bindTable.getTrainId()) {
+					trainId = bindTable.getTrainId();
+				} else {
+					trainId = "";
+				}
+				if (null != bindTable.getCarGoType()) {
+					carGoType = bindTable.getCarGoType();
+				} else {
+					carGoType = "";
+				}
+				map = new HashMap<String, Object>();
+				map.clear();
+				map.put("ccdata", pageCcdata.getList().get(i));
 //			map.put("ccdata", ccdatas.get(i));
 //			map.put("oilLevel", ccdatas.get(i).getOilLevel());
 //			map.put("trainId", trainId);
 //			map.put("theNextStationId", bindTable.getTheNextStationId());
 //			map.put("carGoType", carGoType);
 //			map.put("routeType", routeType);
-			map.put("setTemp", ccdatas.get(i).getTempSet());
-			maps.add(map);
-		}*/
+				map.put("setTemp", ccdatas.get(i).getTempSet());
+				maps.add(map);
+			}*/
 
-		return Msg.success().add("page", pageCcdata);
+			return Msg.success().add("page", pageCcdata);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			System.out.println("异常");
+		}
+		return null;
 	}
 
 	/**
@@ -489,49 +501,55 @@ public class SensorController {
 			String containerId, String startTime, String endTime,
 			@RequestParam(value = "pn", defaultValue = "1") Integer pn) {
 
-		long startLongTime = DateUtil.getLongFromStr(startTime,
-				"yyyy-MM-dd HH:mm:ss");
-		long endLongTime = DateUtil.getLongFromStr(endTime,
-				"yyyy-MM-dd HH:mm:ss");
+		try {
+			long startLongTime = DateUtil.getLongFromStr(startTime,
+					"yyyy-MM-dd HH:mm:ss");
+			long endLongTime = DateUtil.getLongFromStr(endTime,
+					"yyyy-MM-dd HH:mm:ss");
 
-		Map<String, Object> mapp = new HashMap<String, Object>();
-		mapp.put("containerId", containerId);
-		mapp.put("start", startLongTime);
-		mapp.put("end", endLongTime);
+			Map<String, Object> mapp = new HashMap<String, Object>();
+			mapp.put("containerId", containerId);
+			mapp.put("start", startLongTime);
+			mapp.put("end", endLongTime);
 /*		List<OurCcdata> ourccdatas1 = daoService
-				.getOurCcdatasByContainerIdBetweenTowTime(mapp);
-		Integer totalPage = null;
-		if(ourccdatas1.size() > 0){
-			totalPage = ourccdatas1.size() % 25 == 0 ? ourccdatas1.size() / 25
-					    : ourccdatas1.size() / 25 + 1;
-		}else{
-			totalPage = 1;
-		}
-		Map<String, Object> page = new HashMap<>();
-		page.put("pageNow", pn);
-		page.put("totalPage", totalPage);*/
-		// 在查询之前只需要调用，传入页码，以及每页的大小
-		PageHelper.startPage(pn, 39);
+					.getOurCcdatasByContainerIdBetweenTowTime(mapp);
+			Integer totalPage = null;
+			if(ourccdatas1.size() > 0){
+				totalPage = ourccdatas1.size() % 25 == 0 ? ourccdatas1.size() / 25
+						    : ourccdatas1.size() / 25 + 1;
+			}else{
+				totalPage = 1;
+			}
+			Map<String, Object> page = new HashMap<>();
+			page.put("pageNow", pn);
+			page.put("totalPage", totalPage);*/
+			// 在查询之前只需要调用，传入页码，以及每页的大小
+			PageHelper.startPage(pn, 39);
 //		List<OurCcdata> ourccdatas = ourccdatas1;
-		List<OurCcdata> ourccdatas = daoService
-				.getOurCcdatasByContainerIdBetweenTowTime(mapp);
-		PageInfo pageOurCcdata = new PageInfo(ourccdatas, 5);
+			List<OurCcdata> ourccdatas = daoService
+					.getOurCcdatasByContainerIdBetweenTowTime(mapp);
+			PageInfo pageOurCcdata = new PageInfo(ourccdatas, 5);
 
-		/*List<Map<String, Object>> maps = new ArrayList<Map<String, Object>>();
-		Map<String, Object> map = new HashMap<String, Object>();
+			/*List<Map<String, Object>> maps = new ArrayList<Map<String, Object>>();
+			Map<String, Object> map = new HashMap<String, Object>();
 
-		for (int i = 0; i < ourccdatas.size(); i++) {
-			map = new HashMap<String, Object>();
-			map.clear();
-			map.put("ourccdata", pageOurCcdata.getList().get(i));
-			// map.put("ourccdata", ourccdatas.get(i));
-			maps.add(map);
-		}
+			for (int i = 0; i < ourccdatas.size(); i++) {
+				map = new HashMap<String, Object>();
+				map.clear();
+				map.put("ourccdata", pageOurCcdata.getList().get(i));
+				// map.put("ourccdata", ourccdatas.get(i));
+				maps.add(map);
+			}
 */
 //		for (int i = 0; i < maps.size(); i++) {
 //			System.out.println(maps.get(i));
 //		}
-		return Msg.success().add("page", pageOurCcdata);
+			return Msg.success().add("page", pageOurCcdata);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			System.out.println("异常");
+		}
+		return null;
 	}
 
 	/**
@@ -638,13 +656,19 @@ public class SensorController {
 	@RequestMapping("/selectContainersLikeyInPCSersor")
 	public String selectContainersLikeyInPCSersor(HttpServletRequest request,
 			String containerId, ModelMap mmp) {
-		User user = (User) request.getSession().getAttribute("user");
-		Map<String, Object> map = new HashMap<>();
-		map.put("companyId", user.getCompanyId());
-		map.put("containerId", containerId);
-		List<Ccdata1> ccdatas = daoService.selectIndexContainerIdLikey(map);
-		mmp.addAttribute("ccdatas", ccdatas);
-		return "showContainersInPCSensor.jsp";
+		try {
+			User user = (User) request.getSession().getAttribute("user");
+			Map<String, Object> map = new HashMap<>();
+			map.put("companyId", user.getCompanyId());
+			map.put("containerId", containerId);
+			List<Ccdata1> ccdatas = daoService.selectIndexContainerIdLikey(map);
+			mmp.addAttribute("ccdatas", ccdatas);
+			return "showContainersInPCSensor.jsp";
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			System.out.println("模糊查询报告异常");
+		}
+		return null;
 	}
 	/**
 	 * 导入jackson包。

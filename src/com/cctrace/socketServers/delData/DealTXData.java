@@ -21,85 +21,99 @@ public class DealTXData {
 	}
 
 	public int dealTXData(String txData, String sevNum) {
-		Long currentLongTime = System.currentTimeMillis();
-		DealDateData dealDateData = new DealDateData();
-		String alertStrFormatNowDate = dealDateData
-				.getStringDate(currentLongTime);
-		ErrorData errorData = new ErrorData();
-		errorData.setContent(txData);
-		errorData.setReceiveTime(alertStrFormatNowDate);
-		errorData.setReceiveLongTime("" + currentLongTime);
-		errorData.setType(sevNum);
-		daoService.insertErrorData(errorData);
-		int returndata = 0;
-		return returndata;
+		try {
+			Long currentLongTime = System.currentTimeMillis();
+			DealDateData dealDateData = new DealDateData();
+			String alertStrFormatNowDate = dealDateData
+					.getStringDate(currentLongTime);
+			ErrorData errorData = new ErrorData();
+			errorData.setContent(txData);
+			errorData.setReceiveTime(alertStrFormatNowDate);
+			errorData.setReceiveLongTime("" + currentLongTime);
+			errorData.setType(sevNum);
+			daoService.insertErrorData(errorData);
+			int returndata = 0;
+			return returndata;
+		} catch (Exception e) {
+			System.out.println("接受数据异常！");
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return 0;
 	}
 
 	public String commandStore(String data, String sevNum) {
 
-		Container cn = daoService.selectContainerByDeviceId(sevNum);
-		if (cn == null) {
-			return null;
-		}
-		String containerId = cn.getContainerId();
-		CommandStore cs = daoService.selectCommandStoreDesc(containerId);
-		Ccdata1 cc = daoService.selectLastCcdataByContainerId1(containerId);
-		String command = cs.getCommand();
-		String display = cs.getDisplay();
-		String value = cs.getValue();
-		String status = cs.getStatus();
-		if (cs == null) {
-			return null;
-		}
-		String data1 = data.substring(2, 4);
-		String data2 = data.substring(4, 6);
+		try {
+			Container cn = daoService.selectContainerByDeviceId(sevNum);
+			if (cn == null) {
+				return null;
+			}
+			String containerId = cn.getContainerId();
+			CommandStore cs = daoService.selectCommandStoreDesc(containerId);
+			Ccdata1 cc = daoService.selectLastCcdataByContainerId1(containerId);
+			String command = cs.getCommand();
+			String display = cs.getDisplay();
+			String value = cs.getValue();
+			String status = cs.getStatus();
+			if (cs == null) {
+				return null;
+			}
+			String data1 = data.substring(2, 4);
+			String data2 = data.substring(4, 6);
 
-		if(status != "Y"){
-			if (data1.equals("CD") && data2.equals("00")
-					&& command.equals("remoteSwiMac")) {
-				cc.setRefSwiState(value);
-				daoService.updateCcdataById1(cc);
-			} else if (data1.equals("CE") && data2.equals("00")
-					&& command.equals("refRunMode")) {
-				cc.setRefRunMode(value);
-				daoService.updateCcdataById1(cc);
-	
-			} else if (data1.equals("CE") && data2.equals("00")
-					&& command.equals("temSet")) {
-				Double val = Double.parseDouble(value);
-				cc.setTempSet(val);
-				daoService.updateCcdataById1(cc);
-			} else if (data1.equals("CE") && data2.equals("00")
-					&& command.equals("clearAlert")) {
-				Map<String, Object> map = new HashMap<String, Object>();
-				map.put("containerId", cn.getContainerId());
-				map.put("startTime", System.currentTimeMillis()
-						- (24 * 60 * 60 * 1000));
-				map.put("endTime", System.currentTimeMillis());
-				List<Alert> listA = daoService.selectAllAlertOnByContainerId(map);
-				if (listA != null) {
-					for (int i = 0; i < listA.size(); i++) {
-						listA.get(i).setReaded("yes");
-						daoService.updateAlertById(listA.get(i));
+			if(status != "Y"){
+				if (data1.equals("CD") && data2.equals("00")
+						&& command.equals("remoteSwiMac")) {
+					cc.setRefSwiState(value);
+					daoService.updateCcdataById1(cc);
+				} else if (data1.equals("CE") && data2.equals("00")
+						&& command.equals("refRunMode")) {
+					cc.setRefRunMode(value);
+					daoService.updateCcdataById1(cc);
+
+				} else if (data1.equals("CE") && data2.equals("00")
+						&& command.equals("temSet")) {
+					Double val = Double.parseDouble(value);
+					cc.setTempSet(val);
+					daoService.updateCcdataById1(cc);
+				} else if (data1.equals("CE") && data2.equals("00")
+						&& command.equals("clearAlert")) {
+					Map<String, Object> map = new HashMap<String, Object>();
+					map.put("containerId", cn.getContainerId());
+					map.put("startTime", System.currentTimeMillis()
+							- (24 * 60 * 60 * 1000));
+					map.put("endTime", System.currentTimeMillis());
+					List<Alert> listA = daoService.selectAllAlertOnByContainerId(map);
+					if (listA != null) {
+						for (int i = 0; i < listA.size(); i++) {
+							listA.get(i).setReaded("yes");
+							daoService.updateAlertById(listA.get(i));
+						}
 					}
+
 				}
-	
-			}
-	
-			if (data2.equals("00")) {
-				cs.setStatus("Y");
-				cs.setDisplay(value);
-				daoService.updateCommandStoreById(cs);
-			} else {
-				if (cs.getStatus().equals("Y")) {
-	
-				} else {
-					cs.setStatus("N");
-					// cs.setDisplay(value);
+
+				if (data2.equals("00")) {
+					cs.setStatus("Y");
+					cs.setDisplay(value);
 					daoService.updateCommandStoreById(cs);
+				} else {
+					if (cs.getStatus().equals("Y")) {
+
+					} else {
+						cs.setStatus("N");
+						// cs.setDisplay(value);
+						daoService.updateCommandStoreById(cs);
+					}
+
 				}
-	
 			}
+			return null;
+		} catch (NumberFormatException e) {
+			System.out.println("控制命令处理异常!");
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		return null;
 

@@ -88,7 +88,7 @@
 				</div>
 				<!--<img class="con__loading" src="img/loading.gif" alt=""/>-->
 			</div>
-			<div class="con__modal">
+			<!-- <div class="con__modal">
 				<div class="con__modal--wrap">
 					<span> 集装箱编号：<input type="text" readonly unselectable="on" />
 					</span> <span> 班列ID：<input type="text" />
@@ -100,7 +100,7 @@
 						<button class="con__modal--cancel rt">取 消</button>
 					</span>
 				</div>
-			</div>
+			</div> -->
 			</main>
 		</div>
 	</div>

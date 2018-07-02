@@ -38,18 +38,24 @@ public class GeomessageController {
 	@ResponseBody
 	public Integer getCountOfNoReadedGeomessageBeforeDays(
 			HttpServletRequest request) {
-		Integer companyId = getCompanyIdOfCurrentUser(request);
-		Date now = new Date();
-		long longNow = DateUtil.getLongFromDate(now);
-		long beginTime = longNow - (1 * 24 * 60 * 60 * 1000);
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("companyId", companyId);
-		map.put("beginTime", beginTime);
-		Integer count = null;
-		if (daoService.getCountOfNoReadedGeomessageBeforeDays(map) != null) {
-			count = daoService.getCountOfNoReadedGeomessageBeforeDays(map);
+		try {
+			Integer companyId = getCompanyIdOfCurrentUser(request);
+			Date now = new Date();
+			long longNow = DateUtil.getLongFromDate(now);
+			long beginTime = longNow - (1 * 24 * 60 * 60 * 1000);
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("companyId", companyId);
+			map.put("beginTime", beginTime);
+			Integer count = null;
+			if (daoService.getCountOfNoReadedGeomessageBeforeDays(map) != null) {
+				count = daoService.getCountOfNoReadedGeomessageBeforeDays(map);
+			}
+			return count;
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			System.out.println("异常");
 		}
-		return count;
+		return null;
 	}
 
 	/**
@@ -60,19 +66,25 @@ public class GeomessageController {
 	 */
 	@RequestMapping(value = "/getRecentOneDaysGeoAlerts")
 	public String getRecentOneDaysAlerts(HttpServletRequest request, ModelMap mm) {
-		Integer companyId = getCompanyIdOfCurrentUser(request);
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("companyId", companyId);
-		Date now = new Date();
-		long longNow = DateUtil.getLongFromDate(now);
-		long beginTime = longNow - (1 * 24 * 60 * 60 * 1000);
-		map.put("beginTime", beginTime);
-		List<Geomessage> geomessages = daoService
-				.getAlertsByCompanyIdInOneDays(map);
+		try {
+			Integer companyId = getCompanyIdOfCurrentUser(request);
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("companyId", companyId);
+			Date now = new Date();
+			long longNow = DateUtil.getLongFromDate(now);
+			long beginTime = longNow - (1 * 24 * 60 * 60 * 1000);
+			map.put("beginTime", beginTime);
+			List<Geomessage> geomessages = daoService
+					.getAlertsByCompanyIdInOneDays(map);
 
-		mm.addAttribute("geomessages", geomessages);
-		System.out.println(mm);
-		return "warningGeo.jsp";
+			mm.addAttribute("geomessages", geomessages);
+			System.out.println(mm);
+			return "warningGeo.jsp";
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			System.out.println("查看明细页面异常");
+		}
+		return null;
 	}
 
 	/**
@@ -89,23 +101,29 @@ public class GeomessageController {
 	public String selectShowGeomessageInTwoTime(HttpServletRequest request,
 			@RequestParam String startTime, @RequestParam String endTime,
 			@RequestParam String containerId, ModelMap mm) {
-		String mess = "";
-		Integer flag = ConstantCode.ERROR;
-		List<Alert> alerts = null;
-		Map<String, Object> map = new HashMap<String, Object>();
-		long longStart = DateUtil.getLongFromStr(startTime,
-				"yyyy-MM-dd HH:mm:ss");
-		long longEnd = DateUtil.getLongFromStr(endTime, "yyyy-MM-dd HH:mm:ss");
-		map.put("containerId", containerId);
-		map.put("startTime", longStart);
-		map.put("endTime", longEnd);
-		if (daoService.selectShowAlertInTwoTime(map).size() > 0) {
-			alerts = daoService.selectShowAlertInTwoTime(map);
-			mess = "查询到警告信息";
-			flag = ConstantCode.SUCCESS;
+		try {
+			String mess = "";
+			Integer flag = ConstantCode.ERROR;
+			List<Alert> alerts = null;
+			Map<String, Object> map = new HashMap<String, Object>();
+			long longStart = DateUtil.getLongFromStr(startTime,
+					"yyyy-MM-dd HH:mm:ss");
+			long longEnd = DateUtil.getLongFromStr(endTime, "yyyy-MM-dd HH:mm:ss");
+			map.put("containerId", containerId);
+			map.put("startTime", longStart);
+			map.put("endTime", longEnd);
+			if (daoService.selectShowAlertInTwoTime(map).size() > 0) {
+				alerts = daoService.selectShowAlertInTwoTime(map);
+				mess = "查询到警告信息";
+				flag = ConstantCode.SUCCESS;
+			}
+			mm.addAttribute("alerts", alerts);
+			return "showGeomessageSelectWarning.jsp";
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			System.out.println("查询围栏通知异常");
 		}
-		mm.addAttribute("alerts", alerts);
-		return "showGeomessageSelectWarning.jsp";
+		return null;
 	}
 
 	/**
@@ -119,39 +137,45 @@ public class GeomessageController {
 			HttpServletRequest request, @RequestParam String startTime,
 			@RequestParam String endTime, @RequestParam String containerId,
 			ModelMap mm) {
-		String mess = "";
-		Integer flag = ConstantCode.ERROR;
-		List<Geomessage> messages = null;
-		Map<String, Object> map = new HashMap<String, Object>();
-		long longStart = 0L;
-		if (null != startTime && !"".equals(startTime)) {
-			longStart = DateUtil.getLongFromStr(startTime,
-					"yyyy-MM-dd HH:mm:ss");
-		}
-		long longEnd = 0L;
-		if (null != endTime && !"".equals(endTime)) {
-			longEnd = DateUtil.getLongFromStr(endTime, "yyyy-MM-dd HH:mm:ss");
-		}
+		try {
+			String mess = "";
+			Integer flag = ConstantCode.ERROR;
+			List<Geomessage> messages = null;
+			Map<String, Object> map = new HashMap<String, Object>();
+			long longStart = 0L;
+			if (null != startTime && !"".equals(startTime)) {
+				longStart = DateUtil.getLongFromStr(startTime,
+						"yyyy-MM-dd HH:mm:ss");
+			}
+			long longEnd = 0L;
+			if (null != endTime && !"".equals(endTime)) {
+				longEnd = DateUtil.getLongFromStr(endTime, "yyyy-MM-dd HH:mm:ss");
+			}
 
-		map.put("containerId", containerId);
-		if (longStart == 0) {
-			map.put("startTime", null);
-		} else {
-			map.put("startTime", longStart);
-		}
-		if (longEnd == 0) {
-			map.put("endTime", null);
-		} else {
-			map.put("endTime", longEnd);
-		}
+			map.put("containerId", containerId);
+			if (longStart == 0) {
+				map.put("startTime", null);
+			} else {
+				map.put("startTime", longStart);
+			}
+			if (longEnd == 0) {
+				map.put("endTime", null);
+			} else {
+				map.put("endTime", longEnd);
+			}
 
-		if (daoService.showGeomessagetsInTwoTimeAndContainerId(map).size() > 0) {
-			messages = daoService.showGeomessagetsInTwoTimeAndContainerId(map);
-			mess = "查询到警告信息";
-			flag = ConstantCode.SUCCESS;
+			if (daoService.showGeomessagetsInTwoTimeAndContainerId(map).size() > 0) {
+				messages = daoService.showGeomessagetsInTwoTimeAndContainerId(map);
+				mess = "查询到警告信息";
+				flag = ConstantCode.SUCCESS;
+			}
+			mm.addAttribute("messages", messages);
+			return "showSelectGeomessage.jsp";
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			System.out.println("查询冷藏箱异常");
 		}
-		mm.addAttribute("messages", messages);
-		return "showSelectGeomessage.jsp";
+		return null;
 	}
 
 	/**
@@ -164,28 +188,46 @@ public class GeomessageController {
 	@ResponseBody
 	public Geomessage modifyAlertReadStateByGeomessagetId(
 			HttpServletRequest request) {
-		String alertIdStr = request.getParameter("alertId");
-		int alertId = Integer.parseInt(alertIdStr);
-		Integer modify = daoService
-				.modifyAlertReadStateByGeomessagetId(alertId);
-		Geomessage alert = daoService.getGeoMessageById(alertId);
-		if (modify == 1) {
-			System.out.println("更新成功。。。");
-		} else {
-			System.out.println("更新失败。。。");
+		try {
+			String alertIdStr = request.getParameter("alertId");
+			int alertId = Integer.parseInt(alertIdStr);
+			Integer modify = daoService
+					.modifyAlertReadStateByGeomessagetId(alertId);
+			Geomessage alert = daoService.getGeoMessageById(alertId);
+			if (modify == 1) {
+				System.out.println("更新成功。。。");
+			} else {
+				System.out.println("更新失败。。。");
+			}
+			return alert;
+		} catch (NumberFormatException e) {
+			// TODO Auto-generated catch block
+			System.out.println("更新消息异常");
 		}
-		return alert;
+		return null;
 	}
 
 	private User getCurrentUser(HttpServletRequest request) {
-		HttpSession session = request.getSession();
-		User user = (User) session.getAttribute("user");
-		return user;
+		try {
+			HttpSession session = request.getSession();
+			User user = (User) session.getAttribute("user");
+			return user;
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			System.out.println("异常");
+		}
+		return null;
 	}
 
 	private Integer getCompanyIdOfCurrentUser(HttpServletRequest request) {
-		User user = getCurrentUser(request);
-		Integer companyId = user.getCompanyId();
-		return companyId;
+		try {
+			User user = getCurrentUser(request);
+			Integer companyId = user.getCompanyId();
+			return companyId;
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			System.out.println("异常");
+		}
+		return null;
 	}
 }

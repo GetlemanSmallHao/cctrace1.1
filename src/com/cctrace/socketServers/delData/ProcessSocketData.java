@@ -176,264 +176,133 @@ public class ProcessSocketData implements Runnable {
 	}
 
 	public static Map<String, Object> dataResponse(Map<String, String> mapSet) {
-		String dev = mapSet.get("dev");// 设备号
-		String conId = mapSet.get("num");// 设备号
-		String type = mapSet.get("type");// 设定类型：command冷藏箱的控制指令，temp温度设定
-		String data = mapSet.get("data");// 参数：如开机，关机，温度的度数等
-		String chillerType = mapSet.get("chillerType");
-		Socket socket1 = map.get(dev);
-		String message = "请求失败，稍后重试！";
-		Map<String, Object> pmap = new HashMap<String, Object>();
-		int flag = ConstantCode.ERROR;
-		/*
-		 * if (socket1 == null) { pmap.put("object", null); pmap.put("msg",
-		 * message); pmap.put("flag", "" + flag); return pmap; }
-		 */
-		String returnVal = null;
-		Map returnMap = new HashMap();
-		if (type.equals("command")) {
-			Command cmd = new Command();
-			returnMap = cmd.method(data, dev, conId, chillerType);
-			if (returnMap != null) {
-				returnVal = (String) returnMap.get("commandSet");
+		try {
+			String dev = mapSet.get("dev");// 设备号
+			String conId = mapSet.get("num");// 设备号
+			String type = mapSet.get("type");// 设定类型：command冷藏箱的控制指令，temp温度设定
+			String data = mapSet.get("data");// 参数：如开机，关机，温度的度数等
+			String chillerType = mapSet.get("chillerType");
+			Socket socket1 = map.get(dev);
+			String message = "请求失败，稍后重试！";
+			Map<String, Object> pmap = new HashMap<String, Object>();
+			int flag = ConstantCode.ERROR;
+			/*
+			 * if (socket1 == null) { pmap.put("object", null); pmap.put("msg",
+			 * message); pmap.put("flag", "" + flag); return pmap; }
+			 */
+			String returnVal = null;
+			Map returnMap = new HashMap();
+			if (type.equals("command")) {
+				Command cmd = new Command();
+				returnMap = cmd.method(data, dev, conId, chillerType);
+				if (returnMap != null) {
+					returnVal = (String) returnMap.get("commandSet");
+				}
 			}
-		}
-		if (type.equals("temp")) {
-			if ("thermoking".equals(chillerType)) {
-				TempSet tem = new TempSet();
-				returnMap = tem.tempSet(data, dev, conId);
-			} else if ("carrier".equals(chillerType)) {
-				CarryTemset carryTemSet = new CarryTemset();
-				returnMap = carryTemSet.tempSet(data, dev, conId);
+			if (type.equals("temp")) {
+				if ("thermoking".equals(chillerType)) {
+					TempSet tem = new TempSet();
+					returnMap = tem.tempSet(data, dev, conId);
+				} else if ("carrier".equals(chillerType)) {
+					CarryTemset carryTemSet = new CarryTemset();
+					returnMap = carryTemSet.tempSet(data, dev, conId);
+				}
+				if (returnMap != null) {
+					returnVal = (String) returnMap.get("key");
+				}
 			}
-			if (returnMap != null) {
-				returnVal = (String) returnMap.get("key");
+			if (type.equals("cfm")) {
+				if ("carrier".equals(chillerType)) {
+					CarryTemset carryTemSet = new CarryTemset();
+					returnMap = carryTemSet.cfmSet(data, dev, conId);
+				} else if ("thermoking".equals(chillerType)) {
+					message="请求失败，该机型不支持该方式！";
+					returnMap = null;
+				}
+				if (returnMap != null) {
+					returnVal = (String) returnMap.get("key");
+				}
 			}
-		}
-		if (type.equals("cfm")) {
-			if ("carrier".equals(chillerType)) {
-				CarryTemset carryTemSet = new CarryTemset();
-				returnMap = carryTemSet.cfmSet(data, dev, conId);
-			} else if ("thermoking".equals(chillerType)) {
-				message="请求失败，该机型不支持该方式！";
-				returnMap = null;
-			}
-			if (returnMap != null) {
-				returnVal = (String) returnMap.get("key");
-			}
-		}
-		if (socket1 != null && StringUtil.isNotEmpty(returnVal)) {
-			try {
-				OutputStream os = socket1.getOutputStream();
-				is = socket1.getInputStream();
-				os.write(returnVal.getBytes());
-				os.flush();
-				message = "设定成功！";
-				flag = ConstantCode.SUCCESS;
-			} catch (SocketTimeoutException e) {
-				System.out.println("连接超时，关闭连接");
-				message = "信号断开，稍后重试！";
+			if (socket1 != null && StringUtil.isNotEmpty(returnVal)) {
+				try {
+					OutputStream os = socket1.getOutputStream();
+					is = socket1.getInputStream();
+					os.write(returnVal.getBytes());
+					os.flush();
+					message = "设定成功！";
+					flag = ConstantCode.SUCCESS;
+				} catch (SocketTimeoutException e) {
+					System.out.println("连接超时，关闭连接");
+					message = "信号断开，稍后重试！";
+					flag = 1;
+					e.printStackTrace();
+				} catch (IOException ex) {
+					ex.printStackTrace();
+				}
+			} else {
 				flag = 1;
-				e.printStackTrace();
-			} catch (IOException ex) {
-				ex.printStackTrace();
+				message = "信号断开，稍后重试！";
 			}
-		} else {
-			flag = 1;
-			message = "信号断开，稍后重试！";
-		}
-		if (returnMap != null && flag == 0) {
-			pmap.put("object", returnMap.get("object"));
-		} else {
-			if (returnMap != null) {
+			if (returnMap != null && flag == 0) {
 				pmap.put("object", returnMap.get("object"));
 			} else {
-				pmap.put("object", null);
+				if (returnMap != null) {
+					pmap.put("object", returnMap.get("object"));
+				} else {
+					pmap.put("object", null);
+				}
 			}
+			pmap.put("returnVal", returnVal);
+			pmap.put("msg", message);
+			pmap.put("flag", "" + flag);
+			return pmap;
+		} catch (Exception e) {
+			System.out.println("发送指令异常！");
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		pmap.put("returnVal", returnVal);
-		pmap.put("msg", message);
-		pmap.put("flag", "" + flag);
-		return pmap;
+		return null;
 	}
 
 	public String requestData(final Socket socket1, final String sevNum) {
 
-		Ccdata1 cc1 = daoService.selectCcdataByDeviceId1(sevNum);
-		if (cc1 == null) {
-			return null;
-		}
-		final String chillerType = cc1.getChillerType();
-		long timeInterval = 1000;
-		Runnable runnable = new Runnable() {
-			public void run() {
-				List<String> list = new ArrayList<String>();
-
-				if ("thermoking".equals(chillerType)) {
-					list.add(sevNum + " 04 9300C8A5");// 冷王测试开关机指令 C8 数据总解
-				} else if ("carrier".equals(chillerType)) {
-					list.add(CarryTemset.getSendData(
-							CarryTemset.overallUnitStatus, sevNum));// 开利测试开关机指令
-																	// 请求操作状态;
-				}
-
-				if (socket1 != null && list.size() > 0) {
-					try {
-						OutputStream os = socket1.getOutputStream();
-						in = socket1.getInputStream();
-						os.write(list.get(0).getBytes());
-
-						/*
-						 * CommandStore cs = new CommandStore();
-						 * 
-						 * Long currentLongTime = System.currentTimeMillis();
-						 * DealDateData dealDateData = new DealDateData();
-						 * String strFormatNowDate = dealDateData
-						 * .getStringDate(currentLongTime);
-						 * cs.setContent(list.get(0)); cs.setLongTime("" +
-						 * currentLongTime); cs.setTime(strFormatNowDate);
-						 * cs.setType("0"); daoService.insertCommandStore(cs);
-						 */
-						System.out.println("list" + 0 + ":" + list.get(0));
-						os.flush();
-						Thread.sleep(8000);
-					} catch (SocketTimeoutException e) {
-						System.out.println("连接超时，关闭连接");
-						e.printStackTrace();
-					} catch (IOException ex) {
-						ex.printStackTrace();
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					}
-				}
+		try {
+			Ccdata1 cc1 = daoService.selectCcdataByDeviceId1(sevNum);
+			if (cc1 == null) {
+				return null;
 			}
-		};
-		Thread thread = new Thread(runnable);
-		thread.start();
-		// thread.interrupt();
+			final String chillerType = cc1.getChillerType();
+			long timeInterval = 1000;
+			Runnable runnable = new Runnable() {
+				public void run() {
+					List<String> list = new ArrayList<String>();
 
-		return sevNum;
-	}
-
-	public String sendRequest(final Socket socket1, final String sevNum) {
-
-		Ccdata1 cc1 = daoService.selectCcdataByDeviceId1(sevNum);
-		ErrorData ed = daoService.selectErrorDataByDeviceId(sevNum);
-		if (cc1 == null) {
-			return null;
-		}
-		long receiveLongTime = 0;
-		if (ed != null) {
-			receiveLongTime = Long.parseLong(ed.getReceiveLongTime());
-		}
-		if (StringUtil.isNotEmpty(ed.getReceiveLongTime())) {
-			Long timeDifference = (System.currentTimeMillis() - receiveLongTime) / 56000;
-			if (timeDifference > 2) {
-				cc1.setRefSwiState("off");
-				daoService.updateCcdataById1(cc1);
-				try {
-					Map<String, Object> mapCS = new HashMap<String, Object>();
-					Long csTime = System.currentTimeMillis() - 190000;
-					mapCS.put("value1", cc1.getContainerId());
-					mapCS.put("value2", csTime);
-					CommandStore cs = daoService.selectCommandStoreByMap(mapCS);
-					if (cs != null) {
-						cs.setStatus("Y");
-						daoService.updateCommandStoreById(cs);
-
+					if ("thermoking".equals(chillerType)) {
+						list.add(sevNum + " 04 9300C8A5");// 冷王测试开关机指令 C8 数据总解
+					} else if ("carrier".equals(chillerType)) {
+						list.add(CarryTemset.getSendData(
+								CarryTemset.overallUnitStatus, sevNum));// 开利测试开关机指令
+																		// 请求操作状态;
 					}
 
-				} catch (Exception e) {
-					// TODO: handle exception
-				}
-			}
-		}
-		final String chillerType = cc1.getChillerType();
-		long timeInterval = 1000;
-		Runnable runnable = new Runnable() {
-			public void run() {
-				String commandStringByDevId = null;
-				OfflineOrder offO = null;
-				try {
-					commandStringByDevId = OfflineOrderUtil
-							.getCommandStringByDevId(sevNum);
-					offO = OfflineOrderUtil.getOffLineOrderByDev(sevNum);
-					OfflineOrderUtil.deleteCommandStringByDevId(sevNum);
-				} catch (Exception e) {
-					commandStringByDevId = null;
-					offO = null;
-				}
-				List<String> list = new ArrayList<String>();
-				if ("thermoking".equals(chillerType)) {
-					if (commandStringByDevId != null) {
-						list.add(commandStringByDevId);// 缓存命令
-					}
-					list.add(sevNum + " 04 9300C8A5");// 数据总解
-					list.add(sevNum + " 04 9300A8C5");// 电瓶电压
-					list.add(sevNum + " 04 9300ABC2");// 环境温度
-					list.add(sevNum + " 04 9300F677");// 车辆运行时长
-					list.add(sevNum + " 04 9300F776");// 发动机运行时长
-					list.add(sevNum + " 04 9300CF9E");// 预警信息值
-				} else if ("carrier".equals(chillerType)) {
-					if (commandStringByDevId != null) {
-						list.add(commandStringByDevId);// 缓存命令
-					}
-					list.add(CarryTemset.getSendData(
-							CarryTemset.overallUnitStatus, sevNum));// 请求操作状态
-					list.add(CarryTemset.getSendData(
-							CarryTemset.activeAlarmQueue, sevNum));// 请求报警数据
-					list.add(CarryTemset.getSendData(CarryTemset.setTemValue,
-							sevNum));// 请求设置温度值
-
-					list.add(CarryTemset.getSendData(CarryTemset.realTem,
-							sevNum));// 请求温度传感器
-
-					list.add(CarryTemset.getSendData(CarryTemset.engineSensors,
-							sevNum));// 请求发动机传感器，电压，油量，门开关，远程开关1，远程开关2
-					list.add(CarryTemset.getSendData(
-							CarryTemset.standardHourMeters, sevNum));// 标准小时计量器（发动机，备用机，启动）
-				}
-
-				if (socket1 != null && list.size() > 0) {
-					for (int i = 0; i < list.size(); i++) {
+					if (socket1 != null && list.size() > 0) {
 						try {
 							OutputStream os = socket1.getOutputStream();
 							in = socket1.getInputStream();
-							os.write(list.get(i).getBytes());
+							os.write(list.get(0).getBytes());
 
-							if (i == 0 && offO != null) {
-								CommandStore cs = new CommandStore();
-								Long currentLongTime = System
-										.currentTimeMillis();
-								DealDateData dealDateData = new DealDateData();
-								String strFormatNowDate = dealDateData
-										.getStringDate(currentLongTime);
-								cs.setContent(commandStringByDevId);
-								cs.setTime(strFormatNowDate);
-								cs.setLongTime("" + currentLongTime);
-								cs.setTime("1");
-								cs.setCommand(offO.getType());
-								cs.setContainerId(offO.getContainerId());
-								cs.setValue(offO.getData());
-								cs.setUserName(offO.getUserName());
-								cs.setStatus("N");
-								daoService.insertCommandStore(cs);
-							}
 							/*
 							 * CommandStore cs = new CommandStore();
 							 * 
-							 * Long currentLongTime =
-							 * System.currentTimeMillis(); DealDateData
-							 * dealDateData = new DealDateData(); String
-							 * strFormatNowDate = dealDateData
+							 * Long currentLongTime = System.currentTimeMillis();
+							 * DealDateData dealDateData = new DealDateData();
+							 * String strFormatNowDate = dealDateData
 							 * .getStringDate(currentLongTime);
-							 * cs.setContent(list.get(i)); cs.setLongTime("" +
+							 * cs.setContent(list.get(0)); cs.setLongTime("" +
 							 * currentLongTime); cs.setTime(strFormatNowDate);
-							 * cs.setType("0");
-							 * daoService.insertCommandStore(cs);
+							 * cs.setType("0"); daoService.insertCommandStore(cs);
 							 */
-
-							System.out.println("list" + i + ":" + list.get(i));
+							System.out.println("list" + 0 + ":" + list.get(0));
 							os.flush();
 							Thread.sleep(8000);
 						} catch (SocketTimeoutException e) {
@@ -446,13 +315,165 @@ public class ProcessSocketData implements Runnable {
 						}
 					}
 				}
-			}
-		};
-		Thread thread = new Thread(runnable);
-		thread.start();
-		// thread.interrupt();
+			};
+			Thread thread = new Thread(runnable);
+			thread.start();
+			// thread.interrupt();
 
-		return sevNum;
+			return sevNum;
+		} catch (Exception e) {
+			System.out.println("关机异常请求！");
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	public String sendRequest(final Socket socket1, final String sevNum) {
+
+		try {
+			Ccdata1 cc1 = daoService.selectCcdataByDeviceId1(sevNum);
+			ErrorData ed = daoService.selectErrorDataByDeviceId(sevNum);
+			if (cc1 == null) {
+				return null;
+			}
+			long receiveLongTime = 0;
+			if (ed != null) {
+				receiveLongTime = Long.parseLong(ed.getReceiveLongTime());
+			}
+			if (StringUtil.isNotEmpty(ed.getReceiveLongTime())) {
+				Long timeDifference = (System.currentTimeMillis() - receiveLongTime) / 56000;
+				if (timeDifference > 2) {
+					cc1.setRefSwiState("off");
+					daoService.updateCcdataById1(cc1);
+					try {
+						Map<String, Object> mapCS = new HashMap<String, Object>();
+						Long csTime = System.currentTimeMillis() - 190000;
+						mapCS.put("value1", cc1.getContainerId());
+						mapCS.put("value2", csTime);
+						CommandStore cs = daoService.selectCommandStoreByMap(mapCS);
+						if (cs != null) {
+							cs.setStatus("Y");
+							daoService.updateCommandStoreById(cs);
+
+						}
+
+					} catch (Exception e) {
+						// TODO: handle exception
+					}
+				}
+			}
+			final String chillerType = cc1.getChillerType();
+			long timeInterval = 1000;
+			Runnable runnable = new Runnable() {
+				public void run() {
+					String commandStringByDevId = null;
+					OfflineOrder offO = null;
+					try {
+						commandStringByDevId = OfflineOrderUtil
+								.getCommandStringByDevId(sevNum);
+						offO = OfflineOrderUtil.getOffLineOrderByDev(sevNum);
+						OfflineOrderUtil.deleteCommandStringByDevId(sevNum);
+					} catch (Exception e) {
+						commandStringByDevId = null;
+						offO = null;
+					}
+					List<String> list = new ArrayList<String>();
+					if ("thermoking".equals(chillerType)) {
+						if (commandStringByDevId != null) {
+							list.add(commandStringByDevId);// 缓存命令
+						}
+						list.add(sevNum + " 04 9300C8A5");// 数据总解
+						list.add(sevNum + " 04 9300A8C5");// 电瓶电压
+						list.add(sevNum + " 04 9300ABC2");// 环境温度
+						list.add(sevNum + " 04 9300F677");// 车辆运行时长
+						list.add(sevNum + " 04 9300F776");// 发动机运行时长
+						list.add(sevNum + " 04 9300CF9E");// 预警信息值
+					} else if ("carrier".equals(chillerType)) {
+						if (commandStringByDevId != null) {
+							list.add(commandStringByDevId);// 缓存命令
+						}
+						list.add(CarryTemset.getSendData(
+								CarryTemset.overallUnitStatus, sevNum));// 请求操作状态
+						list.add(CarryTemset.getSendData(
+								CarryTemset.activeAlarmQueue, sevNum));// 请求报警数据
+						list.add(CarryTemset.getSendData(CarryTemset.setTemValue,
+								sevNum));// 请求设置温度值
+
+						list.add(CarryTemset.getSendData(CarryTemset.realTem,
+								sevNum));// 请求温度传感器
+
+						list.add(CarryTemset.getSendData(CarryTemset.engineSensors,
+								sevNum));// 请求发动机传感器，电压，油量，门开关，远程开关1，远程开关2
+						list.add(CarryTemset.getSendData(
+								CarryTemset.standardHourMeters, sevNum));// 标准小时计量器（发动机，备用机，启动）
+					}
+
+					if (socket1 != null && list.size() > 0) {
+						for (int i = 0; i < list.size(); i++) {
+							try {
+								OutputStream os = socket1.getOutputStream();
+								in = socket1.getInputStream();
+								os.write(list.get(i).getBytes());
+
+								if (i == 0 && offO != null) {
+									CommandStore cs = new CommandStore();
+									Long currentLongTime = System
+											.currentTimeMillis();
+									DealDateData dealDateData = new DealDateData();
+									String strFormatNowDate = dealDateData
+											.getStringDate(currentLongTime);
+									cs.setContent(commandStringByDevId);
+									cs.setTime(strFormatNowDate);
+									cs.setLongTime("" + currentLongTime);
+									cs.setTime("1");
+									cs.setCommand(offO.getType());
+									cs.setContainerId(offO.getContainerId());
+									cs.setValue(offO.getData());
+									cs.setUserName(offO.getUserName());
+									cs.setStatus("N");
+									daoService.insertCommandStore(cs);
+								}
+								/*
+								 * CommandStore cs = new CommandStore();
+								 * 
+								 * Long currentLongTime =
+								 * System.currentTimeMillis(); DealDateData
+								 * dealDateData = new DealDateData(); String
+								 * strFormatNowDate = dealDateData
+								 * .getStringDate(currentLongTime);
+								 * cs.setContent(list.get(i)); cs.setLongTime("" +
+								 * currentLongTime); cs.setTime(strFormatNowDate);
+								 * cs.setType("0");
+								 * daoService.insertCommandStore(cs);
+								 */
+
+								System.out.println("list" + i + ":" + list.get(i));
+								os.flush();
+								Thread.sleep(8000);
+							} catch (SocketTimeoutException e) {
+								System.out.println("连接超时，关闭连接");
+								e.printStackTrace();
+							} catch (IOException ex) {
+								ex.printStackTrace();
+							} catch (InterruptedException e) {
+								e.printStackTrace();
+							}
+						}
+					}
+				}
+			};
+			Thread thread = new Thread(runnable);
+			thread.start();
+			// thread.interrupt();
+
+			return sevNum;
+		} catch (NumberFormatException e) {
+			System.out.println("开机指令请求异常!");
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 
 	}
 

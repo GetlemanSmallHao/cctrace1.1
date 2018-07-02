@@ -65,6 +65,7 @@ public class SimpleHttpClient {
 	        SimpleHttpClient httpClient=new SimpleHttpClient();  
 	        //远程 124.207.192.18  
 	        //本地班172.60.5.100  
+	        //在使用本地socket调试时，ip需要修改成电脑本地ip已进行调试（192.168.18.232）
 	        httpClient.send("172.60.5.100",   
 	                8080, "/allRunServer/login.html",  
 	                null);  

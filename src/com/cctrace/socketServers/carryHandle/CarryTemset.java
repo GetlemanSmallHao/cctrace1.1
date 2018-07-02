@@ -1,7 +1,6 @@
 package com.cctrace.socketServers.carryHandle;
 
 import java.util.HashMap;
-
 import java.util.Map;
 
 import org.springframework.util.StringUtils;
@@ -58,31 +57,37 @@ public class CarryTemset {
 	// 开利温度设置
 	public Map<String, Object> tempSet(String setTem, String deviceId,
 			String containerId) {
-		String key = null;
-		key = CarryTemset.getTemperatureCommandString(Double
-				.parseDouble(setTem));
-		if (key != null) {
-			key = getSendData(key, deviceId);
-		}
-		if (StringUtil.isNotEmpty(key)) {
-			Map<String, Object> map = new HashMap<String, Object>();
-			map.put("key", key);
-			CommandStore cs = new CommandStore();
-			Long currentLongTime = System.currentTimeMillis();
-			DealDateData dealDateData = new DealDateData();
-			String strFormatNowDate = dealDateData
-					.getStringDate(currentLongTime);
-			cs.setContent(key);
-			cs.setLongTime("" + currentLongTime);
-			cs.setTime(strFormatNowDate);
-			cs.setCommand("temSet");
-			cs.setType("1");
-			cs.setStatus("0");
-			cs.setValue(setTem);
-			cs.setContainerId(containerId);
-			map.put("command", "temSet");
-			map.put("object", cs);
-			return map;
+		try {
+			String key = null;
+			key = CarryTemset.getTemperatureCommandString(Double
+					.parseDouble(setTem));
+			if (key != null) {
+				key = getSendData(key, deviceId);
+			}
+			if (StringUtil.isNotEmpty(key)) {
+				Map<String, Object> map = new HashMap<String, Object>();
+				map.put("key", key);
+				CommandStore cs = new CommandStore();
+				Long currentLongTime = System.currentTimeMillis();
+				DealDateData dealDateData = new DealDateData();
+				String strFormatNowDate = dealDateData
+						.getStringDate(currentLongTime);
+				cs.setContent(key);
+				cs.setLongTime("" + currentLongTime);
+				cs.setTime(strFormatNowDate);
+				cs.setCommand("temSet");
+				cs.setType("1");
+				cs.setStatus("0");
+				cs.setValue(setTem);
+				cs.setContainerId(containerId);
+				map.put("command", "temSet");
+				map.put("object", cs);
+				return map;
+			}
+			return null;
+		} catch (NumberFormatException e) {
+			// TODO Auto-generated catch block
+			System.out.println("开立温度设定异常");
 		}
 		return null;
 	}
@@ -90,30 +95,36 @@ public class CarryTemset {
 	// 开利cfm设置
 	public Map<String, Object> cfmSet(String setCfm, String deviceId,
 			String containerId) {
-		String key = null;
-		key = CarryTemset.getCfmCommandString(Integer.valueOf(setCfm));
-		if (key != null) {
-			key = getSendData(key, deviceId);
-		}
-		if (StringUtil.isNotEmpty(key)) {
-			Map<String, Object> map = new HashMap<String, Object>();
-			map.put("key", key);
-			CommandStore cs = new CommandStore();
-			Long currentLongTime = System.currentTimeMillis();
-			DealDateData dealDateData = new DealDateData();
-			String strFormatNowDate = dealDateData
-					.getStringDate(currentLongTime);
-			cs.setContent(key);
-			cs.setLongTime("" + currentLongTime);
-			cs.setTime(strFormatNowDate);
-			cs.setCommand("cfmSet");
-			cs.setType("1");
-			cs.setStatus("0");
-			cs.setValue(setCfm);
-			cs.setContainerId(containerId);
-			map.put("command", "cfmSet");
-			map.put("object", cs);
-			return map;
+		try {
+			String key = null;
+			key = CarryTemset.getCfmCommandString(Integer.valueOf(setCfm));
+			if (key != null) {
+				key = getSendData(key, deviceId);
+			}
+			if (StringUtil.isNotEmpty(key)) {
+				Map<String, Object> map = new HashMap<String, Object>();
+				map.put("key", key);
+				CommandStore cs = new CommandStore();
+				Long currentLongTime = System.currentTimeMillis();
+				DealDateData dealDateData = new DealDateData();
+				String strFormatNowDate = dealDateData
+						.getStringDate(currentLongTime);
+				cs.setContent(key);
+				cs.setLongTime("" + currentLongTime);
+				cs.setTime(strFormatNowDate);
+				cs.setCommand("cfmSet");
+				cs.setType("1");
+				cs.setStatus("0");
+				cs.setValue(setCfm);
+				cs.setContainerId(containerId);
+				map.put("command", "cfmSet");
+				map.put("object", cs);
+				return map;
+			}
+			return null;
+		} catch (NumberFormatException e) {
+			// TODO Auto-generated catch block
+			System.out.println("cfm设定异常");
 		}
 		return null;
 	}
@@ -122,62 +133,80 @@ public class CarryTemset {
 	 * 发送的数据的生成
 	 */
 	public static String getSendData(String command, String deviceId) {
-		int lengthValue = command.length() / 2;
-		String lengthString = Integer.toHexString(lengthValue).length() == 1 ? ("0" + Integer
-				.toHexString(lengthValue)) : Integer.toHexString(lengthValue);
-		String returnVal = deviceId + " " + lengthString + " " + command;
-		return returnVal.toUpperCase();
+		try {
+			int lengthValue = command.length() / 2;
+			String lengthString = Integer.toHexString(lengthValue).length() == 1 ? ("0" + Integer
+					.toHexString(lengthValue)) : Integer.toHexString(lengthValue);
+			String returnVal = deviceId + " " + lengthString + " " + command;
+			return returnVal.toUpperCase();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			System.out.println("发送的数据生成");
+		}
+		return null;
 	}
 
 	/**
 	 * 温度控制指令的生成 根据摄氏温度值，获取温度设置指令字符串 参数： 温度（摄氏）
 	 */
 	public static String getTemperatureCommandString(double i) {
-		String firstString = "86032058AA06";
-		String lastString = "FFFFFFFF";
-		// 这是摄氏度 华氏度(℉)=32+摄氏度(℃)×1.8 冷机有两种模式一种是设置度，一种是华式度，暂时使用摄氏度
-		// Float hua = (float) (i*1.8+32); 华氏度
-		Float hua = (float) i;
-		Float lastHua = hua * 32;
-		// 对数据格式化向下取整
-		Integer ii = (int) Math.floor(lastHua);
-		// 根据数据获取字符串
-		String CommandTempNum = Integer.toHexString(ii);
-		System.out.println(CommandTempNum.length());
-		while (CommandTempNum.length() < 4) {
-			CommandTempNum = "0000" + CommandTempNum;
+		try {
+			String firstString = "86032058AA06";
+			String lastString = "FFFFFFFF";
+			// 这是摄氏度 华氏度(℉)=32+摄氏度(℃)×1.8 冷机有两种模式一种是设置度，一种是华式度，暂时使用摄氏度
+			// Float hua = (float) (i*1.8+32); 华氏度
+			Float hua = (float) i;
+			Float lastHua = hua * 32;
+			// 对数据格式化向下取整
+			Integer ii = (int) Math.floor(lastHua);
+			// 根据数据获取字符串
+			String CommandTempNum = Integer.toHexString(ii);
+			System.out.println(CommandTempNum.length());
+			while (CommandTempNum.length() < 4) {
+				CommandTempNum = "0000" + CommandTempNum;
+			}
+			CommandTempNum = CommandTempNum.substring(CommandTempNum.length() - 4,
+					CommandTempNum.length());
+			CommandTempNum = CommandTempNum.substring(2, 4)
+					+ CommandTempNum.substring(0, 2);
+			StringBuffer buffer = new StringBuffer();
+			buffer.append(firstString).append(CommandTempNum).append(lastString);
+			String checkCode = createCheckCodeString(buffer.toString());
+			buffer.append(checkCode);
+			return buffer.toString().toUpperCase();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			System.out.println("温度控制指令的生成");
 		}
-		CommandTempNum = CommandTempNum.substring(CommandTempNum.length() - 4,
-				CommandTempNum.length());
-		CommandTempNum = CommandTempNum.substring(2, 4)
-				+ CommandTempNum.substring(0, 2);
-		StringBuffer buffer = new StringBuffer();
-		buffer.append(firstString).append(CommandTempNum).append(lastString);
-		String checkCode = createCheckCodeString(buffer.toString());
-		buffer.append(checkCode);
-		return buffer.toString().toUpperCase();
+		return null;
 	}
 
 	/**
 	 * cfm控制指令的生成 参数： cfm
 	 */
 	public static String getCfmCommandString(int i) {
-		String firstString = "86032B58AA0202";
-		Integer ii = i;
-		// 根据数据获取字符串
-		String CommandCfmNum = Integer.toHexString(ii);
-		System.out.println(CommandCfmNum.length());
-		while (CommandCfmNum.length() < 4) {
-			CommandCfmNum = "0000" + CommandCfmNum;
+		try {
+			String firstString = "86032B58AA0202";
+			Integer ii = i;
+			// 根据数据获取字符串
+			String CommandCfmNum = Integer.toHexString(ii);
+			System.out.println(CommandCfmNum.length());
+			while (CommandCfmNum.length() < 4) {
+				CommandCfmNum = "0000" + CommandCfmNum;
+			}
+			CommandCfmNum = CommandCfmNum.substring(CommandCfmNum.length() - 4,
+					CommandCfmNum.length());
+			CommandCfmNum = CommandCfmNum.substring(2, 4);
+			StringBuffer buffer = new StringBuffer();
+			buffer.append(firstString).append(CommandCfmNum);
+			String checkCode = createCheckCodeString(buffer.toString());
+			buffer.append(checkCode);
+			return buffer.toString().toUpperCase();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			System.out.println("cfm指令生成");
 		}
-		CommandCfmNum = CommandCfmNum.substring(CommandCfmNum.length() - 4,
-				CommandCfmNum.length());
-		CommandCfmNum = CommandCfmNum.substring(2, 4);
-		StringBuffer buffer = new StringBuffer();
-		buffer.append(firstString).append(CommandCfmNum);
-		String checkCode = createCheckCodeString(buffer.toString());
-		buffer.append(checkCode);
-		return buffer.toString().toUpperCase();
+		return null;
 	}
 
 	/**
@@ -185,33 +214,39 @@ public class CarryTemset {
 	 */
 	public static String createCheckCodeString(String s) {
 
-		StringBuffer bs = new StringBuffer();
-		char[] charArray = s.toCharArray();
-		System.out.println(charArray.length);
-		// 构造待计算的数组
-		String[] strs = new String[charArray.length / 2];
-		for (int i = 0; i < strs.length; i++) {
-			bs.append(charArray[i * 2]);
-			bs.append(charArray[i * 2 + 1]);
-			strs[i] = bs.toString();
-			bs.delete(0, bs.length());
+		try {
+			StringBuffer bs = new StringBuffer();
+			char[] charArray = s.toCharArray();
+			System.out.println(charArray.length);
+			// 构造待计算的数组
+			String[] strs = new String[charArray.length / 2];
+			for (int i = 0; i < strs.length; i++) {
+				bs.append(charArray[i * 2]);
+				bs.append(charArray[i * 2 + 1]);
+				strs[i] = bs.toString();
+				bs.delete(0, bs.length());
+			}
+			Integer theSum = 0;
+			// 计算该数组，按照一字节有符号数进行计算
+			for (int i = 0; i < strs.length; i++) {
+				String tstr = strs[i];
+				// int i = **
+				// byte ss = (byte)(i & 0xFF);
+				Integer thisval = Integer.parseInt(tstr, 16);
+				byte byteValue = (byte) (thisval & 0xFF);
+				theSum += byteValue;
+			}
+			// 将和转换成16进制的字符串
+			String sumString = Integer.toHexString(theSum);
+			if (sumString.length() == 1) {
+				sumString = "0" + sumString;
+			}
+			return sumString.substring(sumString.length() - 2, sumString.length())
+					.toUpperCase();
+		} catch (NumberFormatException e) {
+			// TODO Auto-generated catch block
+			System.out.println("生成校验字符串");
 		}
-		Integer theSum = 0;
-		// 计算该数组，按照一字节有符号数进行计算
-		for (int i = 0; i < strs.length; i++) {
-			String tstr = strs[i];
-			// int i = **
-			// byte ss = (byte)(i & 0xFF);
-			Integer thisval = Integer.parseInt(tstr, 16);
-			byte byteValue = (byte) (thisval & 0xFF);
-			theSum += byteValue;
-		}
-		// 将和转换成16进制的字符串
-		String sumString = Integer.toHexString(theSum);
-		if (sumString.length() == 1) {
-			sumString = "0" + sumString;
-		}
-		return sumString.substring(sumString.length() - 2, sumString.length())
-				.toUpperCase();
+		return null;
 	}
 }

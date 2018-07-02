@@ -52,30 +52,36 @@ public class locationController {
 	public Msg getLocationByContaionId(HttpServletRequest request,String containerId,Model map){
 		
 		
-		OurCcdata1 lastourCcdata= daoService.selectOurCcdataBycontainerId1(containerId);
+		try {
+			OurCcdata1 lastourCcdata= daoService.selectOurCcdataBycontainerId1(containerId);
 //										getLastCcdataByContainerId(containerId);
 //		OurCcdata ourCcdata = daoService.se
-		Double lat = lastourCcdata.getLat();
-		Double lon = lastourCcdata.getLon();
-		String deviceId = lastourCcdata.getDeviceId();
-		String nowTime = lastourCcdata.getNowTime();
-		
-		System.out.println(lat+"---"+lon);
-		map.addAttribute("lat", lat);
-		map.addAttribute("lon", lon);
-		try {
-			List<Double> sendGET = ChangeRealLocation.SendGET(lat, lon);
-			map.addAttribute("lat", sendGET.get(0));
-			map.addAttribute("lon", sendGET.get(1));
+			Double lat = lastourCcdata.getLat();
+			Double lon = lastourCcdata.getLon();
+			String deviceId = lastourCcdata.getDeviceId();
+			String nowTime = lastourCcdata.getNowTime();
+			
+			System.out.println(lat+"---"+lon);
+			map.addAttribute("lat", lat);
+			map.addAttribute("lon", lon);
+			try {
+				List<Double> sendGET = ChangeRealLocation.SendGET(lat, lon);
+				map.addAttribute("lat", sendGET.get(0));
+				map.addAttribute("lon", sendGET.get(1));
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
+			map.addAttribute("deviceId", deviceId);
+			map.addAttribute("containerId", containerId);
+			map.addAttribute("nowTime", nowTime);
+			
+			
+			return Msg.success().add("map", map);
 		} catch (Exception e) {
-			// TODO: handle exception
+			// TODO Auto-generated catch block
+			System.out.println("定位异常");
 		}
-		map.addAttribute("deviceId", deviceId);
-		map.addAttribute("containerId", containerId);
-		map.addAttribute("nowTime", nowTime);
-		
-		
-		return Msg.success().add("map", map);
+		return null;
 	}
 	
 
